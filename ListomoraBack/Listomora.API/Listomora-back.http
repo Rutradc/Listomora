@@ -1,0 +1,6 @@
+@Listomora_back_HostAddress = http://localhost:5245
+
+GET {{Listomora_back_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
