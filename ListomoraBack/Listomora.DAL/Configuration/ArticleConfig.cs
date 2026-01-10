@@ -1,8 +1,8 @@
-﻿using Listomora_back.Domain.Model;
+﻿using Listomora.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Listomora_back.DAL.Configuration
+namespace Listomora.DAL.Configuration
 {
     public class ArticleConfig : IEntityTypeConfiguration<Article>
     {

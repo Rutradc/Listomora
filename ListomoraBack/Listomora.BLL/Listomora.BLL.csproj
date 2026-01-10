@@ -2,15 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>Listomora_back.BLL</RootNamespace>
+    <RootNamespace>Listomora.BLL</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Implementations\" />
-    <Folder Include="Services\Interfaces\" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Listomora.DAL\Listomora.DAL.csproj" />

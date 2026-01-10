@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace Listomora_back.DAL.Migrations
+namespace Listomora.DAL.Migrations
 {
     /// <inheritdoc />
     public partial class init : Migration
@@ -14,7 +14,7 @@ namespace Listomora_back.DAL.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Article",
+                name: "Articles",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -27,7 +27,7 @@ namespace Listomora_back.DAL.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Article",
+                table: "Articles",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
@@ -46,7 +46,7 @@ namespace Listomora_back.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Article");
+                name: "Articles");
         }
     }
 }

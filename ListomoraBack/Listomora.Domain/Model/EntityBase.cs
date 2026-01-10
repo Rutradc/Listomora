@@ -1,4 +1,4 @@
-﻿namespace Listomora_back.Domain.Model
+﻿namespace Listomora.Domain.Model
 {
     public abstract class EntityBase
     {

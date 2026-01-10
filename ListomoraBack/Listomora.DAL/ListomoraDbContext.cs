@@ -1,9 +1,9 @@
-﻿using Listomora_back.DAL.Configuration;
-using Listomora_back.DAL.Seeds;
-using Listomora_back.Domain.Model;
+﻿using Listomora.DAL.Configuration;
+using Listomora.DAL.Seeds;
+using Listomora.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace Listomora_back.DAL
+namespace Listomora.DAL
 {
     public class ListomoraDbContext : DbContext
     {

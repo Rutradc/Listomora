@@ -2,13 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>Listomora_back.Domain</RootNamespace>
+    <RootNamespace>Listomora.Domain</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
 
 </Project>

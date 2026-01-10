@@ -1,4 +1,8 @@
-using Listomora_back.DAL;
+using Listomora.BLL.Services.Implementations;
+using Listomora.BLL.Services.Interfaces;
+using Listomora.DAL;
+using Listomora.DAL.Repositories;
+using Listomora.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,12 +13,31 @@ IConfiguration configuration = builder.Configuration;
 //config services EF
 builder.Services.AddDbContext<ListomoraDbContext>(options =>
     options.UseSqlServer(configuration.GetConnectionString("Listomora.EntityFramework")));
+//config services DAL
+builder.Services.AddScoped<IArticleRepo, SqlArticleRepo>();
+//config services BLL
+builder.Services.AddScoped<IArticleService, ArticleService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(opt =>
+{
+    // Déclaration d'une policy CORS nommée "MvcCors"
+    opt.AddPolicy("ListomoraCors", p =>
+    {
+        var origins = builder.Configuration
+            .GetSection("Cors:AllowedOrigins")
+            .Get<string[]>() ?? [];
+
+        p.WithOrigins(origins)
+         .AllowAnyHeader()
+         .AllowAnyMethod();
+        //.WithMethods("GET", "POST", "PUT");
+    });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,6 +48,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("ListomoraCors");
 
 app.UseAuthorization();
 

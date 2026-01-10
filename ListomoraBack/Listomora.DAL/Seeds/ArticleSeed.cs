@@ -1,8 +1,8 @@
-﻿using Listomora_back.Domain.Model;
+﻿using Listomora.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Listomora_back.DAL.Seeds
+namespace Listomora.DAL.Seeds
 {
     public class ArticleSeed : IEntityTypeConfiguration<Article>
     {
