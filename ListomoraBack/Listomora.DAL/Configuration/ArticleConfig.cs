@@ -8,6 +8,10 @@ namespace Listomora.DAL.Configuration
     {
         public void Configure(EntityTypeBuilder<Article> builder)
         {
+            builder.HasDiscriminator<string>("ArticleType")
+                .HasValue<Article>("Article")
+                .HasValue<Ingredient>("Ingredient");
+
             builder.Property(a => a.Id).ValueGeneratedOnAdd();
             builder.Property(a => a.Name).HasMaxLength(150).IsRequired();
 

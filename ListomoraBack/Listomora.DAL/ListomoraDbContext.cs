@@ -8,6 +8,7 @@ namespace Listomora.DAL
     public class ListomoraDbContext : DbContext
     {
         public DbSet<Article> Articles { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
         public ListomoraDbContext(DbContextOptions options) : base(options)
         {
         }
@@ -15,6 +16,7 @@ namespace Listomora.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ArticleConfig());
+            modelBuilder.ApplyConfiguration(new IngredientConfig());
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
@@ -28,6 +30,7 @@ namespace Listomora.DAL
             }
 
             modelBuilder.ApplyConfiguration(new ArticleSeed());
+            modelBuilder.ApplyConfiguration(new IngredientSeed());
         }
     }
 }

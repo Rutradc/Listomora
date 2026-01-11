@@ -11,43 +11,33 @@ namespace Listomora.DAL.Seeds
             builder.HasData(
                 new
                 {
-                    Id = new Guid("cae52516-7547-4d4e-a289-358fd8891a98"),
-                    Name = "Pommes de terre"
+                    Id = new Guid("bdf2a31b-5e8f-4874-838d-3246a804ae13"),
+                    Name = "Raquette de padel"
                 },
                 new
                 {
-                    Id = new Guid("e5bebf1e-bd35-448c-a1a2-941e55687ff5"),
-                    Name = "Viande de veau"
+                    Id = new Guid("6a03f6d7-9160-4d0f-b94b-dbc41d497ec8"),
+                    Name = "Papier toilette double épaisseur"
                 },
                 new
                 {
-                    Id = new Guid("1ed84abe-4c15-458f-82b8-a5a9bc34b5b5"),
-                    Name = "Filet de saumon"
+                    Id = new Guid("34a8bda4-f77f-42e5-ba61-2b511985c4db"),
+                    Name = "Crayons"
                 },
                 new
                 {
-                    Id = new Guid("82a56879-1d59-40f6-8a20-75cdcd2fe686"),
-                    Name = "Emmental rapé"
+                    Id = new Guid("bb861dfa-889d-49c3-ad76-407d662dd7c2"),
+                    Name = "Produit vaiselle"
                 },
                 new
                 {
-                    Id = new Guid("97505262-64f9-4444-83cf-67c93d8161d5"),
-                    Name = "Blanc de poulet"
+                    Id = new Guid("06effa04-6bcf-401f-a091-00b24f6ba8f0"),
+                    Name = "Sacs poubelle 30 litres"
                 },
                 new
                 {
-                    Id = new Guid("97796814-4f88-40a6-8d3d-98f46135be41"),
-                    Name = "Sel"
-                },
-                new
-                {
-                    Id = new Guid("16c4a654-0f04-40eb-a23e-9d580c7062a8"),
-                    Name = "Poivre"
-                },
-                new
-                {
-                    Id = new Guid("3d11a56b-1b6a-4581-940a-36eb4c25d01c"),
-                    Name = "Spaghetti"
+                    Id = new Guid("f15deb6c-e587-421c-b0cf-1ea1640df7b3"),
+                    Name = "Déodorant AXE YOU 48H"
                 }
                 );
         }
