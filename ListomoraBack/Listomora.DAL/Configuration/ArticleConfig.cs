@@ -14,6 +14,7 @@ namespace Listomora.DAL.Configuration
 
             builder.Property(a => a.Id).ValueGeneratedOnAdd();
             builder.Property(a => a.Name).HasMaxLength(150).IsRequired();
+            builder.Property(a => a.IsPublic).IsRequired();
 
             //constraints
             builder.HasKey(a => a.Id).HasName("PK_Article");

@@ -5,6 +5,7 @@ namespace Listomora.Domain.Model
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public bool IsPublic { get; set; }
         //public Guid CreatedBy { get; set; }
     }
 }

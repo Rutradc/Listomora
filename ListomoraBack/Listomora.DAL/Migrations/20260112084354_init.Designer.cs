@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Listomora.DAL.Migrations
 {
     [DbContext(typeof(ListomoraDbContext))]
-    [Migration("20260111154321_init")]
+    [Migration("20260112084354_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -41,6 +41,9 @@ namespace Listomora.DAL.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -59,31 +62,37 @@ namespace Listomora.DAL.Migrations
                         new
                         {
                             Id = new Guid("bdf2a31b-5e8f-4874-838d-3246a804ae13"),
+                            IsPublic = true,
                             Name = "Raquette de padel"
                         },
                         new
                         {
                             Id = new Guid("6a03f6d7-9160-4d0f-b94b-dbc41d497ec8"),
+                            IsPublic = true,
                             Name = "Papier toilette double épaisseur"
                         },
                         new
                         {
                             Id = new Guid("34a8bda4-f77f-42e5-ba61-2b511985c4db"),
+                            IsPublic = true,
                             Name = "Crayons"
                         },
                         new
                         {
                             Id = new Guid("bb861dfa-889d-49c3-ad76-407d662dd7c2"),
+                            IsPublic = true,
                             Name = "Produit vaiselle"
                         },
                         new
                         {
                             Id = new Guid("06effa04-6bcf-401f-a091-00b24f6ba8f0"),
+                            IsPublic = true,
                             Name = "Sacs poubelle 30 litres"
                         },
                         new
                         {
                             Id = new Guid("f15deb6c-e587-421c-b0cf-1ea1640df7b3"),
+                            IsPublic = true,
                             Name = "Déodorant AXE YOU 48H"
                         });
                 });
@@ -102,48 +111,56 @@ namespace Listomora.DAL.Migrations
                         new
                         {
                             Id = new Guid("cae52516-7547-4d4e-a289-358fd8891a98"),
+                            IsPublic = true,
                             Name = "Pommes de terre",
                             Category = "CEREALS"
                         },
                         new
                         {
                             Id = new Guid("e5bebf1e-bd35-448c-a1a2-941e55687ff5"),
+                            IsPublic = true,
                             Name = "Viande de veau",
                             Category = "MEAT"
                         },
                         new
                         {
                             Id = new Guid("1ed84abe-4c15-458f-82b8-a5a9bc34b5b5"),
+                            IsPublic = true,
                             Name = "Filet de saumon",
                             Category = "FISH_AND_SEAFOODS"
                         },
                         new
                         {
                             Id = new Guid("82a56879-1d59-40f6-8a20-75cdcd2fe686"),
+                            IsPublic = true,
                             Name = "Emmental rapé",
                             Category = "DAIRY_PRODUCTS"
                         },
                         new
                         {
                             Id = new Guid("97505262-64f9-4444-83cf-67c93d8161d5"),
+                            IsPublic = true,
                             Name = "Blanc de poulet",
                             Category = "MEAT"
                         },
                         new
                         {
                             Id = new Guid("97796814-4f88-40a6-8d3d-98f46135be41"),
+                            IsPublic = true,
                             Name = "Sel",
                             Category = "CONDIMENTS"
                         },
                         new
                         {
                             Id = new Guid("16c4a654-0f04-40eb-a23e-9d580c7062a8"),
+                            IsPublic = true,
                             Name = "Poivre",
                             Category = "CONDIMENTS"
                         },
                         new
                         {
                             Id = new Guid("3d11a56b-1b6a-4581-940a-36eb4c25d01c"),
+                            IsPublic = true,
                             Name = "Spaghetti",
                             Category = "CEREALS"
                         });

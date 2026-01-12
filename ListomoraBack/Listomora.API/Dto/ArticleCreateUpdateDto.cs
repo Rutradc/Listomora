@@ -2,6 +2,7 @@
 {
     public record ArticleCreateUpdateDto
     (
-        string Name
+        string Name,
+        bool IsPublic
     );
 }
