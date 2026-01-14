@@ -9,6 +9,7 @@ namespace Listomora.DAL
     {
         public DbSet<Article> Articles { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<User> Users { get; set; }
         public ListomoraDbContext(DbContextOptions options) : base(options)
         {
         }
@@ -17,6 +18,7 @@ namespace Listomora.DAL
         {
             modelBuilder.ApplyConfiguration(new ArticleConfig());
             modelBuilder.ApplyConfiguration(new IngredientConfig());
+            modelBuilder.ApplyConfiguration(new UserConfig());
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
@@ -24,6 +26,7 @@ namespace Listomora.DAL
                 {
                     modelBuilder.Entity(entityType.ClrType)
                         .Property(nameof(EntityBase.CreatedAt))
+                        .HasColumnType("DateTime2")
                         .HasDefaultValueSql("GETUTCDATE()")
                         .ValueGeneratedOnAdd();
                 }
@@ -31,6 +34,7 @@ namespace Listomora.DAL
 
             modelBuilder.ApplyConfiguration(new ArticleSeed());
             modelBuilder.ApplyConfiguration(new IngredientSeed());
+            modelBuilder.ApplyConfiguration(new UserSeed());
         }
     }
 }

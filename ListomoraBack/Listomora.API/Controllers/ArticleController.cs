@@ -2,6 +2,7 @@
 using Listomora.API.Handlers;
 using Listomora.BLL.Services.Interfaces;
 using Listomora.Domain.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Listomora.API.Controllers
@@ -16,8 +17,10 @@ namespace Listomora.API.Controllers
         {
             _service = service;
         }
+        //[Authorize(Policy = "Member")]
         [HttpGet]
         public async Task<IActionResult> GetAll() => Ok(await _service.GetAllAsync());
+        //[Authorize(Policy = "Member")]
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> Get(Guid id)
         {
@@ -26,12 +29,14 @@ namespace Listomora.API.Controllers
                 return NotFound();
             return Ok(article);
         }
+        //[Authorize(Policy = "Member")]
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] ArticleCreateUpdateDto dto)
         {
             var created = await _service.InsertAsync(dto.ToEntity());
             return CreatedAtAction(nameof(Insert),new { id = created.Id }, created);
         }
+        //[Authorize(Policy = "Member")]
         [HttpPatch("{id:guid}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] ArticleCreateUpdateDto dto)
         {
@@ -40,6 +45,7 @@ namespace Listomora.API.Controllers
                 return NotFound();
             return Ok(article);
         }
+        //[Authorize(Policy = "Member")]
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {

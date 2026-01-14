@@ -35,8 +35,11 @@ namespace Listomora.DAL.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
+                        .HasColumnType("DateTime2")
                         .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsPublic")
                         .HasColumnType("bit");
@@ -48,6 +51,8 @@ namespace Listomora.DAL.Migrations
 
                     b.HasKey("Id")
                         .HasName("PK_Article");
+
+                    b.HasIndex("CreatorId");
 
                     b.ToTable("Articles");
 
@@ -91,6 +96,68 @@ namespace Listomora.DAL.Migrations
                             Id = new Guid("f15deb6c-e587-421c-b0cf-1ea1640df7b3"),
                             IsPublic = true,
                             Name = "Déodorant AXE YOU 48H"
+                        });
+                });
+
+            modelBuilder.Entity("Listomora.Domain.Model.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DateTime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<DateTime?>("DisableDate")
+                        .HasColumnType("DateTime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(320)
+                        .HasColumnType("nvarchar(320)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("PasswordHash");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasDefaultValue("User");
+
+                    b.HasKey("Id")
+                        .HasName("PK_User");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                            Email = "john@cena.us",
+                            FirstName = "John",
+                            LastName = "Cena",
+                            Password = "AQAAAAIAAYagAAAAENPe+GBHwVUPi9G/MzOxT6Dbsx2WCXHCl+Vc7l//HljQLfj3IPQyNBM0pQAf03H9KA==",
+                            Role = "Admin"
                         });
                 });
 
@@ -161,6 +228,20 @@ namespace Listomora.DAL.Migrations
                             Name = "Spaghetti",
                             Category = "CEREALS"
                         });
+                });
+
+            modelBuilder.Entity("Listomora.Domain.Model.Article", b =>
+                {
+                    b.HasOne("Listomora.Domain.Model.User", "User")
+                        .WithMany("CreatedArticles")
+                        .HasForeignKey("CreatorId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Listomora.Domain.Model.User", b =>
+                {
+                    b.Navigation("CreatedArticles");
                 });
 #pragma warning restore 612, 618
         }
