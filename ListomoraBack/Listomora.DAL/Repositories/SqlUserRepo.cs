@@ -15,7 +15,7 @@ namespace Listomora.DAL.Repositories
 
         public async Task<User> GetAsync(string email)
         {
-            return await _dbContext.Users.Where(u => u.Email == email).FirstOrDefaultAsync();
+            return await _dbContext.Users.Where(u => u.Email == email).SingleOrDefaultAsync();
         }
         // TODO : ajouter token de création de compte
         public async Task<bool> RegisterAsync(User user)

@@ -15,7 +15,7 @@ namespace Listomora.DAL.Repositories
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-            Article article = await _dbContext.Articles.FirstOrDefaultAsync(a => a.Id == id);
+            Article article = await _dbContext.Articles.SingleOrDefaultAsync(a => a.Id == id);
             if (article is null)
                 return false;
             _dbContext.Articles.Remove(article);
@@ -25,7 +25,7 @@ namespace Listomora.DAL.Repositories
 
         public async Task<Article> GetAsync(Guid id)
         {
-            return await _dbContext.Articles.FirstOrDefaultAsync(a => a.Id == id);
+            return await _dbContext.Articles.SingleOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<IEnumerable<Article>> GetAllAsync()

@@ -49,9 +49,16 @@ namespace Listomora.API.Controllers
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            if (await _service.DeleteAsync(id))
-                return Ok();
-            return NotFound();
+            try
+            {
+                if (await _service.DeleteAsync(id))
+                    return Ok();
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }
