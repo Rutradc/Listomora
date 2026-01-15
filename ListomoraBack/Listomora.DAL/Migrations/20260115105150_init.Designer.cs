@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Listomora.DAL.Migrations
 {
     [DbContext(typeof(ListomoraDbContext))]
-    [Migration("20260114155509_init")]
+    [Migration("20260115105150_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -127,7 +127,6 @@ namespace Listomora.DAL.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 

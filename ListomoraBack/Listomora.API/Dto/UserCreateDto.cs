@@ -6,7 +6,7 @@
         // string CreationToken,
         string Email,
         string FirstName,
-        string LastName,
+        string? LastName,
         string Password
     );
 }

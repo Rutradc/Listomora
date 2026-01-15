@@ -124,7 +124,6 @@ namespace Listomora.DAL.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
