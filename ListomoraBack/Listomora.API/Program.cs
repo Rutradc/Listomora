@@ -21,11 +21,14 @@ builder.Services.AddDbContext<ListomoraDbContext>(options =>
     options.UseSqlServer(configuration.GetConnectionString("Listomora.EntityFramework")));
 //config services DAL
 builder.Services.AddScoped<IArticleRepo, SqlArticleRepo>();
+builder.Services.AddScoped<IIngredientRepo, SqlIngredientRepo>();
 builder.Services.AddScoped<IUserRepo, SqlUserRepo>();
 //config services BLL
 builder.Services.AddScoped<IArticleService, ArticleService>();
+builder.Services.AddScoped<IIngredientService, IngredientService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+// TODO : Retirer passwordHasher pour utiliser procédure stockée
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 builder.Services.AddControllers();

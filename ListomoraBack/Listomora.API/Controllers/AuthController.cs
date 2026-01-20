@@ -1,7 +1,6 @@
 ﻿using Listomora.API.Dto;
 using Listomora.API.Handlers;
 using Listomora.BLL.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Listomora.API.Controllers

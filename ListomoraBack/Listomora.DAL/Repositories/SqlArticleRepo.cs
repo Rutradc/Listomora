@@ -46,6 +46,7 @@ namespace Listomora.DAL.Repositories
             if (articleToUpdate is null)
                 return null;
             articleToUpdate.Name = article.Name;
+            articleToUpdate.IsPublic = article.IsPublic;
             await _dbContext.SaveChangesAsync();
             return articleToUpdate;
         }
