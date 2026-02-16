@@ -1,8 +1,10 @@
 using Blazored.LocalStorage;
+using ListomoraFront.Services;
 using ListomoraFront.Services.Implementations;
 using ListomoraFront.Services.Interfaces;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.AspNetCore.Components.WebAssembly.Http;
 
 namespace ListomoraFront
 {
@@ -14,9 +16,11 @@ namespace ListomoraFront
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
-            builder.Services.AddHttpClient<ArticleAPIClient>();
-            builder.Services.AddHttpClient<AuthAPIClient>();
-            builder.Services.AddHttpClient<UserAPIClient>();
+            builder.Services.AddScoped<IncludeCredentialsHandler>();
+
+            builder.Services.AddHttpClient<ArticleAPIClient>().AddHttpMessageHandler<IncludeCredentialsHandler>();
+            builder.Services.AddHttpClient<AuthAPIClient>().AddHttpMessageHandler<IncludeCredentialsHandler>();
+            builder.Services.AddHttpClient<UserAPIClient>().AddHttpMessageHandler<IncludeCredentialsHandler>();
 
             builder.Services.AddSingleton<IArticleService, ArticleAPIClient>();
             builder.Services.AddSingleton<IAuthService, AuthAPIClient>();
