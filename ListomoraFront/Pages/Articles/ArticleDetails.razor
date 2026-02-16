@@ -1,0 +1,43 @@
+﻿@page "/article/{id:guid}"
+
+<h1>Détails d'article</h1>
+
+<div>
+    @if (Article is not null)
+    {
+        <dl class="row">
+            <dt class="col-sm-2">
+                Id
+            </dt>
+            <dd class="col-sm-10">
+                @Article.Id
+            </dd>
+            <dt class="col-sm-2">
+                Nom
+            </dt>
+            <dd class="col-sm-10">
+                @Article.Name
+            </dd>
+            <dt class="col-sm-2">
+                Est public
+            </dt>
+            <dd class="col-sm-10">
+                @Article.IsPublic
+            </dd>
+            <dt class="col-sm-2">
+                Id créateur
+            </dt>
+            <dd class="col-sm-10">
+                @Article.CreatorId
+            </dd>
+            <dt class="col-sm-2">
+                Date de création
+            </dt>
+            <dd class="col-sm-10">
+                @Article.CreatedAt
+            </dd>
+        </dl>
+    }
+</div>
+
+<button @onclick="() => GoToList()" class="btn btn-outline-primary w-25 m-auto">Liste</button>

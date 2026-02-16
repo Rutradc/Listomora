@@ -1,0 +1,55 @@
+﻿@page "/article"
+@using ListomoraFront.Models
+@using ListomoraFront.Models.Articles
+
+<PageTitle>Articles</PageTitle>
+
+<h3>Liste d'articles</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Nom
+            </th>
+            <th>
+                Est public
+            </th>
+            <th>
+                Id créateur
+            </th>
+            <th>
+                Date de création
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(ArticleDto a in Articles)
+        {
+            <tr>
+                <td>
+                    @a.Id
+                </td>
+                <td>
+                    @a.Name
+                </td>
+                <td>
+                    @a.IsPublic
+                </td>
+                <td>
+                    @a.CreatorId
+                </td>
+                <td>
+                    @a.CreatedAt
+                </td>
+                <td>
+                    <button @onclick="() => GoToDetails(a.Id)" class="btn btn-outline-primary">Détails</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

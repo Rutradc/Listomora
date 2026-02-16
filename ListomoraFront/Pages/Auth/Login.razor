@@ -1,0 +1,57 @@
+﻿@page "/login"
+
+<PageTitle>Se connecter</PageTitle>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow border-0">
+                <div class="card-header bg-primary text-white text-center py-3">
+                    <h4 class="mb-0">Connexion</h4>
+                </div>
+                <div class="card-body p-4">
+                    <EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
+                        <DataAnnotationsValidator />
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <InputText @bind-Value="loginModel.Email" class="form-control" placeholder="nom@exemple.com" />
+                            <ValidationMessage For="@(() => loginModel.Email)" class="text-danger" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Mot de passe</label>
+                            <InputText @bind-Value="loginModel.Password" type="password" class="form-control" placeholder="••••••••" />
+                            <ValidationMessage For="@(() => loginModel.Password)" class="text-danger" />
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary" disabled="@isLoggingIn">
+                                @if (isLoggingIn)
+                                {
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span> Connexion...</span>
+                                }
+                                else
+                                {
+                                    <span>Se connecter</span>
+                                }
+                            </button>
+                        </div>
+                    </EditForm>
+
+                    @if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="alert alert-danger mt-3 mb-0 text-center">
+                            @errorMessage
+                        </div>
+                    }
+                </div>
+                <div class="card-footer text-center py-3">
+                    <span class="text-muted">Pas encore de compte ?</span>
+                    <a href="/register" class="text-primary text-decoration-none"> Créer un compte</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
