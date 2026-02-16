@@ -62,7 +62,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("ListomoraCors");
+app.UseCors("ListomoraCors");   
 
 app.UseAuthorization();
 
