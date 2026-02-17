@@ -1,6 +1,6 @@
 ﻿using Listomora.API.Dto;
 using Listomora.API.Handlers;
-using Listomora.BLL.Services.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Listomora.API.Controllers
@@ -9,28 +9,29 @@ namespace Listomora.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthService _service;
+        private readonly IMediator _mediator;
 
-        public AuthController(IAuthService service)
+        public AuthController(IMediator mediator)
         {
-            _service = service;
+            _mediator = mediator;
         }
-        // TODO : ajouter token de création de compte
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] UserCreateDto dto)
-        {
-            var isCreated = await _service.RegisterUser(dto.ToEntity());
-            if (isCreated)
-                return Ok();
-            return BadRequest();
-        }
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserCredsDto dto)
-        {
-            var isValid = await _service.VerifyLogin(dto.Email, dto.Password);
-            if (isValid)
-                return Ok();
-            return BadRequest();
-        }
+
+        //// TODO : ajouter token de création de compte
+        //[HttpPost("register")]
+        //public async Task<IActionResult> Register([FromBody] UserCreateDto dto)
+        //{
+        //    var isCreated = await _service.RegisterUser(dto.ToEntity());
+        //    if (isCreated)
+        //        return Ok();
+        //    return BadRequest();
+        //}
+        //[HttpPost("login")]
+        //public async Task<IActionResult> Login([FromBody] UserCredsDto dto)
+        //{
+        //    var isValid = await _service.VerifyLogin(dto.Email, dto.Password);
+        //    if (isValid)
+        //        return Ok();
+        //    return BadRequest();
+        //}
     }
 }

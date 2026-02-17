@@ -4,7 +4,7 @@ Shopping list and recipe application.
 
 ## Front end
 
-Front end to be determined.
+Front end coded in C# with Blazor.
 
 ## Back end
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace Listomora.DAL.Migrations
+namespace Listomora.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class init : Migration

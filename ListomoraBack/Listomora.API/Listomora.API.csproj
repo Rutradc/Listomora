@@ -17,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Listomora.BLL\Listomora.BLL.csproj" />
-    <ProjectReference Include="..\Listomora.DAL\Listomora.DAL.csproj" />
+    <ProjectReference Include="..\Listomora.Application\Listomora.Application.csproj" />
     <ProjectReference Include="..\Listomora.Domain\Listomora.Domain.csproj" />
+    <ProjectReference Include="..\Listomora.Infrastructure\Listomora.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

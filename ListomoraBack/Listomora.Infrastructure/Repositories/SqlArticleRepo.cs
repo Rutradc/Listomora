@@ -2,7 +2,7 @@
 using Listomora.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace Listomora.DAL.Repositories
+namespace Listomora.Infrastructure.Repositories
 {
     public class SqlArticleRepo : IArticleRepo
     {

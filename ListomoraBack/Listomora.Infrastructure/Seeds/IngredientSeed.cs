@@ -2,7 +2,7 @@
 using Listomora.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-namespace Listomora.DAL.Seeds
+namespace Listomora.Infrastructure.Seeds
 {
     public class IngredientSeed : IEntityTypeConfiguration<Ingredient>
     {

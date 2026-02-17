@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Listomora.DAL.Configuration
+namespace Listomora.Infrastructure.Configuration
 {
     public class IngredientConfig : IEntityTypeConfiguration<Ingredient>
     {

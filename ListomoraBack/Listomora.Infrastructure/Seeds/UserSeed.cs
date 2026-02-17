@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Listomora.DAL.Seeds
+namespace Listomora.Infrastructure.Seeds
 {
     public class UserSeed : IEntityTypeConfiguration<User>
     {
