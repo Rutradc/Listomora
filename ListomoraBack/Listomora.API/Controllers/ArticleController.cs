@@ -1,7 +1,9 @@
 ﻿using Listomora.API.Dto;
 using Listomora.API.Handlers;
-using Listomora.BLL.Services.Interfaces;
+using Listomora.Application.Features.Articles.Commands;
+using Listomora.Application.Features.Articles.Queries;
 using Listomora.Domain.Model;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,54 +13,55 @@ namespace Listomora.API.Controllers
     [ApiController]
     public class ArticleController : ControllerBase
     {
-        private readonly IArticleService _service;
+        private readonly IMediator _mediator;
 
-        public ArticleController(IArticleService service)
+        public ArticleController(IMediator mediator)
         {
-            _service = service;
+            _mediator = mediator;
         }
+
         //[Authorize(Policy = "Member")]
         [HttpGet]
-        public async Task<IActionResult> GetAll() => Ok(await _service.GetAllAsync());
+        public async Task<IActionResult> GetAll() => Ok(await _mediator.Send(new GetArticlesQuery()));
         //[Authorize(Policy = "Member")]
-        [HttpGet("{id:guid}")]
-        public async Task<IActionResult> Get(Guid id)
-        {
-            Article article = await _service.GetAsync(id);
-            if (article is null)
-                return NotFound();
-            return Ok(article);
-        }
+        //[HttpGet("{id:guid}")]
+        //public async Task<IActionResult> Get(Guid id)
+        //{
+        //    Article article = await _service.GetAsync(id);
+        //    if (article is null)
+        //        return NotFound();
+        //    return Ok(article);
+        //}
         //[Authorize(Policy = "Member")]
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] ArticleCreateUpdateDto dto)
         {
-            var created = await _service.InsertAsync(dto.ToEntity());
-            return CreatedAtAction(nameof(Insert),new { id = created.Id }, created);
+            var created = await _mediator.Send(new CreateArticleCommand(dto.Name, dto.IsPublic));
+            return Created();
         }
         //[Authorize(Policy = "Member")]
-        [HttpPatch("{id:guid}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] ArticleCreateUpdateDto dto)
-        {
-            Article article = await _service.UpdateAsync(dto.ToEntity(), id);
-            if (article is null)
-                return NotFound();
-            return Ok(article);
-        }
-        //[Authorize(Policy = "Member")]
-        [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            try
-            {
-                if (await _service.DeleteAsync(id))
-                    return Ok();
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
+        //[HttpPatch("{id:guid}")]
+        //public async Task<IActionResult> Update(Guid id, [FromBody] ArticleCreateUpdateDto dto)
+        //{
+        //    Article article = await _service.UpdateAsync(dto.ToEntity(), id);
+        //    if (article is null)
+        //        return NotFound();
+        //    return Ok(article);
+        //}
+        ////[Authorize(Policy = "Member")]
+        //[HttpDelete("{id:guid}")]
+        //public async Task<IActionResult> Delete(Guid id)
+        //{
+        //    try
+        //    {
+        //        if (await _service.DeleteAsync(id))
+        //            return Ok();
+        //        return NotFound();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex);
+        //    }
+        //}
     }
 }

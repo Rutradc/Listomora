@@ -5,11 +5,11 @@ VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Listomora.API", "Listomora.API.csproj", "{18505013-8C25-41A6-AAA4-948C1DFA33CD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Listomora.BLL", "..\Listomora.BLL\Listomora.BLL.csproj", "{11001E29-CFE0-4B71-ADDE-DE41B6E5A5DC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Listomora.DAL", "..\Listomora.DAL\Listomora.DAL.csproj", "{CEC7C556-3472-4C6D-AD0C-C9ED72D8557C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Listomora.Domain", "..\Listomora.Domain\Listomora.Domain.csproj", "{00074A76-F842-4FD6-9599-FEEC44F32CAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Listomora.Application", "..\Listomora.Application\Listomora.Application.csproj", "{67842F7A-6A97-4B13-AA3A-D1E598A3A226}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Listomora.Infrastructure", "..\Listomora.Infrastructure\Listomora.Infrastructure.csproj", "{B0BDAE26-82B8-4AF3-BD8F-3C172AEE7CC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +21,18 @@ Global
 		{18505013-8C25-41A6-AAA4-948C1DFA33CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18505013-8C25-41A6-AAA4-948C1DFA33CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18505013-8C25-41A6-AAA4-948C1DFA33CD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{11001E29-CFE0-4B71-ADDE-DE41B6E5A5DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{11001E29-CFE0-4B71-ADDE-DE41B6E5A5DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{11001E29-CFE0-4B71-ADDE-DE41B6E5A5DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{11001E29-CFE0-4B71-ADDE-DE41B6E5A5DC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CEC7C556-3472-4C6D-AD0C-C9ED72D8557C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CEC7C556-3472-4C6D-AD0C-C9ED72D8557C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CEC7C556-3472-4C6D-AD0C-C9ED72D8557C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CEC7C556-3472-4C6D-AD0C-C9ED72D8557C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{00074A76-F842-4FD6-9599-FEEC44F32CAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{00074A76-F842-4FD6-9599-FEEC44F32CAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00074A76-F842-4FD6-9599-FEEC44F32CAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00074A76-F842-4FD6-9599-FEEC44F32CAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67842F7A-6A97-4B13-AA3A-D1E598A3A226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67842F7A-6A97-4B13-AA3A-D1E598A3A226}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67842F7A-6A97-4B13-AA3A-D1E598A3A226}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67842F7A-6A97-4B13-AA3A-D1E598A3A226}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0BDAE26-82B8-4AF3-BD8F-3C172AEE7CC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0BDAE26-82B8-4AF3-BD8F-3C172AEE7CC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0BDAE26-82B8-4AF3-BD8F-3C172AEE7CC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0BDAE26-82B8-4AF3-BD8F-3C172AEE7CC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

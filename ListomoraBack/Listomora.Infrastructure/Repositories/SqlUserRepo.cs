@@ -17,6 +17,12 @@ namespace Listomora.Infrastructure.Repositories
         {
             return await _dbContext.Users.Where(u => u.Email == email).SingleOrDefaultAsync();
         }
+
+        public Task<bool> LoginAsync(string email, string password)
+        {
+            throw new NotImplementedException();
+        }
+
         // TODO : ajouter token de création de compte
         public async Task<bool> RegisterAsync(User user)
         {
