@@ -8,7 +8,7 @@ Front end coded in C# with Blazor.
 
 ## Back end
 
-Back end coded in C# with ASP.NET Core and Entity Framework with SQLServer.
+Back end coded in C# with ASP.NET Core and Entity Framework with SQLServer with a CQRS architecture.
 
 ## License
 
