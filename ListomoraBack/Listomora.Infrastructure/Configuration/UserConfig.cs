@@ -1,6 +1,8 @@
-﻿using Listomora.Domain.Model;
+﻿using Listomora.Domain.Enums;
+using Listomora.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 
 namespace Listomora.Infrastructure.Configuration
 {
@@ -17,7 +19,7 @@ namespace Listomora.Infrastructure.Configuration
                 .HasMaxLength(150);
             builder
                 .Property(u => u.Password)
-                .HasColumnName("PasswordHash")
+                .HasColumnName("Password")
                 .HasMaxLength(255)
                 .IsRequired();
             builder.Property(a => a.Email)
@@ -25,19 +27,29 @@ namespace Listomora.Infrastructure.Configuration
                 .IsRequired();
             builder
                 .Property(u => u.Role)
-                .HasDefaultValue("User")
-                .HasMaxLength(20)
+                .HasDefaultValue(UserRole.USER)
                 .IsRequired();
             builder
                 .Property(u => u.DisableDate)
                 .HasColumnType("DateTime2");
+
+            string rolesString = "";
+            var roles = Enum.GetValues<UserRole>();
+            foreach (UserRole role in roles)
+            {
+                rolesString += (int)role + ",";
+            }
+            rolesString = rolesString[..^1];
 
             //constraints
             builder.HasKey(a => a.Id)
                 .HasName("PK_User");
             builder.HasIndex(a => a.Email)
                 .IsUnique();
-
+            builder.ToTable(t => t.HasCheckConstraint(
+                    "CK_User_Role",
+                    "[Role] IN (" + rolesString + ")"
+                ));
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Listomora.API.Dto;
+﻿using Listomora.Application.Contracts.Persistence.Dtos;
 using Listomora.Domain.Model;
 
 namespace Listomora.API.Handlers

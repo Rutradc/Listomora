@@ -1,5 +1,4 @@
-﻿using Listomora.API.Dto;
-using Listomora.API.Handlers;
+﻿using Listomora.API.Handlers;
 using Listomora.Domain.Model;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

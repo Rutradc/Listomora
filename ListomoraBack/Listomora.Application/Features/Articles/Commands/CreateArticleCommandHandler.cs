@@ -1,5 +1,4 @@
-﻿using Listomora.Domain.Model;
-using Listomora.Domain.Repositories;
+﻿using Listomora.Domain.Repositories;
 using MediatR;
 
 namespace Listomora.Application.Features.Articles.Commands
@@ -15,12 +14,7 @@ namespace Listomora.Application.Features.Articles.Commands
 
         public async Task<Unit> Handle(CreateArticleCommand request, CancellationToken cancellationToken)
         {
-            var article = new Article()
-            {
-                Name = request.Name,
-                IsPublic = request.IsPublic
-            };
-            await _repo.InsertAsync(article);
+            await _repo.InsertAsync(request.Dto, request.CreatorId);
             return Unit.Value;
         }
     }

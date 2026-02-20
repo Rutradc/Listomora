@@ -1,11 +1,12 @@
-﻿using Listomora.API.Dto;
-using Listomora.API.Handlers;
+﻿using Listomora.Application.Contracts.Persistence.CustomExceptions;
+using Listomora.Application.Contracts.Persistence.Dtos;
 using Listomora.Application.Features.Articles.Commands;
 using Listomora.Application.Features.Articles.Queries;
-using Listomora.Domain.Model;
+using Listomora.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Listomora.API.Controllers
 {
@@ -20,48 +21,145 @@ namespace Listomora.API.Controllers
             _mediator = mediator;
         }
 
-        //[Authorize(Policy = "Member")]
+        [HttpGet("list")]
+        [Authorize(Policy = "Admin")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAll() 
+        {
+            try
+            {
+                return Ok(await _mediator.Send(new GetArticlesQuery()));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpGet]
-        public async Task<IActionResult> GetAll() => Ok(await _mediator.Send(new GetArticlesQuery()));
-        //[Authorize(Policy = "Member")]
-        //[HttpGet("{id:guid}")]
-        //public async Task<IActionResult> Get(Guid id)
-        //{
-        //    Article article = await _service.GetAsync(id);
-        //    if (article is null)
-        //        return NotFound();
-        //    return Ok(article);
-        //}
-        //[Authorize(Policy = "Member")]
+        [Authorize(Policy = "Authenticated")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAllPublic()
+        {
+            try
+            {
+                return Ok(await _mediator.Send(new GetPublicArticlesQuery()));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("{id:guid}")]
+        [Authorize(Policy = "Authenticated")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            try
+            {
+                string? role = User.FindFirst(ClaimTypes.Role)?.Value;
+                ArticleDetailsDto article;
+                if (role == UserRole.ADMIN.ToString())
+                     article = await _mediator.Send(new GetArticleByIdQuery(id));
+                else
+                {
+                    string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                    article = await _mediator.Send(new GetArticleByIdQuery(id, new Guid(userId)));
+                }
+                if (article is null)
+                    return NotFound();
+                return Ok(article);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpPost]
+        [Authorize(Policy = "Authenticated")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Insert([FromBody] ArticleCreateUpdateDto dto)
         {
-            var created = await _mediator.Send(new CreateArticleCommand(dto.Name, dto.IsPublic));
-            return Created();
+            try
+            {
+                string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                var created = await _mediator.Send(new CreateArticleCommand(dto, new Guid(userId)));
+                return Created();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        //[Authorize(Policy = "Member")]
-        //[HttpPatch("{id:guid}")]
-        //public async Task<IActionResult> Update(Guid id, [FromBody] ArticleCreateUpdateDto dto)
-        //{
-        //    Article article = await _service.UpdateAsync(dto.ToEntity(), id);
-        //    if (article is null)
-        //        return NotFound();
-        //    return Ok(article);
-        //}
-        ////[Authorize(Policy = "Member")]
-        //[HttpDelete("{id:guid}")]
-        //public async Task<IActionResult> Delete(Guid id)
-        //{
-        //    try
-        //    {
-        //        if (await _service.DeleteAsync(id))
-        //            return Ok();
-        //        return NotFound();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex);
-        //    }
-        //}
+        [HttpPatch("{id:guid}")]
+        [Authorize(Policy = "Authenticated")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Update(Guid id, [FromBody] ArticleCreateUpdateDto dto)
+        {
+            try
+            {
+                string? role = User.FindFirst(ClaimTypes.Role)?.Value;
+                if (role == UserRole.ADMIN.ToString())
+                {
+                    await _mediator.Send(new UpdateArticleCommand(id, dto));
+                    return Ok();
+                }
+                string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                await _mediator.Send(new UpdateArticleCommand(id, dto, new Guid(userId)));
+                return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete("{id:guid}")]
+        [Authorize(Policy = "Authenticated")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                string? role = User.FindFirst(ClaimTypes.Role)?.Value;
+                if (role == UserRole.ADMIN.ToString())
+                {
+                    await _mediator.Send(new DeleteArticleCommand(id));
+                    return Ok();
+                }
+                string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                await _mediator.Send(new DeleteArticleCommand(id, new Guid(userId)));
+                return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

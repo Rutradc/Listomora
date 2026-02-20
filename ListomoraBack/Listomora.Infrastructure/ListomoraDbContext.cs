@@ -7,18 +7,18 @@ namespace Listomora.Infrastructure
 {
     public class ListomoraDbContext : DbContext
     {
+        public DbSet<User> Users { get; set; }
         public DbSet<Article> Articles { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
-        public DbSet<User> Users { get; set; }
         public ListomoraDbContext(DbContextOptions options) : base(options)
         {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new UserConfig());
             modelBuilder.ApplyConfiguration(new ArticleConfig());
             modelBuilder.ApplyConfiguration(new IngredientConfig());
-            modelBuilder.ApplyConfiguration(new UserConfig());
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
@@ -32,9 +32,9 @@ namespace Listomora.Infrastructure
                 }
             }
 
+            modelBuilder.ApplyConfiguration(new UserSeed());
             modelBuilder.ApplyConfiguration(new ArticleSeed());
             modelBuilder.ApplyConfiguration(new IngredientSeed());
-            modelBuilder.ApplyConfiguration(new UserSeed());
         }
     }
 }

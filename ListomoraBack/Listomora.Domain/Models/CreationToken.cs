@@ -1,6 +1,6 @@
 ﻿namespace Listomora.Domain.Model
 {
-    public class CreationToken
+    public class CreationToken : EntityBase
     {
 
         public required string TokenHash { get; set; }

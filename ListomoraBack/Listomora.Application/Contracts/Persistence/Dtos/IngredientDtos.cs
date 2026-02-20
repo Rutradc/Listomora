@@ -1,6 +1,6 @@
 ﻿using Listomora.Domain.Enums;
 
-namespace Listomora.API.Dto
+namespace Listomora.Application.Contracts.Persistence.Dtos
 {
     public record IngredientCreateUpdateDto
     (

@@ -1,17 +1,17 @@
-﻿using MediatR;
+﻿using Listomora.Application.Contracts.Persistence.Dtos;
+using MediatR;
 
 namespace Listomora.Application.Features.Articles.Commands
 {
     public class CreateArticleCommand : IRequest<Unit>
     {
-        public string Name { get; set; }
-        public bool IsPublic { get; set; }
-        //public Guid CreatorId { get; set; }
+        public ArticleCreateUpdateDto Dto { get; set; }
+        public Guid CreatorId { get; set; }
 
-        public CreateArticleCommand(string name, bool isPublic)
+        public CreateArticleCommand(ArticleCreateUpdateDto dto, Guid creatorId)
         {
-            Name = name;
-            IsPublic = isPublic;
+            Dto = dto;
+            CreatorId = creatorId;
         }
     }
 }

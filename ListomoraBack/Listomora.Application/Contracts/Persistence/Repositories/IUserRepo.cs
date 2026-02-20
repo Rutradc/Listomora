@@ -1,11 +1,12 @@
-﻿using Listomora.Domain.Model;
+﻿using Listomora.Application.Contracts.Persistence.Dtos;
+using Listomora.Domain.Model;
 
 namespace Listomora.Domain.Repositories
 {
     public interface IUserRepo
     {
-        Task<User> GetAsync(string email);
-        Task<bool> LoginAsync(string email, string password);
-        Task<bool> RegisterAsync(User user);
+        Task<User> GetByIdAsync(Guid id);
+        Task<User> GetByEmailAsync(string email);
+        Task<bool> RegisterAsync(UserCreateDto user);
     }
 }

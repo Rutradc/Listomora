@@ -27,7 +27,8 @@ namespace Listomora.Infrastructure.Configuration
             // article <> user
             builder.HasOne(a => a.User)
                 .WithMany(d => d.CreatedArticles)
-                .HasForeignKey("CreatorId");
+                .HasForeignKey("CreatorId")
+                .HasConstraintName("FK_Article_Creator");
         }
     }
 }
