@@ -32,5 +32,10 @@ namespace Listomora.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
             return true;
         }
+
+        public async Task<UserProfileDto> GetProfileByIdAsync(Guid id)
+        {
+            return (await _dbContext.Users.SingleOrDefaultAsync(u => u.Id == id)).ToProfileDto();
+        }
     }
 }

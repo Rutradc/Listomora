@@ -41,4 +41,17 @@ namespace Listomora.Application.Contracts.Persistence.Dtos
             Role = role;
         }
     }
+    public class UserProfileDto
+    {
+        public string FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string Email { get; set; }
+
+        public UserProfileDto(string firstName, string? lastName, string email)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+        }
+    }
 }

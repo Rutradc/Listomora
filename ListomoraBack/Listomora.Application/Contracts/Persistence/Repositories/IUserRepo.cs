@@ -8,5 +8,6 @@ namespace Listomora.Application.Contracts.Persistence.Repositories
         Task<User> GetByIdAsync(Guid id);
         Task<User> GetByEmailAsync(string email);
         Task<bool> RegisterAsync(UserCreateDto user);
+        Task<UserProfileDto> GetProfileByIdAsync(Guid id);
     }
 }

@@ -16,6 +16,10 @@ namespace Listomora.Infrastructure.Mappers
                 Password = dto.Password
             };
         }
+        public static UserProfileDto ToProfileDto(this User entity)
+        {
+            return new UserProfileDto(entity.FirstName, entity.LastName, entity.Email);
+        }
         #endregion
         #region Article
         public static Article ToEntity(this ArticleCreateUpdateDto dto, Guid? creatorId = null)
