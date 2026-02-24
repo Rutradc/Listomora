@@ -22,7 +22,7 @@ namespace Listomora.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Listomora.Domain.Model.Article", b =>
+            modelBuilder.Entity("Listomora.Domain.Models.Article", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -64,21 +64,21 @@ namespace Listomora.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("bdf2a31b-5e8f-4874-838d-3246a804ae13"),
-                            CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
-                            IsPublic = true,
+                            CreatorId = new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"),
+                            IsPublic = false,
                             Name = "Raquette de padel"
                         },
                         new
                         {
                             Id = new Guid("6a03f6d7-9160-4d0f-b94b-dbc41d497ec8"),
-                            CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
-                            IsPublic = true,
+                            CreatorId = new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"),
+                            IsPublic = false,
                             Name = "Papier toilette double épaisseur"
                         },
                         new
                         {
                             Id = new Guid("34a8bda4-f77f-42e5-ba61-2b511985c4db"),
-                            CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                            CreatorId = new Guid("0eb2993d-7fd5-4f29-9172-1b8f6aa80736"),
                             IsPublic = true,
                             Name = "Crayons"
                         },
@@ -86,13 +86,13 @@ namespace Listomora.Infrastructure.Migrations
                         {
                             Id = new Guid("bb861dfa-889d-49c3-ad76-407d662dd7c2"),
                             CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
-                            IsPublic = true,
+                            IsPublic = false,
                             Name = "Produit vaiselle"
                         },
                         new
                         {
                             Id = new Guid("06effa04-6bcf-401f-a091-00b24f6ba8f0"),
-                            CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                            CreatorId = new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"),
                             IsPublic = true,
                             Name = "Sacs poubelle 30 litres"
                         },
@@ -105,7 +105,7 @@ namespace Listomora.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Listomora.Domain.Model.User", b =>
+            modelBuilder.Entity("Listomora.Domain.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -163,14 +163,34 @@ namespace Listomora.Infrastructure.Migrations
                             Email = "john@cena.us",
                             FirstName = "John",
                             LastName = "Cena",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$fRlsYBDz40czH4DaWM80oA$0Lf1tyyNjRt7PVxcbc7oNJcBTmLkGRz5YiOPW4Ri0sc",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$6GXdGoruD5Mbs390Ww5kqw$4hHZ0JEnuZS8TznnDop+UpoJI1mPZE6o13SKMDkLaP8",
                             Role = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "cr7@goat.com",
+                            FirstName = "Cristiano",
+                            LastName = "Ronaldo",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$o1qPwuNhroI6TTdSXWUnGA$FpvVj7q+p6240Ckq4WH7GY6XIpo/1LeadQ07Gm4jqMc",
+                            Role = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("0eb2993d-7fd5-4f29-9172-1b8f6aa80736"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "lm10@goat.com",
+                            FirstName = "Lionel",
+                            LastName = "Messi",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$ZDeYfEWWpk1m7MQx6SOMng$ItM+S+c4GDbdGloYuieW6DAYDIO4y4HdDoWsnv6Wl6w",
+                            Role = 1
                         });
                 });
 
-            modelBuilder.Entity("Listomora.Domain.Model.Ingredient", b =>
+            modelBuilder.Entity("Listomora.Domain.Models.Ingredient", b =>
                 {
-                    b.HasBaseType("Listomora.Domain.Model.Article");
+                    b.HasBaseType("Listomora.Domain.Models.Article");
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -190,15 +210,15 @@ namespace Listomora.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("e5bebf1e-bd35-448c-a1a2-941e55687ff5"),
-                            CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
-                            IsPublic = true,
+                            CreatorId = new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"),
+                            IsPublic = false,
                             Name = "Viande de veau",
                             Category = "MEAT"
                         },
                         new
                         {
                             Id = new Guid("1ed84abe-4c15-458f-82b8-a5a9bc34b5b5"),
-                            CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                            CreatorId = new Guid("0eb2993d-7fd5-4f29-9172-1b8f6aa80736"),
                             IsPublic = true,
                             Name = "Filet de saumon",
                             Category = "FISH_AND_SEAFOODS"
@@ -215,14 +235,14 @@ namespace Listomora.Infrastructure.Migrations
                         {
                             Id = new Guid("97505262-64f9-4444-83cf-67c93d8161d5"),
                             CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
-                            IsPublic = true,
+                            IsPublic = false,
                             Name = "Blanc de poulet",
                             Category = "MEAT"
                         },
                         new
                         {
                             Id = new Guid("97796814-4f88-40a6-8d3d-98f46135be41"),
-                            CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                            CreatorId = new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"),
                             IsPublic = true,
                             Name = "Sel",
                             Category = "CONDIMENTS"
@@ -230,8 +250,8 @@ namespace Listomora.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("16c4a654-0f04-40eb-a23e-9d580c7062a8"),
-                            CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
-                            IsPublic = true,
+                            CreatorId = new Guid("0eb2993d-7fd5-4f29-9172-1b8f6aa80736"),
+                            IsPublic = false,
                             Name = "Poivre",
                             Category = "CONDIMENTS"
                         },
@@ -245,9 +265,9 @@ namespace Listomora.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Listomora.Domain.Model.Article", b =>
+            modelBuilder.Entity("Listomora.Domain.Models.Article", b =>
                 {
-                    b.HasOne("Listomora.Domain.Model.User", "User")
+                    b.HasOne("Listomora.Domain.Models.User", "User")
                         .WithMany("CreatedArticles")
                         .HasForeignKey("CreatorId")
                         .HasConstraintName("FK_Article_Creator");
@@ -255,7 +275,7 @@ namespace Listomora.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Listomora.Domain.Model.User", b =>
+            modelBuilder.Entity("Listomora.Domain.Models.User", b =>
                 {
                     b.Navigation("CreatedArticles");
                 });

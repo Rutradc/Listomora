@@ -1,5 +1,5 @@
 ﻿using Listomora.Domain.Enums;
-using Listomora.Domain.Model;
+using Listomora.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Reflection.Emit;

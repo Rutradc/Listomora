@@ -1,6 +1,5 @@
 ﻿using Isopoh.Cryptography.Argon2;
-using Listomora.Domain.Model;
-using Listomora.Domain.Repositories;
+using Listomora.Application.Contracts.Persistence.Repositories;
 using MediatR;
 
 namespace Listomora.Application.Features.Users.Commands

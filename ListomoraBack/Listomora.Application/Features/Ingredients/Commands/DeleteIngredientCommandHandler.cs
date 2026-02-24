@@ -2,18 +2,18 @@
 using Listomora.Application.Contracts.Persistence.Repositories;
 using MediatR;
 
-namespace Listomora.Application.Features.Articles.Commands
+namespace Listomora.Application.Features.Ingredients.Commands
 {
-    public class DeleteArticleCommandHandler : IRequestHandler<DeleteArticleCommand, Unit>
+    public class DeleteIngredientCommandHandler : IRequestHandler<DeleteIngredientCommand, Unit>
     {
-        private readonly IArticleRepo _repo;
+        private readonly IIngredientRepo _repo;
 
-        public DeleteArticleCommandHandler(IArticleRepo repo)
+        public DeleteIngredientCommandHandler(IIngredientRepo repo)
         {
             _repo = repo;
         }
 
-        public async Task<Unit> Handle(DeleteArticleCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteIngredientCommand request, CancellationToken cancellationToken)
         {
             bool isDeleted;
             if (request.IsAdmin)
@@ -22,7 +22,7 @@ namespace Listomora.Application.Features.Articles.Commands
                 isDeleted = await _repo.DeleteAsync(request.Id, request.UserId);
             if (isDeleted)
                 return Unit.Value;
-            throw new NotFoundException("Article was not found.");
+            throw new NotFoundException("Ingredient was not found.");
         }
     }
 }

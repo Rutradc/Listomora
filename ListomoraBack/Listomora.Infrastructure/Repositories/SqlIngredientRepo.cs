@@ -1,5 +1,7 @@
-﻿using Listomora.Domain.Model;
-using Listomora.Domain.Repositories;
+﻿using Listomora.Application.Contracts.Persistence.Dtos;
+using Listomora.Application.Contracts.Persistence.Repositories;
+using Listomora.Domain.Models;
+using Listomora.Infrastructure.Mappers;
 using Microsoft.EntityFrameworkCore;
 
 namespace Listomora.Infrastructure.Repositories
@@ -13,9 +15,13 @@ namespace Listomora.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id, Guid? userId = null)
         {
-            Ingredient ingredient = await _dbContext.Ingredients.SingleOrDefaultAsync(a => a.Id == id);
+            Ingredient ingredient;
+            if (userId is null)
+                ingredient = await _dbContext.Ingredients.SingleOrDefaultAsync(a => a.Id == id);
+            else
+                ingredient = await _dbContext.Ingredients.SingleOrDefaultAsync(a => a.Id == id && a.CreatorId == userId);
             if (ingredient is null)
                 return false;
             _dbContext.Ingredients.Remove(ingredient);
@@ -23,33 +29,54 @@ namespace Listomora.Infrastructure.Repositories
             return true;
         }
 
-        public async Task<IEnumerable<Ingredient>> GetAllAsync()
+        public async Task<IEnumerable<IngredientDetailsDto>> GetAllAsync()
         {
-            return await _dbContext.Ingredients.ToListAsync();
+            return await _dbContext.Ingredients.Include(i => i.User).Select(i => i.ToDetailsDto()).ToListAsync();
         }
 
-        public async Task<Ingredient> GetAsync(Guid id)
+        public async Task<IEnumerable<IngredientListDto>> GetAllPublicAsync()
         {
-            return await _dbContext.Ingredients.SingleOrDefaultAsync(a => a.Id == id);
+            return await _dbContext.Ingredients.Include(i => i.User).Where(i => i.IsPublic).Select(i => i.ToListDto()).ToListAsync();
         }
 
-        public async Task<Ingredient> InsertAsync(Ingredient ingredient)
+        public async Task<IngredientDetailsDto> GetByIdAsync(Guid id, Guid? userId = null)
         {
-            _dbContext.Ingredients.Add(ingredient);
+            if (userId is null)
+                return (await _dbContext.Ingredients.Include(i => i.User).SingleOrDefaultAsync(i => i.Id == id)).ToDetailsDto();
+            return (await _dbContext.Ingredients.Where(i => i.IsPublic || i.CreatorId == userId).Include(i => i.User).SingleOrDefaultAsync(i => i.Id == id)).ToDetailsDto();
+        }
+
+        public async Task<bool> InsertAsync(IngredientCreateUpdateDto ingredient, Guid creatorId)
+        {
+            _dbContext.Ingredients.Add(ingredient.ToEntity(creatorId));
             await _dbContext.SaveChangesAsync();
-            return ingredient;
+            return true;
         }
 
-        public async Task<Ingredient> UpdateAsync(Ingredient ingredient, Guid id)
+        public async Task<bool> UpdateAsync(Guid id, IngredientCreateUpdateDto ingredient, Guid? userId = null)
         {
-            Ingredient ingredientToUpdate = await _dbContext.Ingredients.FirstOrDefaultAsync(a => a.Id == id);
+            Ingredient ingredientToUpdate;
+            if (userId is null)
+                ingredientToUpdate = await _dbContext.Ingredients.SingleOrDefaultAsync(a => a.Id == id);
+            else
+                ingredientToUpdate = await _dbContext.Ingredients.SingleOrDefaultAsync(a => a.Id == id && a.CreatorId == (Guid)userId);
             if (ingredientToUpdate is null)
-                return null;
+                return false;
             ingredientToUpdate.Name = ingredient.Name;
             ingredientToUpdate.IsPublic = ingredient.IsPublic;
             ingredientToUpdate.Category = ingredient.Category;
             await _dbContext.SaveChangesAsync();
-            return ingredientToUpdate;
+            return true;
+        }
+
+        public async Task<IEnumerable<IngredientListDto>> GetPublicAndMineAsync(Guid userId)
+        {
+            return await _dbContext.Ingredients.Include(a => a.User).Where(a => a.IsPublic || a.CreatorId == userId).Select(a => a.ToListDto()).ToListAsync();
+        }
+
+        public async Task<IEnumerable<IngredientDetailsDto>> GetMineAsync(Guid userId)
+        {
+            return await _dbContext.Ingredients.Include(a => a.User).Where(a => a.CreatorId == userId).Select(a => a.ToDetailsDto()).ToListAsync();
         }
     }
 }

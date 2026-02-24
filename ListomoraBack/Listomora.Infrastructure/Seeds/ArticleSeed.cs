@@ -1,4 +1,4 @@
-﻿using Listomora.Domain.Model;
+﻿using Listomora.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,28 +13,28 @@ namespace Listomora.Infrastructure.Seeds
                 {
                     Id = new Guid("bdf2a31b-5e8f-4874-838d-3246a804ae13"),
                     Name = "Raquette de padel",
-                    IsPublic = true,
-                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                    IsPublic = false,
+                    CreatorId = new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"),
                 },
                 new
                 {
                     Id = new Guid("6a03f6d7-9160-4d0f-b94b-dbc41d497ec8"),
                     Name = "Papier toilette double épaisseur",
-                    IsPublic = true,
-                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                    IsPublic = false,
+                    CreatorId = new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"),
                 },
                 new
                 {
                     Id = new Guid("34a8bda4-f77f-42e5-ba61-2b511985c4db"),
                     Name = "Crayons",
                     IsPublic = true,
-                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                    CreatorId = new Guid("0eb2993d-7fd5-4f29-9172-1b8f6aa80736"),
                 },
                 new
                 {
                     Id = new Guid("bb861dfa-889d-49c3-ad76-407d662dd7c2"),
                     Name = "Produit vaiselle",
-                    IsPublic = true,
+                    IsPublic = false,
                     CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
                 },
                 new
@@ -42,7 +42,7 @@ namespace Listomora.Infrastructure.Seeds
                     Id = new Guid("06effa04-6bcf-401f-a091-00b24f6ba8f0"),
                     Name = "Sacs poubelle 30 litres",
                     IsPublic = true,
-                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                    CreatorId = new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"),
                 },
                 new
                 {

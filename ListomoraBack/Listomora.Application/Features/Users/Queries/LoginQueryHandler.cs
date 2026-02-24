@@ -2,7 +2,7 @@
 using Listomora.Application.Contracts.Persistence.CustomExceptions;
 using Listomora.Application.Contracts.Persistence.Dtos;
 using Listomora.Domain.Enums;
-using Listomora.Domain.Repositories;
+using Listomora.Application.Contracts.Persistence.Repositories;
 using MediatR;
 
 namespace Listomora.Application.Features.Users.Queries

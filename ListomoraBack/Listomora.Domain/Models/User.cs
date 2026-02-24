@@ -1,7 +1,7 @@
 ﻿using Listomora.Domain.Enums;
 using System.Text.Json.Serialization;
 
-namespace Listomora.Domain.Model
+namespace Listomora.Domain.Models
 {
     public class User : EntityBase
     {

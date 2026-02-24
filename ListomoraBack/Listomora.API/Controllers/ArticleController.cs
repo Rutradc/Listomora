@@ -26,12 +26,13 @@ namespace Listomora.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAll() 
         {
             try
             {
-                return Ok(await _mediator.Send(new GetArticlesQuery()));
+                return Ok(await _mediator.Send(new GetAllArticlesQuery()));
             }
             catch (Exception ex)
             {
@@ -48,7 +49,7 @@ namespace Listomora.API.Controllers
         {
             try
             {
-                return Ok(await _mediator.Send(new GetPublicArticlesQuery()));
+                return Ok(await _mediator.Send(new GetAllPublicArticlesQuery()));
             }
             catch (Exception ex)
             {
@@ -155,6 +156,42 @@ namespace Listomora.API.Controllers
             catch (NotFoundException ex)
             {
                 return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("publicandmine")]
+        [Authorize(Policy = "Authenticated")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetPublicAndMine()
+        {
+            try
+            {
+                string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                return Ok(await _mediator.Send(new GetPublicAndMyArticlesQuery(new Guid(userId))));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("mine")]
+        [Authorize(Policy = "Authenticated")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetMine()
+        {
+            try
+            {
+                string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                return Ok(await _mediator.Send(new GetMyArticlesQuery(new Guid(userId))));
             }
             catch (Exception ex)
             {

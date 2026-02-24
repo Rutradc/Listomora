@@ -1,6 +1,6 @@
 ﻿using Listomora.Application.Contracts.Persistence.Dtos;
-using Listomora.Domain.Model;
-using Listomora.Domain.Repositories;
+using Listomora.Application.Contracts.Persistence.Repositories;
+using Listomora.Domain.Models;
 using Listomora.Infrastructure.Mappers;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,8 +32,8 @@ namespace Listomora.Infrastructure.Repositories
         public async Task<ArticleDetailsDto> GetByIdAsync(Guid id, Guid? userId = null)
         {
             if (userId is null)
-                return await _dbContext.Articles.Include(a => a.User).Select(a => a.ToDetailsDto()).SingleOrDefaultAsync(a => a.Id == id);
-            return await _dbContext.Articles.Where(a => a.IsPublic || a.CreatorId == userId).Include(a => a.User).Select(a => a.ToDetailsDto()).SingleOrDefaultAsync(a => a.Id == id);
+                return (await _dbContext.Articles.Include(a => a.User).SingleOrDefaultAsync(a => a.Id == id)).ToDetailsDto();
+            return (await _dbContext.Articles.Where(a => a.IsPublic || a.CreatorId == userId).Include(a => a.User).SingleOrDefaultAsync(a => a.Id == id)).ToDetailsDto();
         }
 
         public async Task<IEnumerable<ArticleDetailsDto>> GetAllAsync()
@@ -66,6 +66,16 @@ namespace Listomora.Infrastructure.Repositories
             articleToUpdate.IsPublic = article.IsPublic;
             await _dbContext.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<IEnumerable<ArticleListDto>> GetPublicAndMineAsync(Guid userId)
+        {
+            return await _dbContext.Articles.Include(a => a.User).Where(a => a.IsPublic || a.CreatorId == userId).Select(a => a.ToListDto()).ToListAsync();
+        }
+
+        public async Task<IEnumerable<ArticleDetailsDto>> GetMineAsync(Guid userId)
+        {
+            return await _dbContext.Articles.Include(a => a.User).Where(a => a.CreatorId == userId).Select(a => a.ToDetailsDto()).ToListAsync();
         }
     }
 }

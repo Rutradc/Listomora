@@ -1,5 +1,5 @@
 ﻿using Listomora.Domain.Enums;
-using Listomora.Domain.Model;
+using Listomora.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Listomora.Infrastructure.Seeds
@@ -21,9 +21,9 @@ namespace Listomora.Infrastructure.Seeds
                 {
                     Id = new Guid("e5bebf1e-bd35-448c-a1a2-941e55687ff5"),
                     Name = "Viande de veau",
-                    IsPublic = true,
+                    IsPublic = false,
                     Category = IngredientCategory.MEAT,
-                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                    CreatorId = new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"),
                 },
                 new
                 {
@@ -31,7 +31,7 @@ namespace Listomora.Infrastructure.Seeds
                     Name = "Filet de saumon",
                     IsPublic = true,
                     Category = IngredientCategory.FISH_AND_SEAFOODS,
-                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                    CreatorId = new Guid("0eb2993d-7fd5-4f29-9172-1b8f6aa80736"),
                 },
                 new
                 {
@@ -45,7 +45,7 @@ namespace Listomora.Infrastructure.Seeds
                 {
                     Id = new Guid("97505262-64f9-4444-83cf-67c93d8161d5"),
                     Name = "Blanc de poulet",
-                    IsPublic = true,
+                    IsPublic = false,
                     Category = IngredientCategory.MEAT,
                     CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
                 },
@@ -55,15 +55,15 @@ namespace Listomora.Infrastructure.Seeds
                     Name = "Sel",
                     IsPublic = true,
                     Category = IngredientCategory.CONDIMENTS,
-                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                    CreatorId = new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"),
                 },
                 new
                 {
                     Id = new Guid("16c4a654-0f04-40eb-a23e-9d580c7062a8"),
                     Name = "Poivre",
-                    IsPublic = true,
+                    IsPublic = false,
                     Category = IngredientCategory.CONDIMENTS,
-                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                    CreatorId = new Guid("0eb2993d-7fd5-4f29-9172-1b8f6aa80736"),
                 },
                 new
                 {

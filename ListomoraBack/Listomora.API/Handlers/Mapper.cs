@@ -1,5 +1,5 @@
 ﻿using Listomora.Application.Contracts.Persistence.Dtos;
-using Listomora.Domain.Model;
+using Listomora.Domain.Models;
 
 namespace Listomora.API.Handlers
 {

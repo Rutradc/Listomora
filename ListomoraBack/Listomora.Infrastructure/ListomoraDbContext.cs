@@ -1,6 +1,6 @@
 ﻿using Listomora.Infrastructure.Configuration;
 using Listomora.Infrastructure.Seeds;
-using Listomora.Domain.Model;
+using Listomora.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Listomora.Infrastructure

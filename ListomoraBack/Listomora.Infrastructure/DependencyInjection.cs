@@ -1,4 +1,4 @@
-﻿using Listomora.Domain.Repositories;
+﻿using Listomora.Application.Contracts.Persistence.Repositories;
 using Listomora.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,9 +14,9 @@ namespace Listomora.Infrastructure
             services.AddDbContext<ListomoraDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("Listomora.EntityFramework")));
 
+            services.AddScoped<IUserRepo, SqlUserRepo>();
             services.AddScoped<IArticleRepo, SqlArticleRepo>();
             services.AddScoped<IIngredientRepo, SqlIngredientRepo>();
-            services.AddScoped<IUserRepo, SqlUserRepo>();
             return services;
         }
     }

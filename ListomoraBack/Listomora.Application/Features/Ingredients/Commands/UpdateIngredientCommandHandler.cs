@@ -2,18 +2,18 @@
 using Listomora.Application.Contracts.Persistence.Repositories;
 using MediatR;
 
-namespace Listomora.Application.Features.Articles.Commands
+namespace Listomora.Application.Features.Ingredients.Commands
 {
-    public class UpdateArticleCommandHandler : IRequestHandler<UpdateArticleCommand, Unit>
+    public class UpdateIngredientCommandHandler : IRequestHandler<UpdateIngredientCommand, Unit>
     {
-        private readonly IArticleRepo _repo;
+        private readonly IIngredientRepo _repo;
 
-        public UpdateArticleCommandHandler(IArticleRepo repo)
+        public UpdateIngredientCommandHandler(IIngredientRepo repo)
         {
             _repo = repo;
         }
 
-        public async Task<Unit> Handle(UpdateArticleCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateIngredientCommand request, CancellationToken cancellationToken)
         {
             if (request.IsAdmin)
             {
@@ -22,7 +22,7 @@ namespace Listomora.Application.Features.Articles.Commands
             }
             if (await _repo.UpdateAsync(request.Id, request.Dto, request.UserId))
                 return Unit.Value;
-            throw new NotFoundException("Article to update was not found.");
+            throw new NotFoundException("Ingredient to update was not found.");
         }
     }
 }

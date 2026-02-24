@@ -1,6 +1,6 @@
 ﻿using Listomora.Domain.Enums;
 
-namespace Listomora.Domain.Model
+namespace Listomora.Domain.Models
 {
     public class Ingredient : Article
     {

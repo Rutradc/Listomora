@@ -1,10 +1,11 @@
 ﻿using Listomora.Application.Contracts.Persistence.Dtos;
-using Listomora.Domain.Model;
+using Listomora.Domain.Models;
 
 namespace Listomora.Infrastructure.Mappers
 {
     internal static class Mappers
     {
+        #region User
         public static User ToEntity(this UserCreateDto dto)
         {
             return new User()
@@ -15,6 +16,8 @@ namespace Listomora.Infrastructure.Mappers
                 Password = dto.Password
             };
         }
+        #endregion
+        #region Article
         public static Article ToEntity(this ArticleCreateUpdateDto dto, Guid? creatorId = null)
         {
             if (creatorId != null)
@@ -51,5 +54,48 @@ namespace Listomora.Infrastructure.Mappers
                 CreatorName = entity.User.FirstName + (entity.User.LastName is null ? "" : " " + entity.User.LastName)
             };
         }
+        #endregion
+        #region Ingredient
+        public static Ingredient ToEntity(this IngredientCreateUpdateDto dto, Guid? creatorId = null)
+        {
+            if (creatorId != null)
+            {
+                return new Ingredient()
+                {
+                    Name = dto.Name,
+                    IsPublic = dto.IsPublic,
+                    Category = dto.Category,
+                    CreatorId = creatorId
+                };
+            }
+            return new Ingredient()
+            {
+                Name = dto.Name,
+                IsPublic = dto.IsPublic,
+                Category = dto.Category
+            };
+        }
+        public static IngredientDetailsDto ToDetailsDto(this Ingredient entity)
+        {
+            return new IngredientDetailsDto()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                IsPublic = entity.IsPublic,
+                Category = entity.Category,
+                CreatorName = entity.User.FirstName + (entity.User.LastName is null ? "" : " " + entity.User.LastName)
+            };
+        }
+        public static IngredientListDto ToListDto(this Ingredient entity)
+        {
+            return new IngredientListDto()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Category = entity.Category,
+                CreatorName = entity.User.FirstName + (entity.User.LastName is null ? "" : " " + entity.User.LastName)
+            };
+        }
+        #endregion
     }
 }

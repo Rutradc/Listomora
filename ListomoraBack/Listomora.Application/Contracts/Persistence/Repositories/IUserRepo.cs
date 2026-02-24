@@ -1,7 +1,7 @@
 ﻿using Listomora.Application.Contracts.Persistence.Dtos;
-using Listomora.Domain.Model;
+using Listomora.Domain.Models;
 
-namespace Listomora.Domain.Repositories
+namespace Listomora.Application.Contracts.Persistence.Repositories
 {
     public interface IUserRepo
     {

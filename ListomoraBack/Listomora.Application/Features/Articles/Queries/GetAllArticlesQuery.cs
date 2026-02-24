@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Listomora.Application.Features.Articles.Queries
 {
-    public class GetPublicArticlesQuery : IRequest<IEnumerable<ArticleListDto>>
+    public class GetAllArticlesQuery : IRequest<IEnumerable<ArticleDetailsDto>>
     {
     }
 }

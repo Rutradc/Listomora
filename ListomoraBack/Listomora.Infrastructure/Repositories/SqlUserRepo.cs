@@ -1,7 +1,6 @@
 ﻿using Listomora.Application.Contracts.Persistence.Dtos;
-using Listomora.Domain.Enums;
-using Listomora.Domain.Model;
-using Listomora.Domain.Repositories;
+using Listomora.Application.Contracts.Persistence.Repositories;
+using Listomora.Domain.Models;
 using Listomora.Infrastructure.Mappers;
 using Microsoft.EntityFrameworkCore;
 
