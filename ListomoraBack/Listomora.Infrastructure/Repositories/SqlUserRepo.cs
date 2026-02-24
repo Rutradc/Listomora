@@ -37,5 +37,10 @@ namespace Listomora.Infrastructure.Repositories
         {
             return (await _dbContext.Users.SingleOrDefaultAsync(u => u.Id == id)).ToProfileDto();
         }
+
+        public async Task<UserNavDto> GetNavByIdAsync(Guid id)
+        {
+            return (await _dbContext.Users.SingleOrDefaultAsync(u => u.Id == id)).ToNavDto();
+        }
     }
 }

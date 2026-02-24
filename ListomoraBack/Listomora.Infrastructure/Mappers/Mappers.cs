@@ -20,6 +20,11 @@ namespace Listomora.Infrastructure.Mappers
         {
             return new UserProfileDto(entity.FirstName, entity.LastName, entity.Email);
         }
+
+        public static UserNavDto ToNavDto(this User entity)
+        {
+            return new UserNavDto(entity.FirstName, entity.LastName, entity.Role);
+        }
         #endregion
         #region Article
         public static Article ToEntity(this ArticleCreateUpdateDto dto, Guid? creatorId = null)
