@@ -18,13 +18,19 @@
     {
         public string FirstName { get; set; }
         public string? LastName { get; set; }
-        public string? Role { get; set; }
+        public UserRole? Role { get; set; }
 
-        public UserNav(string firstName, string? lastName, string? role = null)
+        public UserNav(string firstName, string? lastName, UserRole? role = null)
         {
             FirstName = firstName;
             LastName = lastName;
             Role = role;
         }
+    }
+
+    public enum UserRole
+    {
+        ADMIN,  // 0
+        USER    // 1
     }
 }

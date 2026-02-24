@@ -12,14 +12,14 @@ namespace ListomoraFront.Services.Implementations
         public UserAPIClient(HttpClient http, IConfiguration config)
         {
             _http = http;
-            _http.BaseAddress = new Uri(config.GetValue("BaseUrl", "https://localhost:7193"));
+            _http.BaseAddress = new Uri(config.GetValue("BaseUrl", "https://localhost:7087"));
         }
 
         public async Task<UserNav> GetNavAsync()
         {
             try
             {
-                HttpResponseMessage response = await _http.GetAsync(_defaultRoute + "header");
+                HttpResponseMessage response = await _http.GetAsync(_defaultRoute + "nav");
                 response.EnsureSuccessStatusCode();
                 return await response.Content.ReadFromJsonAsync<UserNav>();
             }
@@ -33,7 +33,7 @@ namespace ListomoraFront.Services.Implementations
         {
             try
             {
-                HttpResponseMessage response = await _http.GetAsync(_defaultRoute);
+                HttpResponseMessage response = await _http.GetAsync(_defaultRoute + "profile");
                 response.EnsureSuccessStatusCode();
                 return await response.Content.ReadFromJsonAsync<UserProfile>();
             }

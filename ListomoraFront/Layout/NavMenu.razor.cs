@@ -28,7 +28,7 @@ namespace ListomoraFront.Layout
 
         private async Task Logout()
         {
-            await _authService.LogoutAsync();
+            _authService.LogoutAsync();
         }
 
         private async void HandleAuthStateChanged()
@@ -39,6 +39,7 @@ namespace ListomoraFront.Layout
         private async Task RefreshUserStatus()
         {
             User = await _userService.GetNavAsync();
+            await InvokeAsync(StateHasChanged);
         }
 
         public void Dispose()
