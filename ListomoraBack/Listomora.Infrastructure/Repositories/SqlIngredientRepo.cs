@@ -31,19 +31,19 @@ namespace Listomora.Infrastructure.Repositories
 
         public async Task<IEnumerable<IngredientDetailsDto>> GetAllAsync()
         {
-            return await _dbContext.Ingredients.Include(i => i.User).Select(i => i.ToDetailsDto()).ToListAsync();
+            return await _dbContext.Ingredients.Include(i => i.Creator).Select(i => i.ToDetailsDto()).ToListAsync();
         }
 
         public async Task<IEnumerable<IngredientListDto>> GetAllPublicAsync()
         {
-            return await _dbContext.Ingredients.Include(i => i.User).Where(i => i.IsPublic).Select(i => i.ToListDto()).ToListAsync();
+            return await _dbContext.Ingredients.Include(i => i.Creator).Where(i => i.IsPublic).Select(i => i.ToListDto()).ToListAsync();
         }
 
         public async Task<IngredientDetailsDto> GetByIdAsync(Guid id, Guid? userId = null)
         {
             if (userId is null)
-                return (await _dbContext.Ingredients.Include(i => i.User).SingleOrDefaultAsync(i => i.Id == id)).ToDetailsDto();
-            return (await _dbContext.Ingredients.Where(i => i.IsPublic || i.CreatorId == userId).Include(i => i.User).SingleOrDefaultAsync(i => i.Id == id)).ToDetailsDto();
+                return (await _dbContext.Ingredients.Include(i => i.Creator).SingleOrDefaultAsync(i => i.Id == id)).ToDetailsDto();
+            return (await _dbContext.Ingredients.Where(i => i.IsPublic || i.CreatorId == userId).Include(i => i.Creator).SingleOrDefaultAsync(i => i.Id == id)).ToDetailsDto();
         }
 
         public async Task<bool> InsertAsync(IngredientCreateUpdateDto ingredient, Guid creatorId)
@@ -71,12 +71,12 @@ namespace Listomora.Infrastructure.Repositories
 
         public async Task<IEnumerable<IngredientListDto>> GetPublicAndMineAsync(Guid userId)
         {
-            return await _dbContext.Ingredients.Include(a => a.User).Where(a => a.IsPublic || a.CreatorId == userId).Select(a => a.ToListDto()).ToListAsync();
+            return await _dbContext.Ingredients.Include(a => a.Creator).Where(a => a.IsPublic || a.CreatorId == userId).Select(a => a.ToListDto()).ToListAsync();
         }
 
         public async Task<IEnumerable<IngredientDetailsDto>> GetMineAsync(Guid userId)
         {
-            return await _dbContext.Ingredients.Include(a => a.User).Where(a => a.CreatorId == userId).Select(a => a.ToDetailsDto()).ToListAsync();
+            return await _dbContext.Ingredients.Include(a => a.Creator).Where(a => a.CreatorId == userId).Select(a => a.ToDetailsDto()).ToListAsync();
         }
     }
 }

@@ -32,18 +32,18 @@ namespace Listomora.Infrastructure.Repositories
         public async Task<ArticleDetailsDto> GetByIdAsync(Guid id, Guid? userId = null)
         {
             if (userId is null)
-                return (await _dbContext.Articles.Include(a => a.User).SingleOrDefaultAsync(a => a.Id == id)).ToDetailsDto();
-            return (await _dbContext.Articles.Where(a => a.IsPublic || a.CreatorId == userId).Include(a => a.User).SingleOrDefaultAsync(a => a.Id == id)).ToDetailsDto();
+                return (await _dbContext.Articles.Include(a => a.Creator).SingleOrDefaultAsync(a => a.Id == id)).ToDetailsDto();
+            return (await _dbContext.Articles.Where(a => a.IsPublic || a.CreatorId == userId).Include(a => a.Creator).SingleOrDefaultAsync(a => a.Id == id)).ToDetailsDto();
         }
 
         public async Task<IEnumerable<ArticleDetailsDto>> GetAllAsync()
         {
-            return await _dbContext.Articles.Include(a => a.User).Select(a => a.ToDetailsDto()).ToListAsync();
+            return await _dbContext.Articles.Include(a => a.Creator).Select(a => a.ToDetailsDto()).ToListAsync();
         }
 
         public async Task<IEnumerable<ArticleListDto>> GetAllPublicAsync()
         {
-            return await _dbContext.Articles.Include(a => a.User).Where(a => a.IsPublic).Select(a => a.ToListDto()).ToListAsync();
+            return await _dbContext.Articles.Include(a => a.Creator).Where(a => a.IsPublic).Select(a => a.ToListDto()).ToListAsync();
         }
 
         public async Task<bool> InsertAsync(ArticleCreateUpdateDto article, Guid creatorId)
@@ -70,12 +70,12 @@ namespace Listomora.Infrastructure.Repositories
 
         public async Task<IEnumerable<ArticleListDto>> GetPublicAndMineAsync(Guid userId)
         {
-            return await _dbContext.Articles.Include(a => a.User).Where(a => a.IsPublic || a.CreatorId == userId).Select(a => a.ToListDto()).ToListAsync();
+            return await _dbContext.Articles.Include(a => a.Creator).Where(a => a.IsPublic || a.CreatorId == userId).Select(a => a.ToListDto()).ToListAsync();
         }
 
         public async Task<IEnumerable<ArticleDetailsDto>> GetMineAsync(Guid userId)
         {
-            return await _dbContext.Articles.Include(a => a.User).Where(a => a.CreatorId == userId).Select(a => a.ToDetailsDto()).ToListAsync();
+            return await _dbContext.Articles.Include(a => a.Creator).Where(a => a.CreatorId == userId).Select(a => a.ToDetailsDto()).ToListAsync();
         }
     }
 }

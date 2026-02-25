@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Listomora.Infrastructure.Migrations
 {
     [DbContext(typeof(ListomoraDbContext))]
-    [Migration("20260224082806_init")]
+    [Migration("20260225125839_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -166,7 +166,7 @@ namespace Listomora.Infrastructure.Migrations
                             Email = "john@cena.us",
                             FirstName = "John",
                             LastName = "Cena",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$6GXdGoruD5Mbs390Ww5kqw$4hHZ0JEnuZS8TznnDop+UpoJI1mPZE6o13SKMDkLaP8",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$ev4diG4da7RDMn1FvRnwNg$l0gZikrMkHCCnl3wfm5pw/udnWV3+qv1jJ3lbJ9OK5c",
                             Role = 0
                         },
                         new
@@ -176,7 +176,7 @@ namespace Listomora.Infrastructure.Migrations
                             Email = "cr7@goat.com",
                             FirstName = "Cristiano",
                             LastName = "Ronaldo",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$o1qPwuNhroI6TTdSXWUnGA$FpvVj7q+p6240Ckq4WH7GY6XIpo/1LeadQ07Gm4jqMc",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$szQt55zx0faZ4uPwde+z6w$zRT3vvQW42okClFQ4AcqvtNRgq8J5lO04VS6wuNTDWY",
                             Role = 1
                         },
                         new
@@ -186,7 +186,7 @@ namespace Listomora.Infrastructure.Migrations
                             Email = "lm10@goat.com",
                             FirstName = "Lionel",
                             LastName = "Messi",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$ZDeYfEWWpk1m7MQx6SOMng$ItM+S+c4GDbdGloYuieW6DAYDIO4y4HdDoWsnv6Wl6w",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$bG4MFO5fRMx7DG/Mxx8g8A$6zCu9QvFF927JPtL+BWIZwnE51vD9nOYDSWkwdAxZWw",
                             Role = 1
                         });
                 });
@@ -270,12 +270,12 @@ namespace Listomora.Infrastructure.Migrations
 
             modelBuilder.Entity("Listomora.Domain.Models.Article", b =>
                 {
-                    b.HasOne("Listomora.Domain.Models.User", "User")
+                    b.HasOne("Listomora.Domain.Models.User", "Creator")
                         .WithMany("CreatedArticles")
                         .HasForeignKey("CreatorId")
                         .HasConstraintName("FK_Article_Creator");
 
-                    b.Navigation("User");
+                    b.Navigation("Creator");
                 });
 
             modelBuilder.Entity("Listomora.Domain.Models.User", b =>

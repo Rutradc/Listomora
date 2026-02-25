@@ -2,7 +2,6 @@
 using Listomora.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Reflection.Emit;
 
 namespace Listomora.Infrastructure.Configuration
 {
