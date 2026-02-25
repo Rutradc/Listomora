@@ -14,18 +14,18 @@ namespace ListomoraFront.Services.Implementations
             _http = http;
         }
 
-        public async Task<List<ArticleDto>> GetAllAsync()
+        public async Task<List<ArticleListDto>> GetAllAsync()
         {
             HttpResponseMessage response = await _http.GetAsync(_defaultRoute);
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<List<ArticleDto>>();
+            return await response.Content.ReadFromJsonAsync<List<ArticleListDto>>();
         }
 
-        public async Task<ArticleDto> GetByIdAsync(Guid id)
+        public async Task<ArticleDetailsDto> GetByIdAsync(Guid id)
         {
             HttpResponseMessage response = await _http.GetAsync(_defaultRoute + id);
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<ArticleDto>();
+            return await response.Content.ReadFromJsonAsync<ArticleDetailsDto>();
         }
     }
 }

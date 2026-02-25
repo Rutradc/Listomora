@@ -1,3 +1,48 @@
+/*nouveau css custom*/
+nav{
+    display: flex;
+    flex-direction: column;
+    color: var(--accent);
+}
+nav div{
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.topNavDiv{
+    padding-left: 1rem;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--primary-dark);
+    color: var(--accent);
+}
+
+.topNavContainer{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-link {
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    background-color: #444;
+}
+
+.nav-text-item {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+    padding-top: 1rem;
+}
+
+/*Css de base*/
+
 .navbar-toggler {
     background-color: rgba(255, 255, 255, 0.1);
 }
@@ -36,33 +81,32 @@
 .nav-item {
     font-size: 0.9rem;
     padding-bottom: 0.5rem;
+    color: var(--accent);
 }
 
-    .nav-item:first-of-type {
+    /* .nav-item:first-of-type {
         padding-top: 1rem;
-    }
+    } */
 
     .nav-item:last-of-type {
         padding-bottom: 1rem;
     }
 
     .nav-item ::deep a {
-        color: #d7d7d7;
         border-radius: 4px;
         height: 3rem;
         display: flex;
         align-items: center;
         line-height: 3rem;
+        color: var(--accent);
     }
 
 .nav-item ::deep a.active {
     background-color: rgba(255,255,255,0.37);
-    color: white;
 }
 
 .nav-item ::deep a:hover {
     background-color: rgba(255,255,255,0.1);
-    color: white;
 }
 
 @media (min-width: 641px) {

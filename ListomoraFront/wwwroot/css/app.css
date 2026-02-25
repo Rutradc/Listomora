@@ -1,3 +1,40 @@
+/*Custom css for app*/
+:root {
+    --primary: #6C5CE7;
+    --primary-dark: #4B3FBF;
+    --accent: #00B894;
+    --background: #F8F9FB;
+    --text: #2D3436;
+}
+
+a{
+    text-decoration: none;
+    color: var(--accent);
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+}
+
+button {
+    background-color: var(--primary);
+    color: white;
+    border-radius: 8px;
+}
+
+    button:hover {
+        background-color: var(--primary-dark);
+    }
+
+/*Base css from Blazor*/
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -47,6 +84,10 @@ a, .btn-link {
     width: 100%;
     z-index: 1000;
 }
+
+    #blazor-error-ui.show {
+        display: block;
+    }
 
     #blazor-error-ui .dismiss {
         cursor: pointer;

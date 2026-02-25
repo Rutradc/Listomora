@@ -1,7 +1,7 @@
 ﻿@using ListomoraFront.Services.Interfaces
-<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">ListomoraFront</a>
+<div class="topNavDiv navbar navbar-dark">
+    <div class="topNavContainer">
+        <a class="navbar-brand" href="">Listomora</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -9,41 +9,41 @@
 </div>
 
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
+    <nav>
         @if (IsConnected){
-            <div class="nav-item px-3">
+            <div class="nav-text-item">
                 <div class="nav-link">
-                    Bonjour @(User?.FirstName + User?.LastName is null ? " " + User?.LastName : "")
+                    Bonjour @(User.FirstName + (User.LastName is null ? "" : " " + User?.LastName))
                 </div>
             </div>
         }
-        <div class="nav-item px-3">
+        <div class="nav-item">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+                <span class="bi fa-solid fa-house" aria-hidden="true"></span> Home
             </NavLink>
         </div>
         @if (!IsConnected){
-            <div class="nav-item px-3">
+            <div class="">
                 <NavLink class="nav-link" href="login">
                     <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Se connecter
                 </NavLink>
             </div>
-            <div class="nav-item px-3">
+            <div class="nav-item">
                 <NavLink class="nav-link" href="register">
                     <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Créer un compte
                 </NavLink>
             </div>
         }
         else{
-            <div class="nav-item px-3">
+            <div class="nav-item">
                 <NavLink class="nav-link" href="article">
                     <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Articles
                 </NavLink>
             </div>
-            <div class="nav-item px-3">
-                <btn class="nav-link" @onclick="Logout">
+            <div class="nav-item">
+                <span class="nav-link" @onclick="Logout">
                     <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Se déconnecter
-                </btn>
+                </span>
             </div>
         }
     </nav>

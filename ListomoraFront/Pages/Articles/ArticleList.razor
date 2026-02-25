@@ -10,41 +10,23 @@
     <thead>
         <tr>
             <th>
-                Id
-            </th>
-            <th>
                 Nom
             </th>
             <th>
-                Est public
-            </th>
-            <th>
-                Id créateur
-            </th>
-            <th>
-                Date de création
+                Nom créateur
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach(ArticleDto a in Articles)
+        @foreach(var a in Articles)
         {
             <tr>
-                <td>
-                    @a.Id
-                </td>
                 <td>
                     @a.Name
                 </td>
                 <td>
-                    @a.IsPublic
-                </td>
-                <td>
-                    @a.CreatorId
-                </td>
-                <td>
-                    @a.CreatedAt
+                    @a.CreatorName
                 </td>
                 <td>
                     <button @onclick="() => GoToDetails(a.Id)" class="btn btn-outline-primary">Détails</button>

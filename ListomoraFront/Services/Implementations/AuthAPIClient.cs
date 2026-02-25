@@ -27,7 +27,6 @@ namespace ListomoraFront.Services.Implementations
 
         public async Task<bool> LoginAsync(LoginForm form)
         {
-            Console.WriteLine("TEST");
             HttpResponseMessage response = await _http.PostAsJsonAsync(_defaultRoute + "login", form);
             if (response.IsSuccessStatusCode)
             {
