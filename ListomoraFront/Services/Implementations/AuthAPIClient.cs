@@ -15,7 +15,6 @@ namespace ListomoraFront.Services.Implementations
         public AuthAPIClient(HttpClient http, IConfiguration config, ILocalStorageService localStorage)
         {
             _http = http;
-            _http.BaseAddress = new Uri(config.GetValue("BaseUrl", "https://localhost:7087"));
             _localStorage = localStorage;
         }
 

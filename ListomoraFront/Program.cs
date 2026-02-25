@@ -21,7 +21,7 @@ namespace ListomoraFront
 
             builder.Services.AddHttpClient("MyAPI", client =>
             {
-                client.BaseAddress = new Uri("https://localhost:7087");
+                client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("BaseUrl"));
             })
             .AddHttpMessageHandler<JwtHandler>();
 

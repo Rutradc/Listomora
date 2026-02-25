@@ -12,7 +12,6 @@ namespace ListomoraFront.Services.Implementations
         public UserAPIClient(HttpClient http, IConfiguration config)
         {
             _http = http;
-            _http.BaseAddress = new Uri(config.GetValue("BaseUrl", "https://localhost:7087"));
         }
 
         public async Task<UserNav> GetNavAsync()

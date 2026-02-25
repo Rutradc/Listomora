@@ -12,7 +12,6 @@ namespace ListomoraFront.Services.Implementations
         public ArticleAPIClient(HttpClient http, IConfiguration config)
         {
             _http = http;
-            _http.BaseAddress = new Uri(config.GetValue("BaseUrl", "https://localhost:7087"));
         }
 
         public async Task<List<ArticleDto>> GetAllAsync()
