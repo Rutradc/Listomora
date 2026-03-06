@@ -19,7 +19,7 @@ namespace ListomoraFront.Pages.Auth
         private bool isShown = false;
         private InputType PasswordInput = InputType.Password;
         private string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
-
+        //TODO: fix errorMessage qui se montre avec "Email ou mot de passe incorrect." avant de charger et de connecter l'utilisateur
         private async Task HandleLogin()
         {
             isLoggingIn = true;
