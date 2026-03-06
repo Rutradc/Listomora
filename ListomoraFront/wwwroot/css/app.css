@@ -1,11 +1,12 @@
 /*Custom css for app*/
 :root {
-    --primary: #6C5CE7;
-    --primary-dark: #4B3FBF;
-    --accent: #00B894;
-    --background: #F8F9FB;
-    --text: #2D3436;
+  --primary: #8A6FF0;        /* Violet clair magique, lumineux et lisible */
+  --primary-dark: #6B4FC9;   /* Variante plus profonde pour hover ou accents */
+  --accent: #3AD8C2;         /* Vert d’eau brillant, contraste fort avec le violet */
+  --background: #FAFAFE;     /* Très clair, légèrement bleuté pour éviter le blanc pur */
+  --text: #1E1B2E;           /* Gris-noir bleuté, bon contraste sur fond clair */
 }
+
 
 a{
     text-decoration: none;
@@ -35,16 +36,16 @@ button {
 
 /*Base css from Blazor*/
 
-html, body {
+/*html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
+}*/
 
 h1:focus {
     outline: none;
 }
 
 a, .btn-link {
-    color: #0071c1;
+    color: var(--accent);
 }
 
 .btn-primary {

@@ -1,3 +1,98 @@
 ﻿@page "/register"
+@using ListomoraFront.Helpers
 
-<h3>Register</h3>
+<PageTitle>Listomora - Créer un compte</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Small">
+    <MudPaper Elevation="6" Class="pa-8">
+        <MudStack Spacing="3">
+            <MudText Typo="Typo.h4" Align="Align.Center">
+                Listomora
+            </MudText>
+
+            <MudText Typo="Typo.subtitle1" Align="Align.Center" Color="Color.Secondary">
+                Créez votre compte
+            </MudText>
+
+            <EditForm Model="@model" OnValidSubmit="HandleRegister">
+                <DataAnnotationsValidator />
+
+                <MudTextField @bind-Value="model.FirstName"
+                              For="@(() => model.FirstName)"
+                              Label="Prénom *"
+                              Variant="Variant.Outlined"
+                              Immediate="true" />
+
+                <MudTextField @bind-Value="model.LastName"
+                              For="@(() => model.LastName)"
+                              Label="Nom de famille"
+                              Variant="Variant.Outlined"
+                              Immediate="true" />
+
+                <MudTextField @bind-Value="model.Email"
+                              For="@(() => model.Email)"
+                              Label="Email *"
+                              Variant="Variant.Outlined"
+                              Immediate="true" />
+
+                <MudTextField @bind-Value="model.Password"
+                              For="@(() => model.Password)"
+                              Label="Mot de passe *"
+                              Variant="Variant.Outlined"
+                              InputType="PasswordInput"
+                              Adornment="Adornment.End"
+                              AdornmentIcon="@PasswordInputIcon"
+                              OnAdornmentClick="ToggleShowPassword"
+                              Immediate="true"
+                              UserAttributes="InputAttributesHelper.NewPassword" />
+
+                <MudTextField @bind-Value="model.PasswordConfirmation"
+                              For="@(() => model.PasswordConfirmation)"
+                              Label="Confirmation du mot de passe *"
+                              Variant="Variant.Outlined"
+                              InputType="PasswordInput"
+                              Adornment="Adornment.End"
+                              AdornmentIcon="@PasswordInputIcon"
+                              OnAdornmentClick="ToggleShowPassword"
+                              Immediate="true"
+                              UserAttributes="InputAttributesHelper.NewPassword" />
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           FullWidth="true"
+                           Size="Size.Large"
+                           Class="mt-4"
+                           ButtonType="ButtonType.Submit"
+                           Disabled="@isRegistering">
+                    @if (isRegistering)
+                    {
+                        <MudProgressCircular Size="Size.Small" Class="me-2" Indeterminate="true" />
+                        <span>Création du compte...</span>
+                    }
+                    else
+                    {
+                        <span>Créer mon compte</span>
+                    }
+                </MudButton>
+
+            </EditForm>
+            @if (errorMessage is not null)
+            {
+                <MudText Typo="Typo.body2" Color="Color.Error">@errorMessage</MudText>
+            }
+            <MudDivider Class="my-2" />
+
+            <MudText Align="Align.Center" Typo="Typo.body2">
+                Vous avez déjà un compte ?
+            </MudText>
+
+            <MudButton Variant="Variant.Outlined"
+                       Color="Color.Primary"
+                       FullWidth="true"
+                       Href="/login"
+                       Disabled="@isRegistering">
+                Se connecter
+            </MudButton>
+        </MudStack>
+    </MudPaper>
+</MudContainer>

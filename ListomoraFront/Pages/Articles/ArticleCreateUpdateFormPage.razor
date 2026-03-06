@@ -1,0 +1,19 @@
+﻿<MudCard Style="margin: 1em">
+    <EditForm Model="@dto" OnValidSubmit="Submit">
+    <DataAnnotationsValidator />
+        <MudCardContent>
+            <MudTextField @bind-Value="dto.Name"
+                          For="@(() => dto.Name)"
+                          Immediate="true"
+                          Label="Nom" />
+
+            <MudSwitch @bind-Value="dto.IsPublic"
+                       For="@(() => dto.IsPublic)"
+                       Label="Public"
+                       Color="Color.Primary" />
+        </MudCardContent>
+    <MudCardActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" ButtonType="ButtonType.Submit">@(Id is null ? "Ajouter" : "Mettre à jour")</MudButton>
+    </MudCardActions>
+    </EditForm>
+</MudCard>

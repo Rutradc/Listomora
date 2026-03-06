@@ -16,7 +16,6 @@ namespace ListomoraFront.Services
         protected override async Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            Console.WriteLine("JWT HANDLER EXECUTÉ");
             var token = await _localStorage.GetItemAsync<string>("token");
 
             if (!string.IsNullOrEmpty(token))

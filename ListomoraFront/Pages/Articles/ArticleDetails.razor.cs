@@ -8,6 +8,8 @@ namespace ListomoraFront.Pages.Articles
     {
         [Parameter]
         public Guid Id { get; set; }
+        [Parameter]
+        public string SourceUrl { get; set; }
         [Inject]
         private IArticleService _client { get; set; }
         [Inject]
@@ -19,7 +21,7 @@ namespace ListomoraFront.Pages.Articles
         }
         public void GoToList()
         {
-            _navigationManager.NavigateTo("/article");
+            _navigationManager.NavigateTo("/article/" + SourceUrl);
         }
     }
 }

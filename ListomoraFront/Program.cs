@@ -4,6 +4,8 @@ using ListomoraFront.Services.Implementations;
 using ListomoraFront.Services.Interfaces;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor;
+using MudBlazor.Services;
 
 namespace ListomoraFront
 {
@@ -17,7 +19,20 @@ namespace ListomoraFront
 
             builder.Services.AddBlazoredLocalStorage();
 
+            builder.Services.AddMudServices(config =>
+            {
+                config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomLeft;
+                config.SnackbarConfiguration.RequireInteraction = false;
+                config.SnackbarConfiguration.PreventDuplicates = false;
+                config.SnackbarConfiguration.NewestOnTop = false;
+                config.SnackbarConfiguration.ShowCloseIcon = true;
+                config.SnackbarConfiguration.VisibleStateDuration = 5000;
+                config.SnackbarConfiguration.HideTransitionDuration = 500;
+                config.SnackbarConfiguration.ShowTransitionDuration = 500;
+                config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
+            });
             builder.Services.AddScoped<JwtHandler>();
+            builder.Services.AddScoped<ThemeService>();
 
             builder.Services.AddHttpClient("ListomoraAPI", client =>
             {

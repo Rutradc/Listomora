@@ -1,10 +1,9 @@
-﻿@page "/article/list"
-@using ListomoraFront.Models
+﻿@page "/article/adminlist"
 @using ListomoraFront.Models.Articles
 
-<PageTitle>Listomora - Articles</PageTitle>
+<PageTitle>Listomora - Articles Admin</PageTitle>
 
-<MudTable Items="@Articles" FixedHeader="true" FixedFooter="true" Dense="false" Hover="true" Filter="new Func<ArticleListDto, bool>(FilterFunc1)" @bind-SelectedItem="selectedArticle1" Style="margin: 1em">
+<MudTable Items="@Articles" FixedHeader="true" FixedFooter="true" Dense="false" Hover="true" Filter="new Func<ArticleDetailsDto, bool>(FilterFunc1)" @bind-SelectedItem="selectedArticle1" Style="margin: 1em">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Articles</MudText>
         <MudSpacer />
@@ -12,13 +11,19 @@
     </ToolBarContent>
     <HeaderContent>
         <MudTh>Nom</MudTh>
+        <MudTh>Public</MudTh>
         <MudTh>Nom créateur</MudTh>
+        <MudTh></MudTh>
+        <MudTh></MudTh>
         <MudTh><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => GoToCreate())">Ajouter</MudButton></MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Nom">@context.Name</MudTd>
+        <MudTd DataLabel="Public"><MudIcon Icon="@(context.IsPublic ? "fas fa-check" : "fas fa-xmark")"/></MudTd>
         <MudTd DataLabel="Nom créateur">@context.CreatorName</MudTd>
         <MudTd><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => GoToDetails(context.Id))">Détails</MudButton></MudTd>
+        <MudTd><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => GoToUpdate(context.Id))">Modifier</MudButton></MudTd>
+        <MudTd><MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@(async () => Delete(context.Id))">Supprimer</MudButton></MudTd>
     </RowTemplate>
     <PagerContent>
         <MudTablePager />

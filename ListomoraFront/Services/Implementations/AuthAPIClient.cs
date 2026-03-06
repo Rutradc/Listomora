@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using ListomoraFront.Models.Auth;
+using ListomoraFront.Models.Users;
 using ListomoraFront.Services.Interfaces;
 using System.Net.Http.Json;
 
@@ -48,6 +49,20 @@ namespace ListomoraFront.Services.Implementations
         {
             HttpResponseMessage response = await _http.PostAsJsonAsync(_defaultRoute + "register", form);
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> UpdateAsync(UserUpdateDto dto)
+        {
+            try
+            {
+                HttpResponseMessage response = await _http.PatchAsJsonAsync("/api/User", dto);
+                NotifyStateChanged();
+                return response.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

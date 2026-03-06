@@ -1,4 +1,5 @@
 ﻿using ListomoraFront.Models.Auth;
+using ListomoraFront.Models.Users;
 
 namespace ListomoraFront.Services.Interfaces
 {
@@ -8,5 +9,6 @@ namespace ListomoraFront.Services.Interfaces
         Task<bool> LoginAsync(LoginForm form);
         Task<bool> RegisterAsync(RegisterForm form);
         void LogoutAsync();
+        Task<bool> UpdateAsync(UserUpdateDto dto);
     }
 }
