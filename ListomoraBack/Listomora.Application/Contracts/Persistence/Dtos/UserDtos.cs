@@ -19,6 +19,12 @@ namespace Listomora.Application.Contracts.Persistence.Dtos
             Password = password;
         }
     };
+    public class UserUpdateDto
+    {
+        public string FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string Email { get; set; }
+    }
     public class UserCredsDto
     {
         public string Email { get; set; }

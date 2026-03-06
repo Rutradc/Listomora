@@ -10,5 +10,6 @@ namespace Listomora.Application.Contracts.Persistence.Repositories
         Task<bool> RegisterAsync(UserCreateDto user);
         Task<UserProfileDto> GetProfileByIdAsync(Guid id);
         Task<UserNavDto> GetNavByIdAsync(Guid id);
+        Task<bool> UpdateAsync(Guid id, UserUpdateDto dto);
     }
 }
