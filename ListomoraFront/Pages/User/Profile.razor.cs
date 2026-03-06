@@ -21,7 +21,7 @@ namespace ListomoraFront.Pages.User
         {
             User = await _client.GetProfileAsync();
         }
-        //TODO: refresh user à l'update
+
         private async Task HandleUpdate()
         {
             _isUpdating = true;
