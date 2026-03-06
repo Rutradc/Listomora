@@ -1,0 +1,14 @@
+<MudAppBar Elevation="1" Color="Color.Primary">
+    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Dark" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+    <MudText Style="font-family: 'Henny Penny', cursive; font-size: 3.2rem; letter-spacing: 2px;" Color="Color.Dark">Listomora</MudText>
+    <MudSpacer />
+    @if (IsConnected)
+    {
+        <MudText Color="Color.Dark" Class="px-4">@(User.FirstName + (User.LastName is null ? "" : " " + User?.LastName))</MudText>
+        <MudIconButton Href="/profile" Icon="fas fa-user" Color="Color.Dark"></MudIconButton>
+    }
+    <MudIconButton Icon="@(DarkLightModeButtonIcon)" Color="Color.Dark" OnClick="@DarkModeToggle" />
+</MudAppBar>
+<MudDrawer id="nav-drawer" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2" Color="Color.Primary">
+    <NavMenu User="User"/>
+</MudDrawer>

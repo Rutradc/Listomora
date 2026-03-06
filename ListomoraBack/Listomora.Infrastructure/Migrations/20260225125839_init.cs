@@ -59,9 +59,9 @@ namespace Listomora.Infrastructure.Migrations
                 columns: new[] { "Id", "DisableDate", "Email", "FirstName", "LastName", "Password", "Role" },
                 values: new object[,]
                 {
-                    { new Guid("0eb2993d-7fd5-4f29-9172-1b8f6aa80736"), null, "lm10@goat.com", "Lionel", "Messi", "$argon2id$v=19$m=65536,t=3,p=1$ZDeYfEWWpk1m7MQx6SOMng$ItM+S+c4GDbdGloYuieW6DAYDIO4y4HdDoWsnv6Wl6w", 1 },
-                    { new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"), null, "john@cena.us", "John", "Cena", "$argon2id$v=19$m=65536,t=3,p=1$6GXdGoruD5Mbs390Ww5kqw$4hHZ0JEnuZS8TznnDop+UpoJI1mPZE6o13SKMDkLaP8", 0 },
-                    { new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"), null, "cr7@goat.com", "Cristiano", "Ronaldo", "$argon2id$v=19$m=65536,t=3,p=1$o1qPwuNhroI6TTdSXWUnGA$FpvVj7q+p6240Ckq4WH7GY6XIpo/1LeadQ07Gm4jqMc", 1 }
+                    { new Guid("0eb2993d-7fd5-4f29-9172-1b8f6aa80736"), null, "lm10@goat.com", "Lionel", "Messi", "$argon2id$v=19$m=65536,t=3,p=1$bG4MFO5fRMx7DG/Mxx8g8A$6zCu9QvFF927JPtL+BWIZwnE51vD9nOYDSWkwdAxZWw", 1 },
+                    { new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"), null, "john@cena.us", "John", "Cena", "$argon2id$v=19$m=65536,t=3,p=1$ev4diG4da7RDMn1FvRnwNg$l0gZikrMkHCCnl3wfm5pw/udnWV3+qv1jJ3lbJ9OK5c", 0 },
+                    { new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"), null, "cr7@goat.com", "Cristiano", "Ronaldo", "$argon2id$v=19$m=65536,t=3,p=1$szQt55zx0faZ4uPwde+z6w$zRT3vvQW42okClFQ4AcqvtNRgq8J5lO04VS6wuNTDWY", 1 }
                 });
 
             migrationBuilder.InsertData(

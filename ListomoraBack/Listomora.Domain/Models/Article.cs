@@ -9,6 +9,6 @@ namespace Listomora.Domain.Models
         public bool IsPublic { get; set; }
         public Guid? CreatorId { get; set; }
         [JsonIgnore]
-        public User? User { get; set; }
+        public User? Creator { get; set; }
     }
 }

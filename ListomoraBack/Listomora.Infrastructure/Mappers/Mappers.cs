@@ -51,7 +51,7 @@ namespace Listomora.Infrastructure.Mappers
                 Id = entity.Id,
                 Name = entity.Name,
                 IsPublic = entity.IsPublic,
-                CreatorName = entity.User.FirstName + (entity.User.LastName is null ? "" : " " + entity.User.LastName)
+                CreatorName = entity.Creator.FirstName + (entity.Creator.LastName is null ? "" : " " + entity.Creator.LastName)
             };
         }
         public static ArticleListDto ToListDto(this Article entity)
@@ -60,7 +60,7 @@ namespace Listomora.Infrastructure.Mappers
             {
                 Id = entity.Id,
                 Name = entity.Name,
-                CreatorName = entity.User.FirstName + (entity.User.LastName is null ? "" : " " + entity.User.LastName)
+                CreatorName = entity.Creator.FirstName + (entity.Creator.LastName is null ? "" : " " + entity.Creator.LastName)
             };
         }
         #endregion
@@ -92,7 +92,7 @@ namespace Listomora.Infrastructure.Mappers
                 Name = entity.Name,
                 IsPublic = entity.IsPublic,
                 Category = entity.Category,
-                CreatorName = entity.User.FirstName + (entity.User.LastName is null ? "" : " " + entity.User.LastName)
+                CreatorName = entity.Creator.FirstName + (entity.Creator.LastName is null ? "" : " " + entity.Creator.LastName)
             };
         }
         public static IngredientListDto ToListDto(this Ingredient entity)
@@ -102,7 +102,7 @@ namespace Listomora.Infrastructure.Mappers
                 Id = entity.Id,
                 Name = entity.Name,
                 Category = entity.Category,
-                CreatorName = entity.User.FirstName + (entity.User.LastName is null ? "" : " " + entity.User.LastName)
+                CreatorName = entity.Creator.FirstName + (entity.Creator.LastName is null ? "" : " " + entity.Creator.LastName)
             };
         }
         #endregion

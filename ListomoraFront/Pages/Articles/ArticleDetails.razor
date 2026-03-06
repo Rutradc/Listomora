@@ -1,43 +1,34 @@
-﻿@page "/article/{id:guid}"
+﻿@page "/article/details/{sourceUrl}/{id:guid}"
+<PageTitle>Listomora - Détails article</PageTitle>
 
-<h1>Détails d'article</h1>
+<MudPaper Class="pa-4" Elevation="4">
+    <MudText Typo="Typo.h4">Détails d'article</MudText>
 
-<div>
     @if (Article is not null)
     {
-        <dl class="row">
-            <dt class="col-sm-2">
-                Id
-            </dt>
-            <dd class="col-sm-10">
-                @Article.Id
-            </dd>
-            <dt class="col-sm-2">
-                Nom
-            </dt>
-            <dd class="col-sm-10">
-                @Article.Name
-            </dd>
-            <dt class="col-sm-2">
-                Est public
-            </dt>
-            <dd class="col-sm-10">
-                @Article.IsPublic
-            </dd>
-            <dt class="col-sm-2">
-                Id créateur
-            </dt>
-            <dd class="col-sm-10">
-                @Article.CreatorId
-            </dd>
-            <dt class="col-sm-2">
-                Date de création
-            </dt>
-            <dd class="col-sm-10">
-                @Article.CreatedAt
-            </dd>
-        </dl>
-    }
-</div>
+        <MudGrid>
+            <MudItem xs="12" sm="6">
+                <MudText Typo="Typo.h6">Nom</MudText>
+                <MudText Typo="Typo.body1">@Article.Name</MudText>
+            </MudItem>
 
-<button @onclick="() => GoToList()" class="btn btn-outline-primary w-25 m-auto">Liste</button>
+            <MudItem xs="12" sm="6">
+                <MudText Typo="Typo.h6">Est public</MudText>
+                <MudText Typo="Typo.body1">@Article.IsPublic</MudText>
+            </MudItem>
+
+            <MudItem xs="12" sm="6">
+                <MudText Typo="Typo.h6">Nom créateur</MudText>
+                <MudText Typo="Typo.body1">@Article.CreatorName</MudText>
+            </MudItem>
+        </MudGrid>
+    }
+
+    <MudButton Variant="Variant.Outlined"
+               Color="Color.Primary"
+               OnClick="() => GoToList()"
+               Class="mt-4 mx-auto d-block"
+               Size="Size.Medium">
+        Retour à la liste
+    </MudButton>
+</MudPaper>

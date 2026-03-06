@@ -1,6 +1,7 @@
 ﻿using ListomoraFront.Models.Auth;
 using ListomoraFront.Services.Interfaces;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace ListomoraFront.Pages.Auth
 {
@@ -12,9 +13,13 @@ namespace ListomoraFront.Pages.Auth
         private NavigationManager _navigation { get; set; }
 
         private LoginForm loginModel = new LoginForm();
-        private string errorMessage;
         private bool isLoggingIn = false;
+        private string errorMessage;
 
+        private bool isShown = false;
+        private InputType PasswordInput = InputType.Password;
+        private string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+        //TODO: fix errorMessage qui se montre avec "Email ou mot de passe incorrect." avant de charger et de connecter l'utilisateur
         private async Task HandleLogin()
         {
             isLoggingIn = true;
@@ -65,6 +70,22 @@ namespace ListomoraFront.Pages.Auth
         private async Task RefreshUserStatus()
         {
             await InvokeAsync(StateHasChanged);
+        }
+
+        private void ToggleShowPassword()
+        {
+            if (isShown)
+            {
+                isShown = false;
+                PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+                PasswordInput = InputType.Password;
+            }
+            else
+            {
+                isShown = true;
+                PasswordInputIcon = Icons.Material.Filled.Visibility;
+                PasswordInput = InputType.Text;
+            }
         }
     }
 }

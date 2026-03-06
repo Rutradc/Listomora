@@ -1,61 +1,45 @@
-﻿@using ListomoraFront.Services.Interfaces
-<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">ListomoraFront</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
+﻿@using ListomoraFront.Models.Users
+@using ListomoraFront.Services.Interfaces
+<MudNavMenu Class="mud-width-full" Color="Color.Dark">
+    <MudNavLink Href="/" Icon="fas fa-house" IconColor="Color.Dark">
+        <MudText Color="Color.Dark">Accueil</MudText>
+    </MudNavLink>
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        @if (IsConnected){
-            <div class="nav-item px-3">
-                <div class="nav-link">
-                    Bonjour @(User?.FirstName + User?.LastName ?? "")
-                </div>
-            </div>
-        }
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        @if (!IsConnected){
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="login">
-                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Se connecter
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="register">
-                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Créer un compte
-                </NavLink>
-            </div>
-        }
-        else{
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="article">
-                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Articles
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <btn class="nav-link" @onclick="Logout">
-                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Se déconnecter
-                </btn>
-            </div>
-        }
-    </nav>
-</div>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
+    @if (!IsConnected)
     {
-        collapseNavMenu = !collapseNavMenu;
+        <MudNavLink Href="/login" Icon="fas fa-right-to-bracket" IconColor="Color.Dark">
+            <MudText Color="Color.Dark">Se connecter</MudText>
+        </MudNavLink>
+        <MudNavLink Href="/register" Icon="fas fa-user-plus" IconColor="Color.Dark">
+            <MudText Color="Color.Dark">Créer un compte</MudText>
+        </MudNavLink>
     }
-}
+    else
+    {
+        <MudNavGroup Icon="fas fa-shop" IconColor="Color.Dark" Expanded="true">
+            <TitleContent>
+                <MudText Color="Color.Dark">Articles</MudText>
+            </TitleContent>
+            <ChildContent>
+                <MudNavLink Href="/article/list" Icon="fas fa-list-ul" IconColor="Color.Dark">
+                    <MudText Color="Color.Dark">Liste d'articles</MudText>
+                </MudNavLink>
+                <MudNavLink Href="/article/mine" Icon="fas fa-list-ul" IconColor="Color.Dark">
+                    <MudText Color="Color.Dark">Liste de vos articles</MudText>
+                </MudNavLink>
+                @if(User.Role == UserRole.ADMIN)
+                {
+                    <MudNavLink Href="/article/adminlist" Icon="fas fa-list-ul" IconColor="Color.Dark">
+                        <MudText Color="Color.Dark">Liste admin d'articles</MudText>
+                    </MudNavLink>
+                }
+                <MudNavLink Href="/article/create/list" Icon="fas fa-square-plus" IconColor="Color.Dark">
+                    <MudText Color="Color.Dark">Créer un article</MudText>
+                </MudNavLink>
+            </ChildContent>
+        </MudNavGroup>
+        <MudNavLink OnClick="@Logout" Icon="fas fa-right-from-bracket" IconColor="Color.Dark">
+            <MudText Color="Color.Dark">Se déconnecter</MudText>
+        </MudNavLink>
+    }
+</MudNavMenu>

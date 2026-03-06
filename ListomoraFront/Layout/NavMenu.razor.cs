@@ -4,13 +4,20 @@ using Microsoft.AspNetCore.Components;
 
 namespace ListomoraFront.Layout
 {
-    public partial class NavMenu : IDisposable
+    public partial class NavMenu
     {
         [Inject]
-        private IAuthService _authService { get; set; }
+        private NavigationManager _navigationManager { get; set; }
+        private bool _expanded = true;
+
+        private void OnExpandCollapseClick()
+        {
+            _expanded = !_expanded;
+        }
         [Inject]
-        private IUserService _userService { get; set; }
-        private UserNav User { get; set; }
+        private IAuthService _authService { get; set; }
+        [Parameter]
+        public UserNav User { get; set; }
         private bool IsConnected { 
             get
             {
@@ -18,33 +25,10 @@ namespace ListomoraFront.Layout
             } 
         }
 
-        protected override async Task OnInitializedAsync()
-        {
-            // S'abonner à l'événement d'authentification
-            _authService.OnAuthStateChanged += HandleAuthStateChanged;
-            // Charger l'état initial
-            await RefreshUserStatus();
-        }
-
         private async Task Logout()
         {
-            await _authService.LogoutAsync();
-        }
-
-        private async void HandleAuthStateChanged()
-        {
-            await RefreshUserStatus();
-        }
-
-        private async Task RefreshUserStatus()
-        {
-            User = await _userService.GetNavAsync();
-        }
-
-        public void Dispose()
-        {
-            // Se désabonner de l'événement d'authentification pour éviter les fuites de mémoire
-            _authService.OnAuthStateChanged -= HandleAuthStateChanged;
+            _authService.LogoutAsync();
+            _navigationManager.NavigateTo("/");
         }
     }
 }

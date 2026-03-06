@@ -42,5 +42,19 @@ namespace Listomora.Infrastructure.Repositories
         {
             return (await _dbContext.Users.SingleOrDefaultAsync(u => u.Id == id)).ToNavDto();
         }
+
+        public async Task<bool> UpdateAsync(Guid id, UserUpdateDto dto)
+        {
+            User userToUpdate;
+
+            userToUpdate = await _dbContext.Users.SingleOrDefaultAsync(a => a.Id == id);
+            if (userToUpdate is null)
+                return false;
+            userToUpdate.FirstName = dto.FirstName;
+            userToUpdate.LastName = dto.LastName;
+            userToUpdate.Email = dto.Email;
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
     }
 }

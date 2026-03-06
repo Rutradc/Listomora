@@ -1,4 +1,7 @@
-﻿using Listomora.Application.Features.Users.Queries;
+﻿using Listomora.Application.Contracts.Persistence.CustomExceptions;
+using Listomora.Application.Contracts.Persistence.Dtos;
+using Listomora.Application.Features.Users.Commands;
+using Listomora.Application.Features.Users.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -52,6 +55,30 @@ namespace Listomora.API.Controllers
                 if (userNav is null)
                     return NotFound();
                 return Ok(userNav);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPatch]
+        [Authorize(Policy = "Authenticated")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Update([FromBody] UserUpdateDto dto)
+        {
+            try
+            {
+                string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                await _mediator.Send(new UpdateUserCommand(new Guid(userId), dto));
+                return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {

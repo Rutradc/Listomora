@@ -4,7 +4,8 @@ using ListomoraFront.Services.Implementations;
 using ListomoraFront.Services.Interfaces;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.AspNetCore.Components.WebAssembly.Http;
+using MudBlazor;
+using MudBlazor.Services;
 
 namespace ListomoraFront
 {
@@ -16,22 +17,34 @@ namespace ListomoraFront
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
-            builder.Services.AddScoped<IncludeCredentialsHandler>();
-
-            builder.Services.AddHttpClient<ArticleAPIClient>().AddHttpMessageHandler<IncludeCredentialsHandler>();
-            builder.Services.AddHttpClient<AuthAPIClient>().AddHttpMessageHandler<IncludeCredentialsHandler>();
-            builder.Services.AddHttpClient<UserAPIClient>().AddHttpMessageHandler<IncludeCredentialsHandler>();
-
-            builder.Services.AddSingleton<IArticleService, ArticleAPIClient>();
-            builder.Services.AddSingleton<IAuthService, AuthAPIClient>();
-            builder.Services.AddSingleton<IUserService, UserAPIClient>();
-
             builder.Services.AddBlazoredLocalStorage();
-            // gestion d'un jwthandler
 
+            builder.Services.AddMudServices(config =>
+            {
+                config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomLeft;
+                config.SnackbarConfiguration.RequireInteraction = false;
+                config.SnackbarConfiguration.PreventDuplicates = false;
+                config.SnackbarConfiguration.NewestOnTop = false;
+                config.SnackbarConfiguration.ShowCloseIcon = true;
+                config.SnackbarConfiguration.VisibleStateDuration = 5000;
+                config.SnackbarConfiguration.HideTransitionDuration = 500;
+                config.SnackbarConfiguration.ShowTransitionDuration = 500;
+                config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
+            });
+            builder.Services.AddScoped<JwtHandler>();
+            builder.Services.AddScoped<ThemeService>();
 
-            // demander pour savoir utiliser builder.HostEnvironment
-            //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddHttpClient("ListomoraAPI", client =>
+            {
+                client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("BaseUrl"));
+            })
+            .AddHttpMessageHandler<JwtHandler>();
+
+            builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("ListomoraAPI"));
+
+            builder.Services.AddScoped<IArticleService, ArticleAPIClient>();
+            builder.Services.AddScoped<IAuthService, AuthAPIClient>();
+            builder.Services.AddScoped<IUserService, UserAPIClient>();
 
             builder.Services.AddAuthorizationCore();
 

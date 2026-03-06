@@ -39,7 +39,7 @@ namespace Listomora.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet]
+        [HttpGet("public")]
         [Authorize(Policy = "Authenticated")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -162,7 +162,7 @@ namespace Listomora.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("publicandmine")]
+        [HttpGet]
         [Authorize(Policy = "Authenticated")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

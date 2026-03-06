@@ -1,0 +1,50 @@
+﻿@page "/profile"
+<PageTitle>Listomora - Profil</PageTitle>
+
+<MudPaper Class="pa-4" Elevation="4">
+    @if (_isPageUpdate)
+    {
+        <EditForm Model="@dto" OnValidSubmit="HandleUpdate">
+            <DataAnnotationsValidator />
+            <MudCardContent>
+                <MudTextField @bind-Value="dto.FirstName"
+                              For="@(() => dto.FirstName)"
+                              Immediate="true"
+                              Label="Nom" />
+                <MudTextField @bind-Value="dto.LastName"
+                              For="@(() => dto.LastName)"
+                              Immediate="true"
+                              Label="Nom de famille" />
+
+                <MudTextField @bind-Value="dto.Email"
+                           For="@(() => dto.Email)"
+                           Immediate="true"
+                           Label="Email" />
+            </MudCardContent>
+        <MudCardActions>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" ButtonType="ButtonType.Submit">Mettre à jour</MudButton>
+        </MudCardActions>
+        </EditForm>
+    }
+    else
+    {
+        <MudText Typo="Typo.h4">Profil</MudText>
+        <MudGrid>
+            <MudItem xs="12" sm="6">
+                <MudText Typo="Typo.h6">Nom</MudText>
+                <MudText Typo="Typo.body1">@User.FirstName</MudText>
+            </MudItem>
+
+            <MudItem xs="12" sm="6">
+                <MudText Typo="Typo.h6">Nom de famille</MudText>
+                <MudText Typo="Typo.body1">@User.LastName</MudText>
+            </MudItem>
+
+            <MudItem xs="12" sm="6">
+                <MudText Typo="Typo.h6">E-mail</MudText>
+                <MudText Typo="Typo.body1">@User.Email</MudText>
+            </MudItem>
+        </MudGrid>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-4 mx-auto d-block" Size="Size.Medium" OnClick="async () => await ToggleUpdatePage()">Changer le profil</MudButton>
+    }
+</MudPaper>

@@ -1,55 +1,26 @@
-﻿@page "/article"
+﻿@page "/article/list"
 @using ListomoraFront.Models
 @using ListomoraFront.Models.Articles
 
-<PageTitle>Articles</PageTitle>
+<PageTitle>Listomora - Articles</PageTitle>
 
-<h3>Liste d'articles</h3>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Id
-            </th>
-            <th>
-                Nom
-            </th>
-            <th>
-                Est public
-            </th>
-            <th>
-                Id créateur
-            </th>
-            <th>
-                Date de création
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(ArticleDto a in Articles)
-        {
-            <tr>
-                <td>
-                    @a.Id
-                </td>
-                <td>
-                    @a.Name
-                </td>
-                <td>
-                    @a.IsPublic
-                </td>
-                <td>
-                    @a.CreatorId
-                </td>
-                <td>
-                    @a.CreatedAt
-                </td>
-                <td>
-                    <button @onclick="() => GoToDetails(a.Id)" class="btn btn-outline-primary">Détails</button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<MudTable Items="@Articles" FixedHeader="true" FixedFooter="true" Dense="false" Hover="true" Filter="new Func<ArticleListDto, bool>(FilterFunc1)" @bind-SelectedItem="selectedArticle1" Style="margin: 1em">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Articles</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString1" Placeholder="Recherche" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Nom</MudTh>
+        <MudTh>Nom créateur</MudTh>
+        <MudTh><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => GoToCreate())">Ajouter</MudButton></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nom">@context.Name</MudTd>
+        <MudTd DataLabel="Nom créateur">@context.CreatorName</MudTd>
+        <MudTd><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => GoToDetails(context.Id))">Détails</MudButton></MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
