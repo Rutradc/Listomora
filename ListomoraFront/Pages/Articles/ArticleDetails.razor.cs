@@ -18,6 +18,17 @@ namespace ListomoraFront.Pages.Articles
         protected override async Task OnInitializedAsync()
         {
             Article = await _client.GetByIdAsync(Id);
+            switch (SourceUrl)
+            {
+                case "list":
+                case "adminList":
+                case "mine":
+                    break;
+                default:
+                    SourceUrl = "list";
+                    await InvokeAsync(StateHasChanged);
+                    break;
+            }
         }
         public void GoToList()
         {
