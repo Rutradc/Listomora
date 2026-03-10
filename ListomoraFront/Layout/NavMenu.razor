@@ -16,7 +16,7 @@
     }
     else
     {
-        <MudNavGroup Icon="fas fa-shop" IconColor="Color.Dark" Expanded="true">
+        <MudNavGroup Icon="fas fa-shop" IconColor="Color.Dark" Expanded="false">
             <TitleContent>
                 <MudText Color="Color.Dark">Articles</MudText>
             </TitleContent>
@@ -25,7 +25,7 @@
                     <MudText Color="Color.Dark">Liste d'articles</MudText>
                 </MudNavLink>
                 <MudNavLink Href="/article/mine" Icon="fas fa-list-ul" IconColor="Color.Dark">
-                    <MudText Color="Color.Dark">Liste de vos articles</MudText>
+                    <MudText Color="Color.Dark">Mes articles</MudText>
                 </MudNavLink>
                 @if(User.Role == UserRole.ADMIN)
                 {
@@ -34,7 +34,29 @@
                     </MudNavLink>
                 }
                 <MudNavLink Href="/article/create/list" Icon="fas fa-square-plus" IconColor="Color.Dark">
-                    <MudText Color="Color.Dark">Créer un article</MudText>
+                    <MudText Color="Color.Dark">Ajouter un article</MudText>
+                </MudNavLink>
+            </ChildContent>
+        </MudNavGroup>
+        <MudNavGroup Icon="fas fa-seedling" IconColor="Color.Dark" Expanded="false">
+            <TitleContent>
+                <MudText Color="Color.Dark">Ingredients</MudText>
+            </TitleContent>
+            <ChildContent>
+                <MudNavLink Href="/ingredient/list" Icon="fas fa-list-ul" IconColor="Color.Dark">
+                    <MudText Color="Color.Dark">Liste d'ingredients</MudText>
+                </MudNavLink>
+                <MudNavLink Href="/ingredient/mine" Icon="fas fa-list-ul" IconColor="Color.Dark">
+                    <MudText Color="Color.Dark">Mes ingredients</MudText>
+                </MudNavLink>
+                @if(User.Role == UserRole.ADMIN)
+                {
+                    <MudNavLink Href="/ingredient/adminlist" Icon="fas fa-list-ul" IconColor="Color.Dark">
+                        <MudText Color="Color.Dark">Liste admin d'ingredients</MudText>
+                    </MudNavLink>
+                }
+                <MudNavLink Href="/ingredient/create/list" Icon="fas fa-square-plus" IconColor="Color.Dark">
+                    <MudText Color="Color.Dark">Ajouter un ingredient</MudText>
                 </MudNavLink>
             </ChildContent>
         </MudNavGroup>
