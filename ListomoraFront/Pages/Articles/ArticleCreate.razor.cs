@@ -11,7 +11,7 @@ namespace ListomoraFront.Pages.Articles
             switch(SourceUrl)
             {
                 case "list":
-                case "adminList":
+                case "adminlist":
                 case "mine":
                     break;
                 default:

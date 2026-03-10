@@ -11,8 +11,6 @@ namespace ListomoraFront.Pages.Articles
         private IArticleService _client { get; set; }
         [Inject]
         private NavigationManager _navigationManager { get; set; }
-        [Inject]
-        private ISnackbar _snackbar { get; set; }
         public List<ArticleListDto> Articles { get; set; } = new List<ArticleListDto>();
         private string searchString1 = "";
         private ArticleListDto selectedArticle1 = null;

@@ -4,7 +4,7 @@
 
 <PageTitle>Listomora - Articles</PageTitle>
 
-<MudTable Items="@Articles" FixedHeader="true" FixedFooter="true" Dense="false" Hover="true" Filter="new Func<ArticleListDto, bool>(FilterFunc1)" @bind-SelectedItem="selectedArticle1" Style="margin: 1em">
+<MudTable Items="@Articles" FixedHeader="true" FixedFooter="true" Dense="false" Hover="true" Filter="new Func<ArticleListDto, bool>(FilterFunc1)" @bind-SelectedItem="selectedArticle1" Class="ma-4">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Articles</MudText>
         <MudSpacer />
