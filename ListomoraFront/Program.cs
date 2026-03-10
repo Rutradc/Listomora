@@ -42,9 +42,10 @@ namespace ListomoraFront
 
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("ListomoraAPI"));
 
-            builder.Services.AddScoped<IArticleService, ArticleAPIClient>();
             builder.Services.AddScoped<IAuthService, AuthAPIClient>();
             builder.Services.AddScoped<IUserService, UserAPIClient>();
+            builder.Services.AddScoped<IArticleService, ArticleAPIClient>();
+            builder.Services.AddScoped<IIngredientService, IngredientAPIClient>();
 
             builder.Services.AddAuthorizationCore();
 

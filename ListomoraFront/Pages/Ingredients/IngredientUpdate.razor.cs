@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace ListomoraFront.Pages.Articles
+namespace ListomoraFront.Pages.Ingredients
 {
-    public partial class ArticleCreate
+    public partial class IngredientUpdate
     {
+        [Parameter]
+        public Guid Id { get; set; }
         [Parameter]
         public string SourceUrl { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            switch(SourceUrl)
+            switch (SourceUrl)
             {
                 case "list":
                 case "adminlist":

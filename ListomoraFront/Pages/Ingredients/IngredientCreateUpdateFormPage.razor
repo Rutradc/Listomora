@@ -1,0 +1,30 @@
+﻿@using ListomoraFront.CustomIcons
+@using ListomoraFront.Models.Ingredients
+<MudCard Class="ma-4">
+    <EditForm Model="@dto" OnValidSubmit="Submit">
+        <DataAnnotationsValidator />
+        <MudCardContent>
+            <MudTextField @bind-Value="dto.Name" Required="true"
+                          For="@(() => dto.Name)"
+                          Immediate="true"
+                          Label="Nom" />
+            <MudSelect @bind-Value="dto.Category" Clearable="true" Required="true"
+                        Label="Catégorie">
+                @foreach(IngredientCategory category in Enum.GetValues(typeof(IngredientCategory)))
+                {
+                    <MudSelectItem Value="category">
+                        @category.ToIconFragment() @category.ToDescription()
+                    </MudSelectItem>
+                }
+            </MudSelect>
+
+            <MudSwitch @bind-Value="dto.IsPublic"
+                       For="@(() => dto.IsPublic)"
+                       Label="Public"
+                       Color="Color.Primary" />
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" ButtonType="ButtonType.Submit">@(Id is null ? "Ajouter" : "Mettre à jour")</MudButton>
+        </MudCardActions>
+    </EditForm>
+</MudCard>

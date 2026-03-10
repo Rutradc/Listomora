@@ -1,16 +1,17 @@
-﻿@page "/article/adminlist"
-@using ListomoraFront.Models.Articles
+﻿@page "/ingredient/adminlist"
+@using ListomoraFront.Models.Ingredients
 
-<PageTitle>Listomora - Articles Admin</PageTitle>
+<PageTitle>Listomora - Ingrédients Admin</PageTitle>
 
-<MudTable Items="@Articles" FixedHeader="true" FixedFooter="true" Dense="false" Hover="true" Filter="new Func<ArticleDetailsDto, bool>(FilterFunc1)" @bind-SelectedItem="selectedArticle1" Class="ma-4">
+<MudTable Items="@Ingredients" FixedHeader="true" FixedFooter="true" Dense="false" Hover="true" Filter="new Func<IngredientDetailsDto, bool>(FilterFunc1)" @bind-SelectedItem="selectedIngredient1" Class="ma-4">
     <ToolBarContent>
-        <MudText Typo="Typo.h6">Articles</MudText>
+        <MudText Typo="Typo.h6">Ingredients</MudText>
         <MudSpacer />
         <MudTextField @bind-Value="searchString1" Placeholder="Recherche" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
     <HeaderContent>
         <MudTh>Nom</MudTh>
+        <MudTh>Catégorie</MudTh>
         <MudTh>Public</MudTh>
         <MudTh>Nom créateur</MudTh>
         <MudTh></MudTh>
@@ -19,7 +20,8 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Nom">@context.Name</MudTd>
-        <MudTd DataLabel="Public"><MudIcon Icon="@(context.IsPublic ? "fas fa-check" : "fas fa-xmark")"/></MudTd>
+        <MudTd DataLabel="Catégorie">@context.Category.ToDescription()</MudTd>
+        <MudTd DataLabel="Public"><MudIcon Icon="@(context.IsPublic ? "fas fa-check" : "fas fa-xmark")" /></MudTd>
         <MudTd DataLabel="Nom créateur">@context.CreatorName</MudTd>
         <MudTd><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => GoToDetails(context.Id))">Détails</MudButton></MudTd>
         <MudTd><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => GoToUpdate(context.Id))">Modifier</MudButton></MudTd>

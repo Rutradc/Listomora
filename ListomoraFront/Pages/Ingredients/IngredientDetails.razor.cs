@@ -1,23 +1,23 @@
-﻿using ListomoraFront.Models.Articles;
+﻿using ListomoraFront.Models.Ingredients;
 using ListomoraFront.Services.Interfaces;
 using Microsoft.AspNetCore.Components;
 
-namespace ListomoraFront.Pages.Articles
+namespace ListomoraFront.Pages.Ingredients
 {
-    public partial class ArticleDetails
+    public partial class IngredientDetails
     {
         [Parameter]
         public Guid Id { get; set; }
         [Parameter]
         public string SourceUrl { get; set; }
         [Inject]
-        private IArticleService _client { get; set; }
+        private IIngredientService _client { get; set; }
         [Inject]
         private NavigationManager _navigationManager { get; set; }
-        public ArticleDetailsDto Article { get; set; } = null;
+        public IngredientDetailsDto Ingredient { get; set; } = null;
         protected override async Task OnInitializedAsync()
         {
-            Article = await _client.GetByIdAsync(Id);
+            Ingredient = await _client.GetByIdAsync(Id);
             switch (SourceUrl)
             {
                 case "list":
@@ -32,7 +32,7 @@ namespace ListomoraFront.Pages.Articles
         }
         public void GoToList()
         {
-            _navigationManager.NavigateTo("/article/" + SourceUrl);
+            _navigationManager.NavigateTo("/ingredient/" + SourceUrl);
         }
     }
 }
