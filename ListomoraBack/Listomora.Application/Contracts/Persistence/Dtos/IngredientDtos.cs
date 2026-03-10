@@ -1,5 +1,4 @@
-﻿
-using Listomora.Domain.Enums;
+﻿using Listomora.Domain.Enums;
 
 namespace Listomora.Application.Contracts.Persistence.Dtos
 {
