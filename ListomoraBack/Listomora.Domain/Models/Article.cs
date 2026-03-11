@@ -10,5 +10,7 @@ namespace Listomora.Domain.Models
         public Guid? CreatorId { get; set; }
         [JsonIgnore]
         public User? Creator { get; set; }
+        [JsonIgnore]
+        public ICollection<ShoppingListLine> ShoppingListLines { get; set; }
     }
 }

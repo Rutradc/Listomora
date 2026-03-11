@@ -14,5 +14,7 @@ namespace Listomora.Domain.Models
         public DateTime? DisableDate { get; set; }
         [JsonIgnore]
         public ICollection<Article> CreatedArticles { get; set; }
+        [JsonIgnore]
+        public ICollection<ShoppingList> CreatedShoppingLists { get; set; }
     }
 }
