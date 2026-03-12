@@ -10,6 +10,8 @@ namespace Listomora.Infrastructure
         public DbSet<User> Users { get; set; }
         public DbSet<Article> Articles { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<ShoppingList> ShoppingLists { get; set; }
+        public DbSet<ShoppingListLine> ShoppingListLines { get; set; }
         public ListomoraDbContext(DbContextOptions options) : base(options)
         {
         }

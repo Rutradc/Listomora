@@ -16,6 +16,30 @@ namespace Listomora.Infrastructure.Seeds
                     IsTemplate = false,
                     IsDone = false,
                     CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                },
+                new ShoppingList
+                {
+                    Id = new Guid("f132fcbf-bcd5-4ce9-ba7b-0dc102fabb72"),
+                    Name = "Liste de courses de mercredi soir prochain",
+                    IsTemplate = false,
+                    IsDone = false,
+                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                },
+                new ShoppingList
+                {
+                    Id = new Guid("5e47b154-be10-43bb-ad15-a09f83d77ff0"),
+                    Name = "Liste de courses du samedi 7 mars",
+                    IsTemplate = false,
+                    IsDone = true,
+                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                },
+                new ShoppingList
+                {
+                    Id = new Guid("49c7a8c0-0647-4380-a588-e8d88c039f06"),
+                    Name = "Liste de courses habituelle",
+                    IsTemplate = true,
+                    IsDone = false,
+                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
                 }
             );
         }

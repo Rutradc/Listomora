@@ -17,6 +17,7 @@ namespace Listomora.Infrastructure
             services.AddScoped<IUserRepo, SqlUserRepo>();
             services.AddScoped<IArticleRepo, SqlArticleRepo>();
             services.AddScoped<IIngredientRepo, SqlIngredientRepo>();
+            services.AddScoped<IShoppingListRepo, SqlShoppingListRepo>();
             return services;
         }
     }
