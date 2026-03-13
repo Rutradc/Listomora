@@ -9,6 +9,8 @@ namespace Listomora.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.ToTable("User");
+
             builder.Property(a => a.Id)
                 .ValueGeneratedOnAdd();
             builder.Property(a => a.FirstName)

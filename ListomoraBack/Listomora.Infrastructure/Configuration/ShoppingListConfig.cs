@@ -8,6 +8,8 @@ namespace Listomora.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<ShoppingList> builder)
         {
+            builder.ToTable("ShoppingList");
+
             builder.Property(a => a.Id)
                 .ValueGeneratedOnAdd();
 

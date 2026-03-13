@@ -8,6 +8,8 @@ namespace Listomora.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<ShoppingListLine> builder)
         {
+            builder.ToTable("ShoppingListLine");
+
             builder.Property(a => a.Amount);
             builder.Property(a => a.Unit)
                 .HasConversion<string>();

@@ -8,6 +8,8 @@ namespace Listomora.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<Article> builder)
         {
+            builder.ToTable("Article");
+
             builder.HasDiscriminator<string>("ArticleType")
                 .HasValue<Article>("Article")
                 .HasValue<Ingredient>("Ingredient");
