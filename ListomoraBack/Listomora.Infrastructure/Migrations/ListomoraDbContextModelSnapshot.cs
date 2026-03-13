@@ -54,7 +54,7 @@ namespace Listomora.Infrastructure.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("Articles");
+                    b.ToTable("Article", (string)null);
 
                     b.HasDiscriminator<string>("ArticleType").HasValue("Article");
 
@@ -194,7 +194,7 @@ namespace Listomora.Infrastructure.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("ShoppingList");
+                    b.ToTable("ShoppingList", (string)null);
 
                     b.HasData(
                         new
@@ -220,6 +220,7 @@ namespace Listomora.Infrastructure.Migrations
                             Id = new Guid("5e47b154-be10-43bb-ad15-a09f83d77ff0"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                            DoneAt = new DateTime(2026, 3, 7, 10, 32, 48, 0, DateTimeKind.Unspecified),
                             IsDone = true,
                             IsTemplate = false,
                             Name = "Liste de courses du samedi 7 mars"
@@ -262,7 +263,7 @@ namespace Listomora.Infrastructure.Migrations
 
                     b.HasIndex("ShoppingListId");
 
-                    b.ToTable("ShoppingListLine");
+                    b.ToTable("ShoppingListLine", (string)null);
 
                     b.HasData(
                         new
@@ -536,7 +537,7 @@ namespace Listomora.Infrastructure.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Users", t =>
+                    b.ToTable("User", null, t =>
                         {
                             t.HasCheckConstraint("CK_User_Role", "[Role] IN (0,1)");
                         });
@@ -549,7 +550,7 @@ namespace Listomora.Infrastructure.Migrations
                             Email = "john@cena.us",
                             FirstName = "John",
                             LastName = "Cena",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$KvvKamJLrc6A3fN5MwkGZw$iaJcIlKsT9s7rhesQTWjDf9Vv47xJlUw1ShYQYyZ1ZU",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$ehpdI3z4ujA4SDfXx1Ou1w$d2Ez1LgQqGeh9D62OsfJUQOvs5k4T1N5qpOS5VeNBGQ",
                             Role = 0
                         },
                         new
@@ -559,7 +560,7 @@ namespace Listomora.Infrastructure.Migrations
                             Email = "cr7@goat.com",
                             FirstName = "Cristiano",
                             LastName = "Ronaldo",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$GLVANDmL61aOTgVNtUAvAg$qkEZDFKrGUnfrg1dqZz+d66Hf/Zsm/x7cMgU//6Kgjg",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$GwBbis6x7S9Jib0/17cHIQ$oLa2jn0WxsHK4HpuMQBaVfjLM69KfH6Bq47sTvTOuRQ",
                             Role = 1
                         },
                         new
@@ -569,7 +570,7 @@ namespace Listomora.Infrastructure.Migrations
                             Email = "lm10@goat.com",
                             FirstName = "Lionel",
                             LastName = "Messi",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$iao8b0dVyI44C1mu1s60mw$M+rFOopn8o6JH/TMVrtnKI/Mpx4n1CXpciRcnNI4n7k",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$KRnjO15ytzYvIK++c9ieGw$ApU20crdRNgygzKPCol+6GtlPhCxIc/j65+pCp2sn+I",
                             Role = 1
                         });
                 });

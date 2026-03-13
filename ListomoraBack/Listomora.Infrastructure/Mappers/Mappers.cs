@@ -107,12 +107,13 @@ namespace Listomora.Infrastructure.Mappers
         }
         #endregion
         #region
-        public static ShoppingList ToEntity(this ShoppingListCreateUpdateDto dto)
+        public static ShoppingList ToEntity(this ShoppingListCreateDto dto, Guid creatorId)
         {
             return new ShoppingList()
             {
                 Name = dto.Name,
                 IsTemplate = dto.IsTemplate,
+                CreatorId = creatorId,
             };
         }
         public static ShoppingListDetailsDto ToDetailsDto(this ShoppingList entity)

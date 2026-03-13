@@ -31,6 +31,7 @@ namespace Listomora.Infrastructure.Seeds
                     Name = "Liste de courses du samedi 7 mars",
                     IsTemplate = false,
                     IsDone = true,
+                    DoneAt = new DateTime(2026, 3, 7, 10, 32, 48),
                     CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
                 },
                 new ShoppingList

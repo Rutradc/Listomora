@@ -1,6 +1,15 @@
-﻿namespace Listomora.Application.Features.ShoppingLists.Commands
+﻿using Listomora.Application.Contracts.Persistence.Repositories;
+using MediatR;
+
+namespace Listomora.Application.Features.ShoppingLists.Commands
 {
-    public class CreateShoppingListLineCommandHandler
+    public class CreateShoppingListLineCommandHandler : IRequestHandler<CreateShoppingListLineCommand, Unit>
     {
+        private readonly IShoppingListRepo _repo;
+        public async Task<Unit> Handle(CreateShoppingListLineCommand request, CancellationToken cancellationToken)
+        {
+            await _repo.InsertLineAsync(request.Dto);
+            return Unit.Value;
+        }
     }
 }

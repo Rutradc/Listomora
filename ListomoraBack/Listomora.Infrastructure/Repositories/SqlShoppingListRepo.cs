@@ -24,29 +24,29 @@ namespace Listomora.Infrastructure.Repositories
             return await _dbContext.ShoppingLists.Where(s => s.CreatorId == creatorId).Select(s => s.ToListDto()).ToListAsync();
         }
 
-        public async Task<ShoppingListDetailsDto> GetByIdAsync(Guid id, Guid? userId)
+        public async Task<ShoppingListDetailsDto> GetByIdAsync(Guid id, Guid? userId = null)
         {
             if (userId is null)
-                return await _dbContext.ShoppingLists.Include(s => s.ShoppingListLines).ThenInclude(sl => sl.Article).Select(s => s.ToDetailsDto()).FirstOrDefaultAsync(s => s.Id == id);
+                return (await _dbContext.ShoppingLists.Include(s => s.ShoppingListLines).ThenInclude(sl => sl.Article).SingleOrDefaultAsync(s => s.Id == id)).ToDetailsDto();
             else
-                return await _dbContext.ShoppingLists.Include(s => s.ShoppingListLines).ThenInclude(sl => sl.Article).Where(s => s.CreatorId == userId).Select(s => s.ToDetailsDto()).FirstOrDefaultAsync(s => s.Id == id);
+                return (await _dbContext.ShoppingLists.Include(s => s.ShoppingListLines).ThenInclude(sl => sl.Article).SingleOrDefaultAsync(s => s.Id == id && s.CreatorId == userId)).ToDetailsDto();
         }
 
-        public async Task<bool> InsertAsync(ShoppingListCreateUpdateDto dto, Guid creatorId)
+        public async Task<bool> InsertAsync(ShoppingListCreateDto dto, Guid creatorId)
         {
-            _dbContext.ShoppingLists.Add(dto.ToEntity());
+            _dbContext.ShoppingLists.Add(dto.ToEntity(creatorId));
             await _dbContext.SaveChangesAsync();
             return true;
         }
 
-        public async Task<bool> InsertLineAsync(ShoppingListLineCreateDto dto, Guid creatorId)
+        public async Task<bool> InsertLineAsync(ShoppingListLineCreateDto dto)
         {
             _dbContext.ShoppingListLines.Add(dto.ToEntity());
             await _dbContext.SaveChangesAsync();
             return true;
         }
 
-        public async Task<bool> UpdateAsync(Guid id, ShoppingListCreateUpdateDto dto, Guid? userId)
+        public async Task<bool> UpdateAsync(Guid id, ShoppingListUpdateDto dto, Guid? userId = null)
         {
             ShoppingList shoppingListToUpdate;
             if (userId is null)
@@ -56,7 +56,6 @@ namespace Listomora.Infrastructure.Repositories
             if (shoppingListToUpdate is null)
                 return false;
             shoppingListToUpdate.Name = dto.Name;
-            shoppingListToUpdate.IsTemplate = dto.IsTemplate;
             await _dbContext.SaveChangesAsync();
             return true;
         }
@@ -73,7 +72,7 @@ namespace Listomora.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
             return true;
         }
-        public async Task<bool> DeleteAsync(Guid id, Guid? userId)
+        public async Task<bool> DeleteAsync(Guid id, Guid? userId = null)
         {
             ShoppingList shoppingList;
             if (userId is null)
@@ -98,7 +97,7 @@ namespace Listomora.Infrastructure.Repositories
             return true;
         }
 
-        public async Task<bool> CompleteShoppingList(Guid id, bool isDone, Guid? userId)
+        public async Task<bool> CompleteShoppingList(Guid id, bool isDone, Guid? userId = null)
         {
             ShoppingList shoppingListToUpdate;
             if (userId is null)

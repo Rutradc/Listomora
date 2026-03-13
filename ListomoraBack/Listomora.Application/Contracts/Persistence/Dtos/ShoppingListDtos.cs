@@ -23,10 +23,14 @@ namespace Listomora.Application.Contracts.Persistence.Dtos
         public UnitTypeEnum? Unit { get; set; }
         public decimal? Price { get; set; }
     }
-    public class ShoppingListCreateUpdateDto
+    public class ShoppingListCreateDto
     {
         public string Name { get; set; }
         public bool IsTemplate { get; set; }
+    }
+    public class ShoppingListUpdateDto
+    {
+        public string Name { get; set; }
     }
     public class ShoppingListDetailsDto
     {

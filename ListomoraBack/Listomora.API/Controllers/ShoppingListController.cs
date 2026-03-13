@@ -1,12 +1,10 @@
 ﻿using Listomora.Application.Contracts.Persistence.CustomExceptions;
 using Listomora.Application.Contracts.Persistence.Dtos;
-using Listomora.Application.Contracts.Persistence.Repositories;
 using Listomora.Application.Features.ShoppingLists.Commands;
 using Listomora.Application.Features.ShoppingLists.Queries;
 using Listomora.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -92,7 +90,7 @@ namespace Listomora.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Insert([FromBody] ShoppingListCreateUpdateDto dto)
+        public async Task<IActionResult> Insert([FromBody] ShoppingListCreateDto dto)
         {
             try
             {
@@ -112,7 +110,7 @@ namespace Listomora.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Update(Guid id, [FromBody] ShoppingListCreateUpdateDto dto)
+        public async Task<IActionResult> Update(Guid id, [FromBody] ShoppingListUpdateDto dto)
         {
             try
             {
@@ -165,7 +163,7 @@ namespace Listomora.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost]
+        [HttpPost("line")]
         [Authorize(Policy = "Authenticated")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -175,8 +173,7 @@ namespace Listomora.API.Controllers
         {
             try
             {
-                string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                var created = await _mediator.Send(new CreateShoppingListLineCommand(dto, new Guid(userId)));
+                var created = await _mediator.Send(new CreateShoppingListLineCommand(dto));
                 return Created();
             }
             catch (Exception ex)
@@ -184,25 +181,18 @@ namespace Listomora.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPatch("{id:guid}")]
+        [HttpPatch("line/{articleId:guid}&{shoppingListId:guid}")]
         [Authorize(Policy = "Authenticated")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateLine(Guid id, [FromBody] ShoppingListLineUpdateDto dto)
+        public async Task<IActionResult> UpdateLine(Guid articleId, Guid shoppingListId, [FromBody] ShoppingListLineUpdateDto dto)
         {
             try
             {
-                string? role = User.FindFirst(ClaimTypes.Role)?.Value;
-                if (role == UserRole.ADMIN.ToString())
-                {
-                    await _mediator.Send(new UpdateShoppingListLineCommand(id, dto));
-                    return Ok();
-                }
-                string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                await _mediator.Send(new UpdateShoppingListLineCommand(id, dto, new Guid(userId)));
+                await _mediator.Send(new UpdateShoppingListLineCommand(articleId, shoppingListId, dto));
                 return Ok();
             }
             catch (NotFoundException ex)
@@ -214,25 +204,18 @@ namespace Listomora.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("line/{articleId:guid}&{shoppingListId:guid}")]
         [Authorize(Policy = "Authenticated")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteLine(Guid id)
+        public async Task<IActionResult> DeleteLine(Guid articleId, Guid shoppingListId)
         {
             try
             {
-                string? role = User.FindFirst(ClaimTypes.Role)?.Value;
-                if (role == UserRole.ADMIN.ToString())
-                {
-                    await _mediator.Send(new DeleteShoppingListLineCommand(id));
-                    return Ok();
-                }
-                string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                await _mediator.Send(new DeleteShoppingListLineCommand(id, new Guid(userId)));
+                await _mediator.Send(new DeleteShoppingListLineCommand(articleId, shoppingListId));
                 return Ok();
             }
             catch (NotFoundException ex)
