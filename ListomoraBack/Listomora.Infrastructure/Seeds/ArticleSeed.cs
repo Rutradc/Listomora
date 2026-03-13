@@ -8,6 +8,7 @@ namespace Listomora.Infrastructure.Seeds
     {
         public void Configure(EntityTypeBuilder<Article> builder)
         {
+            #region BaseSeed
             builder.HasData(
                 new
                 {
@@ -51,7 +52,68 @@ namespace Listomora.Infrastructure.Seeds
                     IsPublic = true,
                     CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
                 }
-                );
+            );
+            #endregion
+            #region SeedForShoppingList
+            builder.HasData(
+                new
+                {
+                    Id = new Guid("d6acb86d-856e-4874-9d64-73a1f3e2f8e9"),
+                    Name = "Savon liquide Palmolive",
+                    IsPublic = true,
+                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                },
+                new
+                {
+                    Id = new Guid("6ef48e96-a40a-4dc5-9432-fe6d85c87bb6"),
+                    Name = "Mouchoirs",
+                    IsPublic = true,
+                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                },
+                new
+                {
+                    Id = new Guid("c7e03ae1-353c-4e21-963f-ff906d09506c"),
+                    Name = "Coca-Cola",
+                    IsPublic = true,
+                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                },
+                new
+                {
+                    Id = new Guid("be258d12-1679-4aa2-8b71-368b2c16b913"),
+                    Name = "Fanta",
+                    IsPublic = true,
+                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                },
+                new
+                {
+                    Id = new Guid("d392cdc1-9141-4dc3-ac7e-a4486e2e8774"),
+                    Name = "Pizza surgelée",
+                    IsPublic = true,
+                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                },
+                new
+                {
+                    Id = new Guid("336ac8ab-c997-4521-a3c1-9aaa5cb86fbb"),
+                    Name = "Chips Kroky paprika",
+                    IsPublic = true,
+                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                },
+                new
+                {
+                    Id = new Guid("a456432d-33d1-44d9-be6a-8599bd02becc"),
+                    Name = "Dentifrice Colgate",
+                    IsPublic = true,
+                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                },
+                new
+                {
+                    Id = new Guid("81bd4a7b-b60c-4e11-8d74-6c641721a928"),
+                    Name = "Piles AAA",
+                    IsPublic = true,
+                    CreatorId = new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"),
+                }
+            );
+            #endregion
         }
     }
 }

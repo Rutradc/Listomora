@@ -10,6 +10,8 @@ namespace Listomora.Infrastructure
         public DbSet<User> Users { get; set; }
         public DbSet<Article> Articles { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<ShoppingList> ShoppingLists { get; set; }
+        public DbSet<ShoppingListLine> ShoppingListLines { get; set; }
         public ListomoraDbContext(DbContextOptions options) : base(options)
         {
         }
@@ -19,6 +21,8 @@ namespace Listomora.Infrastructure
             modelBuilder.ApplyConfiguration(new UserConfig());
             modelBuilder.ApplyConfiguration(new ArticleConfig());
             modelBuilder.ApplyConfiguration(new IngredientConfig());
+            modelBuilder.ApplyConfiguration(new ShoppingListConfig());
+            modelBuilder.ApplyConfiguration(new ShoppingListLineConfig());
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
@@ -35,6 +39,8 @@ namespace Listomora.Infrastructure
             modelBuilder.ApplyConfiguration(new UserSeed());
             modelBuilder.ApplyConfiguration(new ArticleSeed());
             modelBuilder.ApplyConfiguration(new IngredientSeed());
+            modelBuilder.ApplyConfiguration(new ShoppingListSeed());
+            modelBuilder.ApplyConfiguration(new ShoppingListLineSeed());
         }
     }
 }

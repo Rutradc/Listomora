@@ -106,5 +106,60 @@ namespace Listomora.Infrastructure.Mappers
             };
         }
         #endregion
+        #region
+        public static ShoppingList ToEntity(this ShoppingListCreateDto dto, Guid creatorId)
+        {
+            return new ShoppingList()
+            {
+                Name = dto.Name,
+                IsTemplate = dto.IsTemplate,
+                CreatorId = creatorId,
+            };
+        }
+        public static ShoppingListDetailsDto ToDetailsDto(this ShoppingList entity)
+        {
+            return new ShoppingListDetailsDto()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                IsTemplate = entity.IsTemplate,
+                IsDone = entity.IsDone,
+                DoneAt = entity.DoneAt,
+                ShoppingListLines = entity.ShoppingListLines.Select(s => s.ToListDto()),
+            };
+        }
+        public static ShoppingListListDto ToListDto(this ShoppingList entity)
+        {
+            return new ShoppingListListDto()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                IsTemplate = entity.IsTemplate,
+                IsDone = entity.IsDone,
+                DoneAt = entity.DoneAt,
+            };
+        }
+
+        public static ShoppingListLineListDto ToListDto(this ShoppingListLine entity)
+        {
+            return new ShoppingListLineListDto()
+            {
+                ArticleName = entity.Article.Name,
+                Amount = entity.Amount,
+                Unit = entity.Unit,
+                Price = entity.Price,
+            };
+        }
+        public static ShoppingListLine ToEntity(this ShoppingListLineCreateDto dto)
+        {
+            return new ShoppingListLine()
+            {
+                ArticleId = dto.ArticleId,
+                ShoppingListId = dto.ShoppingListId,
+                Amount = dto.Amount,
+                Unit = dto.Unit,
+            };
+        }
+        #endregion
     }
 }
