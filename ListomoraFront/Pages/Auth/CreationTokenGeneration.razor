@@ -1,0 +1,55 @@
+﻿@page "/generateCreationToken"
+<PageTitle>Listomora - Génération de token de création de compte</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Medium">
+    <MudPaper Elevation="6" Class="pa-8">
+        <MudStack Spacing="3">
+
+            <EditForm Model="@model" OnValidSubmit="HandleSubmit">
+                <DataAnnotationsValidator />
+                <MudDatePicker @bind-Date="model.ExpirationDate"
+                              For="@(() => model.ExpirationDate)"
+                              Label="Date d'expiration"
+                              Variant="Variant.Outlined"/>
+
+                <MudTimePicker @bind-Time="model.ExpirationTime"
+                               For="@(() => model.ExpirationTime)"
+                               Label="Heure d'expiration UTC"
+                               Variant="Variant.Outlined" />
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           FullWidth="true"
+                           Size="Size.Large"
+                           Class="mt-4"
+                           ButtonType="ButtonType.Submit"
+                           Disabled="@isLoading">
+                    @if (isLoading)
+                    {
+                        <MudProgressCircular Size="Size.Small" Class="me-2" Indeterminate="true" />
+                        <span>Chargement...</span>
+                    }
+                    else
+                    {
+                        <span>Générer un token</span>
+                    }
+                </MudButton>
+            </EditForm>
+            @if (errorMessage is not null)
+            {
+                <MudText Typo="Typo.body2" Color="Color.Error">@errorMessage</MudText>
+            }
+            @if (tokens?.Count > 0)
+            {
+                <MudDivider Class="my-2" />
+                @foreach(var token in tokens)
+                {
+                    <MudButton StartIcon="@Icons.Material.Filled.ContentCopy"
+                               OnClick="(async() => CopyToken(token))">
+                        @token
+                    </MudButton>
+                }
+            }
+        </MudStack>
+    </MudPaper>
+</MudContainer>
