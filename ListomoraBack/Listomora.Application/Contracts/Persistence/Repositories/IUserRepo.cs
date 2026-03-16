@@ -12,6 +12,6 @@ namespace Listomora.Application.Contracts.Persistence.Repositories
         Task<UserNavDto> GetNavByIdAsync(Guid id);
         Task<bool> UpdateAsync(Guid id, UserUpdateDto dto);
         Task<bool> CreateCreationTokenAsync(CreationTokenCreateDto dto);
-        Task<bool> CheckCreationTokenAsync(string tokenHash);
+        Task<CreationToken> GetCreationTokenAsync(string tokenHash);
     }
 }

@@ -2,11 +2,7 @@
 {
     public class InvalidCredentialsException : Exception
     {
-        public InvalidCredentialsException() : base("Invalid Credentials.")
-        {
-        }
-
-        public InvalidCredentialsException(string message) : base(message)
+        public InvalidCredentialsException(string? message = "Invalid Credentials.") : base(message)
         {
         }
     }

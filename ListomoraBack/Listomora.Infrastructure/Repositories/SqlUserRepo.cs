@@ -1,4 +1,5 @@
-﻿using Listomora.Application.Contracts.Persistence.Dtos;
+﻿using Listomora.Application.Contracts.Persistence.CustomExceptions;
+using Listomora.Application.Contracts.Persistence.Dtos;
 using Listomora.Application.Contracts.Persistence.Repositories;
 using Listomora.Domain.Models;
 using Listomora.Infrastructure.Mappers;
@@ -32,10 +33,11 @@ namespace Listomora.Infrastructure.Repositories
             if (token == null)
                 return false;
             if (token.ExpiresAt < DateTime.UtcNow)
-                throw new Exception("Token has expired at " + token.ExpiresAt + " .");
+                throw new InvalidTokenException("Token has expired at " + token.ExpiresAt + " .");
             if (token.UsedAt is not null)
-                throw new Exception("Token has already been used at " + token.UsedAt + " .");
+                throw new InvalidTokenException("Token has already been used at " + token.UsedAt + " .");
             _dbContext.Users.Add(user.ToEntity());
+            token.UsedAt = DateTime.UtcNow;
             await _dbContext.SaveChangesAsync();
             return true;
         }
@@ -71,16 +73,9 @@ namespace Listomora.Infrastructure.Repositories
             return true;
         }
 
-        public async Task<bool> CheckCreationTokenAsync(string tokenHash)
+        public async Task<CreationToken> GetCreationTokenAsync(string tokenHash)
         {
-            CreationToken token = await _dbContext.CreationTokens.SingleOrDefaultAsync(c => c.TokenHash == tokenHash);
-            if (token == null) 
-                return false;
-            if (token.ExpiresAt < DateTime.UtcNow)
-                throw new Exception("Token has expired at " + token.ExpiresAt + " .");
-            if (token.UsedAt is not null)
-                throw new Exception("Token has already been used at " + token.UsedAt + " .");
-            return true;
+            return await _dbContext.CreationTokens.SingleOrDefaultAsync(c => c.TokenHash == tokenHash);
         }
     }
 }

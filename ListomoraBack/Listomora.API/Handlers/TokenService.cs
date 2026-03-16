@@ -2,18 +2,17 @@
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace Listomora.API.Handlers
 {
     public class TokenService
     {
-        private readonly IConfiguration m_Config;
+        private readonly IConfiguration _config;
 
         public TokenService(IConfiguration config)
         {
-            m_Config = config;
+            _config = config;
         }
 
         public string GenerateJwtToken(UserForToken user)
@@ -28,13 +27,13 @@ namespace Listomora.API.Handlers
 
 
             // Crédentials pour signé le token (Clef + l'algo)
-            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(m_Config["Jwt:Key"]!));
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
             SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             // Génération du token
             JwtSecurityToken token = new JwtSecurityToken(
-                m_Config["Jwt:Issuer"],
-                m_Config["Jwt:Audience"],
+                _config["Jwt:Issuer"],
+                _config["Jwt:Audience"],
                 claims,
                 expires: DateTime.Now.AddHours(6),
                 signingCredentials: creds
@@ -42,11 +41,6 @@ namespace Listomora.API.Handlers
 
             // Export du token sous forme de chaine de caractere
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-        public string GenerateCreationToken()
-        {
-            byte[] bytes = RandomNumberGenerator.GetBytes(32);
-            return Convert.ToHexString(bytes).ToLower();
         }
     }
 }

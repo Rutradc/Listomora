@@ -11,7 +11,8 @@ namespace Listomora.Infrastructure.Configuration
             builder.ToTable("CreationToken");
 
             builder.Property(c => c.TokenHash)
-                .HasMaxLength(255)
+                .HasMaxLength(64)
+                .HasColumnType("char(64)")
                 .IsRequired();
 
             builder.Property(c => c.ExpiresAt)

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Listomora.Domain.Models;
+using MediatR;
 
 namespace Listomora.Application.Features.Users.Queries
 {

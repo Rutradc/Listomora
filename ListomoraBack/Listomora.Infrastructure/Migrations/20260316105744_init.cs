@@ -55,6 +55,27 @@ namespace Listomora.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CreationToken",
+                columns: table => new
+                {
+                    TokenHash = table.Column<string>(type: "char(64)", maxLength: 64, nullable: false),
+                    ExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UsedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    AdminCreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "DateTime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CreationToken", x => x.TokenHash);
+                    table.ForeignKey(
+                        name: "FK_CreationToken_AdminCreator",
+                        column: x => x.AdminCreatorId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ShoppingList",
                 columns: table => new
                 {
@@ -110,9 +131,9 @@ namespace Listomora.Infrastructure.Migrations
                 columns: new[] { "Id", "DisableDate", "Email", "FirstName", "LastName", "Password", "Role" },
                 values: new object[,]
                 {
-                    { new Guid("0eb2993d-7fd5-4f29-9172-1b8f6aa80736"), null, "lm10@goat.com", "Lionel", "Messi", "$argon2id$v=19$m=65536,t=3,p=1$KRnjO15ytzYvIK++c9ieGw$ApU20crdRNgygzKPCol+6GtlPhCxIc/j65+pCp2sn+I", 1 },
-                    { new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"), null, "john@cena.us", "John", "Cena", "$argon2id$v=19$m=65536,t=3,p=1$ehpdI3z4ujA4SDfXx1Ou1w$d2Ez1LgQqGeh9D62OsfJUQOvs5k4T1N5qpOS5VeNBGQ", 0 },
-                    { new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"), null, "cr7@goat.com", "Cristiano", "Ronaldo", "$argon2id$v=19$m=65536,t=3,p=1$GwBbis6x7S9Jib0/17cHIQ$oLa2jn0WxsHK4HpuMQBaVfjLM69KfH6Bq47sTvTOuRQ", 1 }
+                    { new Guid("0eb2993d-7fd5-4f29-9172-1b8f6aa80736"), null, "lm10@goat.com", "Lionel", "Messi", "$argon2id$v=19$m=65536,t=3,p=1$9KglQXiIR6s9qInYYtO/4A$1Xrnsdt/TfiPWtTz1U+R2IfZdXHrdiKO5LlA/8D84hY", 1 },
+                    { new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"), null, "john@cena.us", "John", "Cena", "$argon2id$v=19$m=65536,t=3,p=1$OJpq9F8WrMV6gtGQ4YrBVw$aImUMEHxEwpKSrHeBNwBH0oLez53ayOYzehKtlh5zbY", 0 },
+                    { new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"), null, "cr7@goat.com", "Cristiano", "Ronaldo", "$argon2id$v=19$m=65536,t=3,p=1$NfrlU8e/0Sp1aqqaHkNEzA$IIbZnf2Xj1P6VCPZ8i8cRF/AFzYYXLbQNdjEdN7JAt0", 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -321,6 +342,11 @@ namespace Listomora.Infrastructure.Migrations
                 column: "CreatorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CreationToken_AdminCreatorId",
+                table: "CreationToken",
+                column: "AdminCreatorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ShoppingList_CreatorId",
                 table: "ShoppingList",
                 column: "CreatorId");
@@ -340,6 +366,9 @@ namespace Listomora.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "CreationToken");
+
             migrationBuilder.DropTable(
                 name: "ShoppingListLine");
 

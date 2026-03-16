@@ -15,11 +15,13 @@ namespace Listomora.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly TokenService _tokenService;
+        private readonly CreationTokenService _creationTokenService;
 
-        public AuthController(IMediator mediator, TokenService tokenService)
+        public AuthController(IMediator mediator, TokenService tokenService, CreationTokenService creationTokenService)
         {
             _mediator = mediator;
             _tokenService = tokenService;
+            _creationTokenService = creationTokenService;
         }
 
         // TODO : ajouter token de création de compte
@@ -88,7 +90,7 @@ namespace Listomora.API.Controllers
         {
             try
             {
-                string creationToken = _tokenService.GenerateCreationToken();
+                string creationToken = _creationTokenService.GenerateCreationToken();
                 string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 await _mediator.Send(new CreateCreationTokenCommand(new CreationTokenCreateDto(creationToken, expiresAt, new Guid(userId))));
                 return Ok(creationToken);
@@ -109,7 +111,7 @@ namespace Listomora.API.Controllers
             try
             {
                 if (await _mediator.Send(new CheckCreationTokenQuery(creationToken)))
-                    return Ok();
+                    return Ok(true);
                 else 
                     return BadRequest();
             }
