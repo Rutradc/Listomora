@@ -1,8 +1,8 @@
 ﻿using Listomora.Application.Contracts.Persistence.Dtos;
-using Listomora.Domain.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Listomora.API.Handlers
@@ -42,6 +42,11 @@ namespace Listomora.API.Handlers
 
             // Export du token sous forme de chaine de caractere
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+        public string GenerateCreationToken()
+        {
+            byte[] bytes = RandomNumberGenerator.GetBytes(32);
+            return Convert.ToHexString(bytes).ToLower();
         }
     }
 }

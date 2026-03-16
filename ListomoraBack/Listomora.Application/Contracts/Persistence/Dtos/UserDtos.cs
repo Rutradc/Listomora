@@ -4,19 +4,19 @@ namespace Listomora.Application.Contracts.Persistence.Dtos
 {
     public class UserCreateDto
     {
-        // TODO : ajouter token de création de compte
-        // string CreationToken,
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string? LastName { get; set; }
         public string Password { get; set; }
+        public string CreationToken { get; set; }
 
-        public UserCreateDto(string email, string firstName, string? lastName, string password)
+        public UserCreateDto(string email, string firstName, string? lastName, string password, string creationToken)
         {
             Email = email;
             FirstName = firstName;
             LastName = lastName;
             Password = password;
+            CreationToken = creationToken;
         }
     };
     public class UserUpdateDto
@@ -71,6 +71,19 @@ namespace Listomora.Application.Contracts.Persistence.Dtos
             FirstName = firstName;
             LastName = lastName;
             Role = role;
+        }
+    }
+    public class CreationTokenCreateDto
+    {
+        public string TokenHash { get; set; }
+        public DateTime ExpiresAt { get; set; }
+        public Guid AdminCreatorId { get; set; }
+
+        public CreationTokenCreateDto(string tokenHash, DateTime expiresAt, Guid adminCreatorId)
+        {
+            TokenHash = tokenHash;
+            ExpiresAt = expiresAt;
+            AdminCreatorId = adminCreatorId;
         }
     }
 }

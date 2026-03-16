@@ -13,6 +13,8 @@ namespace Listomora.Domain.Models
         public UserRole? Role { get; set; }
         public DateTime? DisableDate { get; set; }
         [JsonIgnore]
+        public ICollection<CreationToken> CreationTokens { get; set; }
+        [JsonIgnore]
         public ICollection<Article> CreatedArticles { get; set; }
         [JsonIgnore]
         public ICollection<ShoppingList> CreatedShoppingLists { get; set; }

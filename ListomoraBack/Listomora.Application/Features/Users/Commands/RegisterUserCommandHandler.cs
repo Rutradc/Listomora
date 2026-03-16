@@ -18,6 +18,7 @@ namespace Listomora.Application.Features.Users.Commands
             string password = Argon2.Hash(request.Dto.Password);
             var userDto = request.Dto;
             userDto.Password = password;
+            userDto.CreationToken = Argon2.Hash(userDto.CreationToken);
             await _repo.RegisterAsync(userDto);
             return Unit.Value;
         }

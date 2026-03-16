@@ -1,12 +1,14 @@
-﻿namespace Listomora.Domain.Models
+﻿using System.Text.Json.Serialization;
+
+namespace Listomora.Domain.Models
 {
     public class CreationToken : EntityBase
     {
-
-        public required string TokenHash { get; set; }
-
+        public string TokenHash { get; set; }
         public DateTime ExpiresAt { get; set; }
-
-        public Guid CreatedByAdminId { get; set; }
+        public DateTime? UsedAt { get; set; }
+        public Guid AdminCreatorId { get; set; }
+        [JsonIgnore]
+        public User AdminCreator { get; set; }
     }
 }
