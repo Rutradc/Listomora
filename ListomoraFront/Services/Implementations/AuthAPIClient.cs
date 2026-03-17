@@ -80,9 +80,17 @@ namespace ListomoraFront.Services.Implementations
             }
         }
 
-        public Task<bool> CheckCreationAsync(string creationToken)
+        public async Task<bool> CheckCreationTokenAsync(string creationToken)
         {
-            throw new NotImplementedException();
+            try
+            {
+                HttpResponseMessage response = await _http.PostAsJsonAsync(_defaultRoute + "creationtoken", creationToken);
+                return await response.Content.ReadFromJsonAsync<bool>();
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

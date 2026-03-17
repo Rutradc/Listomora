@@ -11,6 +11,6 @@ namespace ListomoraFront.Services.Interfaces
         Task LogoutAsync();
         Task<bool> UpdateAsync(UserUpdateDto dto);
         Task<string> GenerateCreationTokenAsync(CreationTokenCreateDto dto);
-        Task<bool> CheckCreationAsync(string creationToken);
+        Task<bool> CheckCreationTokenAsync(string creationToken);
     }
 }
