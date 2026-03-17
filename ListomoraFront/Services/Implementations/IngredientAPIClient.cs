@@ -9,7 +9,7 @@ namespace ListomoraFront.Services.Implementations
         private readonly HttpClient _http;
         private readonly string _defaultRoute = "/api/Ingredient/";
 
-        public IngredientAPIClient(HttpClient http, IConfiguration config)
+        public IngredientAPIClient(HttpClient http)
         {
             _http = http;
         }

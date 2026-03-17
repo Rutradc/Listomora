@@ -14,7 +14,7 @@ namespace ListomoraFront.Services.Implementations
         public event Action? OnAuthStateChanged;
         private readonly ILocalStorageService _localStorage;
 
-        public AuthAPIClient(HttpClient http, IConfiguration config, ILocalStorageService localStorage)
+        public AuthAPIClient(HttpClient http, ILocalStorageService localStorage)
         {
             _http = http;
             _localStorage = localStorage;

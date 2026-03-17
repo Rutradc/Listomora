@@ -9,7 +9,7 @@ namespace ListomoraFront.Services.Implementations
         private readonly HttpClient _http;
         private readonly string _defaultRoute = "/api/Article/";
         
-        public ArticleAPIClient(HttpClient http, IConfiguration config)
+        public ArticleAPIClient(HttpClient http)
         {
             _http = http;
         }
