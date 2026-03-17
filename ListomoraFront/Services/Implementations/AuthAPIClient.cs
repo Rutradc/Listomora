@@ -3,6 +3,7 @@ using ListomoraFront.Models.Auth;
 using ListomoraFront.Models.Users;
 using ListomoraFront.Services.Interfaces;
 using System.Net.Http.Json;
+using static MudBlazor.CategoryTypes;
 
 namespace ListomoraFront.Services.Implementations
 {
@@ -39,7 +40,7 @@ namespace ListomoraFront.Services.Implementations
             return false;
         }
 
-        public async void LogoutAsync()
+        public async Task LogoutAsync()
         {
             await _localStorage.RemoveItemAsync("token");
             NotifyStateChanged();
@@ -58,6 +59,33 @@ namespace ListomoraFront.Services.Implementations
                 HttpResponseMessage response = await _http.PatchAsJsonAsync("/api/User", dto);
                 NotifyStateChanged();
                 return response.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<string> GenerateCreationTokenAsync(CreationTokenCreateDto dto)
+        {
+            DateTime expiresAt = (DateTime)(((DateTime)(dto.ExpirationDate)).Date + dto.ExpirationTime);
+            try
+            {
+                HttpResponseMessage response = await _http.PostAsJsonAsync(_defaultRoute + "createcreationtoken", expiresAt);
+                return await response.Content.ReadAsStringAsync();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool> CheckCreationTokenAsync(string creationToken)
+        {
+            try
+            {
+                HttpResponseMessage response = await _http.PostAsJsonAsync(_defaultRoute + "creationtoken", creationToken);
+                return await response.Content.ReadFromJsonAsync<bool>();
             }
             catch
             {

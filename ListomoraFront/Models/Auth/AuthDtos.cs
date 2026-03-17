@@ -32,5 +32,17 @@ namespace ListomoraFront.Models.Auth
         [Required(ErrorMessage = "Veuillez confirmer le mot de passe.")]
         [Compare(nameof(Password), ErrorMessage = "Les mots de passe ne correspondent pas.")]
         public string PasswordConfirmation { get; set; }
+        [Required]
+        public string CreationToken { get; set; }
+    }
+
+    public class CreationTokenCreateDto
+    {
+        [Required(ErrorMessage = "La date d'expiration est obligatoire.")]
+        [FutureDate(ErrorMessage = "La date d'expiration doit être dans le futur.")]
+        public DateTime? ExpirationDate { get; set; }
+        [Required(ErrorMessage = "L'heure d'expiration est obligatoire.")]
+        [FutureTime(ErrorMessage = "L'heure d'expiration doit être dans le futur.")]
+        public TimeSpan? ExpirationTime { get; set; }
     }
 }

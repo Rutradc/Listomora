@@ -9,73 +9,121 @@
             <MudText Typo="Typo.h4" Align="Align.Center">
                 Listomora
             </MudText>
+            @if (!hasValidToken)
+            {
+                <MudText Typo="Typo.subtitle2" Align="Align.Center" Color="Color.Secondary">
+                    Insérez un token de création valide
+                </MudText>
+                <MudText Typo="Typo.subtitle1" Align="Align.Center">
+                    Veuillez contacter un administrateur pour vous fournir d'un token
+                </MudText>
+                <EditForm Model="@tokenModel" OnValidSubmit="CheckTokenValidity">
+                    <MudTextField @bind-Value="tokenModel.CreationToken"
+                                  For="@(() => tokenModel.CreationToken)"
+                                  Label="Token de création"
+                                  Required
+                                  Variant="Variant.Outlined"
+                                  Immediate="true"/>
 
-            <MudText Typo="Typo.subtitle1" Align="Align.Center" Color="Color.Secondary">
-                Créez votre compte
-            </MudText>
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               FullWidth="true"
+                               Size="Size.Large"
+                               Class="mt-4"
+                               ButtonType="ButtonType.Submit"
+                               Disabled="@isLoading">
+                        @if (isLoading)
+                        {
+                            <MudProgressCircular Size="Size.Small" Class="me-2" Indeterminate="true" />
+                            <span>Vérification du token...</span>
+                        }
+                        else
+                        {
+                            <span>Créer un compte avec ce token</span>
+                        }
+                    </MudButton>
+                </EditForm>
+            }
+            else 
+            {
+                <MudText Typo="Typo.subtitle1" Align="Align.Center" Color="Color.Secondary">
+                    Créez votre compte
+                </MudText>
 
-            <EditForm Model="@model" OnValidSubmit="HandleRegister">
-                <DataAnnotationsValidator />
+                <EditForm Model="@model" OnValidSubmit="HandleRegister">
+                    <DataAnnotationsValidator />
 
-                <MudTextField @bind-Value="model.FirstName"
-                              For="@(() => model.FirstName)"
-                              Label="Prénom *"
-                              Variant="Variant.Outlined"
-                              Immediate="true" />
+                    <MudTextField @bind-Value="model.CreationToken"
+                                  For="@(() => model.CreationToken)"
+                                  Label="Token de création"
+                                  Variant="Variant.Outlined"
+                                  ReadOnly="true"/>
+                    <MudDivider Class="my-2" />
 
-                <MudTextField @bind-Value="model.LastName"
-                              For="@(() => model.LastName)"
-                              Label="Nom de famille"
-                              Variant="Variant.Outlined"
-                              Immediate="true" />
+                    <MudTextField @bind-Value="model.FirstName"
+                                  For="@(() => model.FirstName)"
+                                  Label="Prénom"
+                                  Required
+                                  Variant="Variant.Outlined"
+                                  Immediate="true" />
 
-                <MudTextField @bind-Value="model.Email"
-                              For="@(() => model.Email)"
-                              Label="Email *"
-                              Variant="Variant.Outlined"
-                              Immediate="true" />
+                    <MudTextField @bind-Value="model.LastName"
+                                  For="@(() => model.LastName)"
+                                  Label="Nom de famille"
+                                  Variant="Variant.Outlined"
+                                  Immediate="true" />
 
-                <MudTextField @bind-Value="model.Password"
-                              For="@(() => model.Password)"
-                              Label="Mot de passe *"
-                              Variant="Variant.Outlined"
-                              InputType="PasswordInput"
-                              Adornment="Adornment.End"
-                              AdornmentIcon="@PasswordInputIcon"
-                              OnAdornmentClick="ToggleShowPassword"
-                              Immediate="true"
-                              UserAttributes="InputAttributesHelper.NewPassword" />
+                    <MudTextField @bind-Value="model.Email"
+                                  For="@(() => model.Email)"
+                                  Label="Email"
+                                  Required
+                                  Variant="Variant.Outlined"
+                                  Immediate="true" />
 
-                <MudTextField @bind-Value="model.PasswordConfirmation"
-                              For="@(() => model.PasswordConfirmation)"
-                              Label="Confirmation du mot de passe *"
-                              Variant="Variant.Outlined"
-                              InputType="PasswordInput"
-                              Adornment="Adornment.End"
-                              AdornmentIcon="@PasswordInputIcon"
-                              OnAdornmentClick="ToggleShowPassword"
-                              Immediate="true"
-                              UserAttributes="InputAttributesHelper.NewPassword" />
+                    <MudTextField @bind-Value="model.Password"
+                                  For="@(() => model.Password)"
+                                  Label="Mot de passe"
+                                  Required
+                                  Variant="Variant.Outlined"
+                                  InputType="PasswordInput"
+                                  Adornment="Adornment.End"
+                                  AdornmentIcon="@PasswordInputIcon"
+                                  OnAdornmentClick="ToggleShowPassword"
+                                  Immediate="true"
+                                  UserAttributes="InputAttributesHelper.NewPassword" />
 
-                <MudButton Variant="Variant.Filled"
-                           Color="Color.Primary"
-                           FullWidth="true"
-                           Size="Size.Large"
-                           Class="mt-4"
-                           ButtonType="ButtonType.Submit"
-                           Disabled="@isRegistering">
-                    @if (isRegistering)
-                    {
-                        <MudProgressCircular Size="Size.Small" Class="me-2" Indeterminate="true" />
-                        <span>Création du compte...</span>
-                    }
-                    else
-                    {
-                        <span>Créer mon compte</span>
-                    }
-                </MudButton>
+                    <MudTextField @bind-Value="model.PasswordConfirmation"
+                                  For="@(() => model.PasswordConfirmation)"
+                                  Label="Confirmation du mot de passe"
+                                  Required
+                                  Variant="Variant.Outlined"
+                                  InputType="PasswordInput"
+                                  Adornment="Adornment.End"
+                                  AdornmentIcon="@PasswordInputIcon"
+                                  OnAdornmentClick="ToggleShowPassword"
+                                  Immediate="true"
+                                  UserAttributes="InputAttributesHelper.NewPassword" />
 
-            </EditForm>
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               FullWidth="true"
+                               Size="Size.Large"
+                               Class="mt-4"
+                               ButtonType="ButtonType.Submit"
+                               Disabled="@isLoading">
+                        @if (isLoading)
+                        {
+                            <MudProgressCircular Size="Size.Small" Class="me-2" Indeterminate="true" />
+                            <span>Création du compte...</span>
+                        }
+                        else
+                        {
+                            <span>Créer mon compte</span>
+                        }
+                    </MudButton>
+
+                </EditForm>
+            }
             @if (errorMessage is not null)
             {
                 <MudText Typo="Typo.body2" Color="Color.Error">@errorMessage</MudText>
@@ -90,7 +138,7 @@
                        Color="Color.Primary"
                        FullWidth="true"
                        Href="/login"
-                       Disabled="@isRegistering">
+                       Disabled="@isLoading">
                 Se connecter
             </MudButton>
         </MudStack>
