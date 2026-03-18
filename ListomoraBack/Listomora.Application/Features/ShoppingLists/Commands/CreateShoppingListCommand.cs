@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Listomora.Application.Features.ShoppingLists.Commands
 {
-    public class CreateShoppingListCommand : IRequest<Unit>
+    public class CreateShoppingListCommand : IRequest<Guid>
     {
         public ShoppingListCreateDto Dto { get; set; }
         public Guid CreatorId { get; set; }

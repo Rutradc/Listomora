@@ -86,7 +86,7 @@ namespace Listomora.API.Controllers
         }
         [HttpPost]
         [Authorize(Policy = "Authenticated")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -95,8 +95,8 @@ namespace Listomora.API.Controllers
             try
             {
                 string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                var created = await _mediator.Send(new CreateShoppingListCommand(dto, new Guid(userId)));
-                return Created();
+                Guid id = await _mediator.Send(new CreateShoppingListCommand(dto, new Guid(userId)));
+                return Ok(id);
             }
             catch (Exception ex)
             {
