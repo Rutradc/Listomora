@@ -32,11 +32,12 @@ namespace Listomora.Infrastructure.Repositories
                 return (await _dbContext.ShoppingLists.Include(s => s.ShoppingListLines).ThenInclude(sl => sl.Article).SingleOrDefaultAsync(s => s.Id == id && s.CreatorId == userId)).ToDetailsDto();
         }
 
-        public async Task<bool> InsertAsync(ShoppingListCreateDto dto, Guid creatorId)
+        public async Task<Guid> InsertAsync(ShoppingListCreateDto dto, Guid creatorId)
         {
-            _dbContext.ShoppingLists.Add(dto.ToEntity(creatorId));
+            var entity = dto.ToEntity(creatorId);
+            _dbContext.ShoppingLists.Add(entity);
             await _dbContext.SaveChangesAsync();
-            return true;
+            return entity.Id;
         }
 
         public async Task<bool> InsertLineAsync(ShoppingListLineCreateDto dto)

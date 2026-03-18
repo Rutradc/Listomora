@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Listomora.Application.Features.ShoppingLists.Commands
 {
-    public class CreateShoppingListCommandHandler : IRequestHandler<CreateShoppingListCommand, Unit>
+    public class CreateShoppingListCommandHandler : IRequestHandler<CreateShoppingListCommand, Guid>
     {
         private readonly IShoppingListRepo _repo;
 
@@ -12,10 +12,9 @@ namespace Listomora.Application.Features.ShoppingLists.Commands
             _repo = repo;
         }
 
-        public async Task<Unit> Handle(CreateShoppingListCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateShoppingListCommand request, CancellationToken cancellationToken)
         {
-            await _repo.InsertAsync(request.Dto, request.CreatorId);
-            return Unit.Value;
+            return await _repo.InsertAsync(request.Dto, request.CreatorId);
         }
     }
 }
