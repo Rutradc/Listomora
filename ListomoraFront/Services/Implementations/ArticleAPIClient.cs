@@ -1,4 +1,5 @@
 ﻿using ListomoraFront.Models.Articles;
+using ListomoraFront.Models.ShoppingLists;
 using ListomoraFront.Services.Interfaces;
 using System.Net.Http.Json;
 
@@ -58,6 +59,13 @@ namespace ListomoraFront.Services.Implementations
         {
             HttpResponseMessage response = await _http.PatchAsJsonAsync(_defaultRoute + id, form);
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<List<ShoppingListLineArticleDto>> Search(string searchString)
+        {
+            HttpResponseMessage response = await _http.GetAsync(_defaultRoute + "search/" + searchString);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromJsonAsync<List<ShoppingListLineArticleDto>>();
         }
     }
 }

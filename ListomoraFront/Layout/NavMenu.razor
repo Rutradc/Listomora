@@ -22,6 +22,15 @@
                 <MudText Color="Color.Dark">Générer un token de création de compte</MudText>
             </MudNavLink>
         }
+        <MudNavLink Href="/shoppinglist/mine" Icon="fas fa-cart-shopping" IconColor="Color.Dark">
+            <MudText Color="Color.Dark">Mes listes de courses</MudText>
+        </MudNavLink>
+        @if(User.Role == UserRole.ADMIN)
+        {
+            <MudNavLink Href="/shoppinglist/adminlist" Icon="fas fa-cart-shopping" IconColor="Color.Dark">
+                <MudText Color="Color.Dark">Liste admin d'articles</MudText>
+            </MudNavLink>
+        }
         <MudNavGroup Icon="fas fa-shop" IconColor="Color.Dark" Expanded="false">
             <TitleContent>
                 <MudText Color="Color.Dark">Articles</MudText>

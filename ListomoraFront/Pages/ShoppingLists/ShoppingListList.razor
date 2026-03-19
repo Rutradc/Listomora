@@ -1,0 +1,30 @@
+﻿@page "/shoppinglist/adminlist"
+@using ListomoraFront.Models
+@using ListomoraFront.Models.ShoppingLists
+
+<PageTitle>Listomora - Liste des listes de courses</PageTitle>
+
+<MudTable Items="@ShoppingLists" FixedHeader="true" FixedFooter="true" Dense="false" Hover="true" Filter="new Func<ShoppingListListDto, bool>(FilterFunc1)" Class="ma-4">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Listes de courses</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString1" Placeholder="Recherche" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Nom</MudTh>
+        <MudTh>Template</MudTh>
+        <MudTh>Terminée</MudTh>
+        <MudTh>Terminée à</MudTh>
+        <MudTh><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => GoToCreate())">Nouvelle liste</MudButton></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nom">@context.Name</MudTd>
+        <MudTd DataLabel="Template"><MudIcon Icon="@(context.IsTemplate ? "fas fa-check" : "fas fa-xmark")" /></MudTd>
+        <MudTd DataLabel="Terminée"><MudIcon Icon="@(context.IsDone ? "fas fa-check" : "fas fa-xmark")" /></MudTd>
+        <MudTd DataLabel="Terminée à">@context.DoneAt</MudTd>
+        <MudTd><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => GoToDetails(context.Id))">Voir</MudButton></MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
