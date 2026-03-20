@@ -1,4 +1,5 @@
-﻿using Listomora.Application.Contracts.Persistence.Dtos;
+﻿using Listomora.Application.Contracts.Persistence.CustomExceptions;
+using Listomora.Application.Contracts.Persistence.Dtos;
 using Listomora.Application.Contracts.Persistence.Repositories;
 using Listomora.Domain.Models;
 using Listomora.Infrastructure.Mappers;
@@ -40,13 +41,6 @@ namespace Listomora.Infrastructure.Repositories
             return entity.Id;
         }
 
-        public async Task<bool> InsertLineAsync(ShoppingListLineCreateDto dto)
-        {
-            _dbContext.ShoppingListLines.Add(dto.ToEntity());
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }
-
         public async Task<bool> UpdateAsync(Guid id, ShoppingListUpdateDto dto, Guid? userId = null)
         {
             ShoppingList shoppingListToUpdate;
@@ -61,18 +55,6 @@ namespace Listomora.Infrastructure.Repositories
             return true;
         }
 
-        public async Task<bool> UpdateLineAsync(Guid articleId, Guid shoppingListId, ShoppingListLineUpdateDto dto)
-        {
-            ShoppingListLine shoppingListLineToUpdate;
-            shoppingListLineToUpdate = await _dbContext.ShoppingListLines.SingleOrDefaultAsync(s => s.ArticleId == articleId && s.ShoppingListId == shoppingListId);
-            if (shoppingListLineToUpdate is null)
-                return false;
-            shoppingListLineToUpdate.Amount = dto.Amount;
-            shoppingListLineToUpdate.Unit = dto.Unit;
-            shoppingListLineToUpdate.Price = dto.Price;
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }
         public async Task<bool> DeleteAsync(Guid id, Guid? userId = null)
         {
             ShoppingList shoppingList;
@@ -83,17 +65,6 @@ namespace Listomora.Infrastructure.Repositories
             if (shoppingList is null)
                 return false;
             _dbContext.ShoppingLists.Remove(shoppingList);
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> DeleteLineAsync(Guid articleId, Guid shoppingListId)
-        {
-            ShoppingListLine shoppingListLine;
-            shoppingListLine = await _dbContext.ShoppingListLines.FirstOrDefaultAsync(s => s.ArticleId == articleId && s.ShoppingListId == shoppingListId);
-            if (shoppingListLine is null)
-                return false;
-            _dbContext.ShoppingListLines.Remove(shoppingListLine);
             await _dbContext.SaveChangesAsync();
             return true;
         }
@@ -112,6 +83,39 @@ namespace Listomora.Infrastructure.Repositories
             shoppingListToUpdate.IsDone = isDone;
             if (!isDone)
                 shoppingListToUpdate.DoneAt = null;
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UpdateLinesAsync(ShoppingListLinesUpdateDto dto)
+        {
+            Guid shoppingListId = dto.ShoppingListId;
+
+            // delete
+            IEnumerable<ShoppingListLine> linesToRemove = await _dbContext.ShoppingListLines.Where(l => l.ShoppingListId == shoppingListId && dto.RemovedLinesArticleIds.Contains(l.ArticleId)).ToListAsync();
+            if (linesToRemove.ToList().Count != dto.RemovedLinesArticleIds.Count)
+                throw new NotFoundException($"{dto.RemovedLinesArticleIds.Count - linesToRemove.ToList().Count} line(s) to delete was(were) not found.");
+            _dbContext.ShoppingListLines.RemoveRange(linesToRemove);
+
+            // update
+            IEnumerable<ShoppingListLine> linesToUpdate = _dbContext.ShoppingListLines.Where(l => dto.UpdatedLines.Select(x => x.ArticleId).Contains(l.ArticleId) && l.ShoppingListId == shoppingListId);
+            foreach (ShoppingListLine line in linesToUpdate)
+            {
+                ShoppingListLineCreateUpdateDto? lineUpdated = dto.UpdatedLines.SingleOrDefault(x => x.OriginArticleId == line.ArticleId);
+                if (lineUpdated is null)
+                    throw new NotFoundException("At least one of the lines to update was not found.");
+                line.ArticleId = lineUpdated.ArticleId;
+                line.Amount = lineUpdated.Amount;
+                line.Unit = lineUpdated.Unit;
+                line.Price = lineUpdated.Price;
+            };
+            _dbContext.ShoppingListLines.UpdateRange(linesToUpdate);
+
+            // insert
+
+            var linesToAdd = dto.AddedLines.Select(x => x.ToEntity());
+            _dbContext.ShoppingListLines.AddRange(linesToAdd);
+
             await _dbContext.SaveChangesAsync();
             return true;
         }

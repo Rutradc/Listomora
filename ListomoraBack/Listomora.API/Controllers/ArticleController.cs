@@ -198,5 +198,25 @@ namespace Listomora.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("search/{searchString}")]
+        [Authorize(Policy = "Authenticated")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Search(string searchString)
+        {
+            try
+            {
+                if (searchString is null)
+                    return BadRequest("Should at least send one character to search.");
+                string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                return Ok(await _mediator.Send(new SearchArticleByStringQuery(searchString, new Guid(userId))));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
