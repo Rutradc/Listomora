@@ -12,11 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Listomora.Infrastructure.Migrations
 {
     [DbContext(typeof(ListomoraDbContext))]
-<<<<<<<< HEAD:ListomoraBack/Listomora.Infrastructure/Migrations/20260320100734_init.Designer.cs
-    [Migration("20260320100734_init")]
-========
-    [Migration("20260316105744_init")]
->>>>>>>> 7151b33265f52ca51771dad3c0f4e5492c5a1fcc:ListomoraBack/Listomora.Infrastructure/Migrations/20260316105744_init.Designer.cs
+    [Migration("20260320101817_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -589,11 +585,7 @@ namespace Listomora.Infrastructure.Migrations
                             Email = "john@cena.us",
                             FirstName = "John",
                             LastName = "Cena",
-<<<<<<<< HEAD:ListomoraBack/Listomora.Infrastructure/Migrations/20260320100734_init.Designer.cs
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$jtCiYlLrbgpWYGk2n3GE8A$6nvjf01pJU8+SQtS+0kaqNz8O2I8vDKdvWqJPw6RelY",
-========
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$OJpq9F8WrMV6gtGQ4YrBVw$aImUMEHxEwpKSrHeBNwBH0oLez53ayOYzehKtlh5zbY",
->>>>>>>> 7151b33265f52ca51771dad3c0f4e5492c5a1fcc:ListomoraBack/Listomora.Infrastructure/Migrations/20260316105744_init.Designer.cs
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$TJV0EXfCCJVX/LQvxmDVVg$T8f2Q3Tg2bQb2gRxUSL3rhdv8rRffBi8RR6VR2MZ9zw",
                             Role = 0
                         },
                         new
@@ -603,11 +595,7 @@ namespace Listomora.Infrastructure.Migrations
                             Email = "cr7@goat.com",
                             FirstName = "Cristiano",
                             LastName = "Ronaldo",
-<<<<<<<< HEAD:ListomoraBack/Listomora.Infrastructure/Migrations/20260320100734_init.Designer.cs
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$p4akL1Q4gdcdkQGfgjIOWQ$RUtq78evmsNxqwF97kf/Wp2WmBbZ5WhbcbnjRRYoWlE",
-========
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$NfrlU8e/0Sp1aqqaHkNEzA$IIbZnf2Xj1P6VCPZ8i8cRF/AFzYYXLbQNdjEdN7JAt0",
->>>>>>>> 7151b33265f52ca51771dad3c0f4e5492c5a1fcc:ListomoraBack/Listomora.Infrastructure/Migrations/20260316105744_init.Designer.cs
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$99J4XCa35WsR8kb8RV/59g$dvXPS3KUan0pA75f7cpw/C1X9VMa8KDwkFYLoeIsCAo",
                             Role = 1
                         },
                         new
@@ -617,11 +605,7 @@ namespace Listomora.Infrastructure.Migrations
                             Email = "lm10@goat.com",
                             FirstName = "Lionel",
                             LastName = "Messi",
-<<<<<<<< HEAD:ListomoraBack/Listomora.Infrastructure/Migrations/20260320100734_init.Designer.cs
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$xFhzpOjAnFM0WRmYfGqX2Q$nraLcMsTJ1JE/+SqtqbpVgqPf8r/JhGcNpNksHInupA",
-========
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$9KglQXiIR6s9qInYYtO/4A$1Xrnsdt/TfiPWtTz1U+R2IfZdXHrdiKO5LlA/8D84hY",
->>>>>>>> 7151b33265f52ca51771dad3c0f4e5492c5a1fcc:ListomoraBack/Listomora.Infrastructure/Migrations/20260316105744_init.Designer.cs
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$t/fNj1U+6fmOHjVWdRKtXw$jOCjBrx9Ts3sl+UMtFh8Wk+ilMpp4YQGbtmEo078lVw",
                             Role = 1
                         });
                 });

@@ -165,6 +165,34 @@ namespace Listomora.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Listomora.Domain.Models.CreationToken", b =>
+                {
+                    b.Property<string>("TokenHash")
+                        .HasMaxLength(64)
+                        .HasColumnType("char(64)");
+
+                    b.Property<Guid>("AdminCreatorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DateTime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UsedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("TokenHash")
+                        .HasName("PK_CreationToken");
+
+                    b.HasIndex("AdminCreatorId");
+
+                    b.ToTable("CreationToken", (string)null);
+                });
+
             modelBuilder.Entity("Listomora.Domain.Models.ShoppingList", b =>
                 {
                     b.Property<Guid>("Id")
@@ -554,7 +582,7 @@ namespace Listomora.Infrastructure.Migrations
                             Email = "john@cena.us",
                             FirstName = "John",
                             LastName = "Cena",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$jtCiYlLrbgpWYGk2n3GE8A$6nvjf01pJU8+SQtS+0kaqNz8O2I8vDKdvWqJPw6RelY",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$TJV0EXfCCJVX/LQvxmDVVg$T8f2Q3Tg2bQb2gRxUSL3rhdv8rRffBi8RR6VR2MZ9zw",
                             Role = 0
                         },
                         new
@@ -564,7 +592,7 @@ namespace Listomora.Infrastructure.Migrations
                             Email = "cr7@goat.com",
                             FirstName = "Cristiano",
                             LastName = "Ronaldo",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$p4akL1Q4gdcdkQGfgjIOWQ$RUtq78evmsNxqwF97kf/Wp2WmBbZ5WhbcbnjRRYoWlE",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$99J4XCa35WsR8kb8RV/59g$dvXPS3KUan0pA75f7cpw/C1X9VMa8KDwkFYLoeIsCAo",
                             Role = 1
                         },
                         new
@@ -574,7 +602,7 @@ namespace Listomora.Infrastructure.Migrations
                             Email = "lm10@goat.com",
                             FirstName = "Lionel",
                             LastName = "Messi",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$xFhzpOjAnFM0WRmYfGqX2Q$nraLcMsTJ1JE/+SqtqbpVgqPf8r/JhGcNpNksHInupA",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$t/fNj1U+6fmOHjVWdRKtXw$jOCjBrx9Ts3sl+UMtFh8Wk+ilMpp4YQGbtmEo078lVw",
                             Role = 1
                         });
                 });
@@ -850,6 +878,18 @@ namespace Listomora.Infrastructure.Migrations
                     b.Navigation("Creator");
                 });
 
+            modelBuilder.Entity("Listomora.Domain.Models.CreationToken", b =>
+                {
+                    b.HasOne("Listomora.Domain.Models.User", "AdminCreator")
+                        .WithMany("CreationTokens")
+                        .HasForeignKey("AdminCreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_CreationToken_AdminCreator");
+
+                    b.Navigation("AdminCreator");
+                });
+
             modelBuilder.Entity("Listomora.Domain.Models.ShoppingList", b =>
                 {
                     b.HasOne("Listomora.Domain.Models.User", "Creator")
@@ -898,6 +938,8 @@ namespace Listomora.Infrastructure.Migrations
                     b.Navigation("CreatedArticles");
 
                     b.Navigation("CreatedShoppingLists");
+
+                    b.Navigation("CreationTokens");
                 });
 #pragma warning restore 612, 618
         }
