@@ -16,6 +16,12 @@
     }
     else
     {
+        @if (User.Role == UserRole.ADMIN)
+        {
+            <MudNavLink Href="/generateCreationToken" Icon="fas fa-user-plus" IconColor="Color.Dark">
+                <MudText Color="Color.Dark">Générer un token de création de compte</MudText>
+            </MudNavLink>
+        }
         <MudNavGroup Icon="fas fa-shop" IconColor="Color.Dark" Expanded="false">
             <TitleContent>
                 <MudText Color="Color.Dark">Articles</MudText>

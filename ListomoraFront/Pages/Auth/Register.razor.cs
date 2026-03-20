@@ -12,17 +12,36 @@ namespace ListomoraFront.Pages.Auth
         [Inject]
         private NavigationManager _navigation { get; set; }
 
+        private CreationTokenModel tokenModel = new();
         private RegisterForm model = new ();
         private string errorMessage;
-        private bool isRegistering = false;
+        private bool isLoading = false;
+        private string creationToken;
 
+        private bool hasValidToken = false;
         private bool isShown = false;
         private InputType PasswordInput = InputType.Password;
         private string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
 
+        private async Task CheckTokenValidity()
+        {
+            isLoading = true;
+            errorMessage = null;
+            if (await _service.CheckCreationTokenAsync(tokenModel.CreationToken))
+            {
+                hasValidToken = true;
+                model.CreationToken = tokenModel.CreationToken;
+            }
+            else
+            {
+                errorMessage = "Token invalide.";
+            }
+            isLoading = false;
+        }
+
         private async Task HandleRegister()
         {
-            isRegistering = true;
+            isLoading = true;
             errorMessage = null;
 
             try
@@ -45,7 +64,7 @@ namespace ListomoraFront.Pages.Auth
             }
             finally
             {
-                isRegistering = false;
+                isLoading = false;
             }
         }
 
@@ -63,6 +82,10 @@ namespace ListomoraFront.Pages.Auth
                 PasswordInputIcon = Icons.Material.Filled.Visibility;
                 PasswordInput = InputType.Text;
             }
+        }
+        private class CreationTokenModel
+        {
+            public string CreationToken { get; set; }
         }
     }
 }

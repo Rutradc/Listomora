@@ -8,6 +8,7 @@ namespace Listomora.Infrastructure
     public class ListomoraDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<CreationToken> CreationTokens { get; set; }
         public DbSet<Article> Articles { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<ShoppingList> ShoppingLists { get; set; }
@@ -19,6 +20,7 @@ namespace Listomora.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserConfig());
+            modelBuilder.ApplyConfiguration(new CreationTokenConfig());
             modelBuilder.ApplyConfiguration(new ArticleConfig());
             modelBuilder.ApplyConfiguration(new IngredientConfig());
             modelBuilder.ApplyConfiguration(new ShoppingListConfig());

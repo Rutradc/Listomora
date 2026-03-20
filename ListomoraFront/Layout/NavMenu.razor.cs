@@ -27,7 +27,7 @@ namespace ListomoraFront.Layout
 
         private async Task Logout()
         {
-            _authService.LogoutAsync();
+            await _authService.LogoutAsync();
             _navigationManager.NavigateTo("/");
         }
     }

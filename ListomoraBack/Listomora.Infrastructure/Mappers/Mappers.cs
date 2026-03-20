@@ -25,6 +25,16 @@ namespace Listomora.Infrastructure.Mappers
         {
             return new UserNavDto(entity.FirstName, entity.LastName, entity.Role);
         }
+
+        public static CreationToken ToEntity(this CreationTokenCreateDto dto)
+        {
+            return new CreationToken()
+            {
+                TokenHash = dto.TokenHash,
+                ExpiresAt = dto.ExpiresAt,
+                AdminCreatorId = dto.AdminCreatorId,
+            };
+        }
         #endregion
         #region Article
         public static Article ToEntity(this ArticleCreateUpdateDto dto, Guid? creatorId = null)

@@ -8,7 +8,9 @@ namespace ListomoraFront.Services.Interfaces
         public event Action? OnAuthStateChanged;
         Task<bool> LoginAsync(LoginForm form);
         Task<bool> RegisterAsync(RegisterForm form);
-        void LogoutAsync();
+        Task LogoutAsync();
         Task<bool> UpdateAsync(UserUpdateDto dto);
+        Task<string> GenerateCreationTokenAsync(CreationTokenCreateDto dto);
+        Task<bool> CheckCreationTokenAsync(string creationToken);
     }
 }
