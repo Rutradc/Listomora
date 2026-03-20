@@ -131,9 +131,9 @@ namespace Listomora.Infrastructure.Migrations
                 columns: new[] { "Id", "DisableDate", "Email", "FirstName", "LastName", "Password", "Role" },
                 values: new object[,]
                 {
-                    { new Guid("0eb2993d-7fd5-4f29-9172-1b8f6aa80736"), null, "lm10@goat.com", "Lionel", "Messi", "$argon2id$v=19$m=65536,t=3,p=1$9KglQXiIR6s9qInYYtO/4A$1Xrnsdt/TfiPWtTz1U+R2IfZdXHrdiKO5LlA/8D84hY", 1 },
-                    { new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"), null, "john@cena.us", "John", "Cena", "$argon2id$v=19$m=65536,t=3,p=1$OJpq9F8WrMV6gtGQ4YrBVw$aImUMEHxEwpKSrHeBNwBH0oLez53ayOYzehKtlh5zbY", 0 },
-                    { new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"), null, "cr7@goat.com", "Cristiano", "Ronaldo", "$argon2id$v=19$m=65536,t=3,p=1$NfrlU8e/0Sp1aqqaHkNEzA$IIbZnf2Xj1P6VCPZ8i8cRF/AFzYYXLbQNdjEdN7JAt0", 1 }
+                    { new Guid("0eb2993d-7fd5-4f29-9172-1b8f6aa80736"), null, "lm10@goat.com", "Lionel", "Messi", "$argon2id$v=19$m=65536,t=3,p=1$t/fNj1U+6fmOHjVWdRKtXw$jOCjBrx9Ts3sl+UMtFh8Wk+ilMpp4YQGbtmEo078lVw", 1 },
+                    { new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"), null, "john@cena.us", "John", "Cena", "$argon2id$v=19$m=65536,t=3,p=1$TJV0EXfCCJVX/LQvxmDVVg$T8f2Q3Tg2bQb2gRxUSL3rhdv8rRffBi8RR6VR2MZ9zw", 0 },
+                    { new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"), null, "cr7@goat.com", "Cristiano", "Ronaldo", "$argon2id$v=19$m=65536,t=3,p=1$99J4XCa35WsR8kb8RV/59g$dvXPS3KUan0pA75f7cpw/C1X9VMa8KDwkFYLoeIsCAo", 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -340,6 +340,13 @@ namespace Listomora.Infrastructure.Migrations
                 name: "IX_Article_CreatorId",
                 table: "Article",
                 column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Article_Name_CreatorId",
+                table: "Article",
+                columns: new[] { "Name", "CreatorId" },
+                unique: true,
+                filter: "[CreatorId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CreationToken_AdminCreatorId",

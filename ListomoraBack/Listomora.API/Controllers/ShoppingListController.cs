@@ -39,6 +39,7 @@ namespace Listomora.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpGet("mine")]
         [Authorize(Policy = "Authenticated")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -57,6 +58,7 @@ namespace Listomora.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpGet("{id:guid}")]
         [Authorize(Policy = "Authenticated")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -84,6 +86,7 @@ namespace Listomora.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpPost]
         [Authorize(Policy = "Authenticated")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -103,6 +106,7 @@ namespace Listomora.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpPatch("{id:guid}")]
         [Authorize(Policy = "Authenticated")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -133,6 +137,7 @@ namespace Listomora.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpDelete("{id:guid}")]
         [Authorize(Policy = "Authenticated")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -163,59 +168,20 @@ namespace Listomora.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost("line")]
-        [Authorize(Policy = "Authenticated")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> InsertLine([FromBody] ShoppingListLineCreateDto dto)
-        {
-            try
-            {
-                var created = await _mediator.Send(new CreateShoppingListLineCommand(dto));
-                return Created();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-        [HttpPatch("line/{articleId:guid}&{shoppingListId:guid}")]
+        
+        //TODO : ajouter check creatorId ou role admin via shoppingList
+        [HttpPatch("lines")]
         [Authorize(Policy = "Authenticated")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateLine(Guid articleId, Guid shoppingListId, [FromBody] ShoppingListLineUpdateDto dto)
+        public async Task<IActionResult> UpdateLines([FromBody] ShoppingListLinesUpdateDto dto)
         {
             try
             {
-                await _mediator.Send(new UpdateShoppingListLineCommand(articleId, shoppingListId, dto));
-                return Ok();
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-        [HttpDelete("line/{articleId:guid}&{shoppingListId:guid}")]
-        [Authorize(Policy = "Authenticated")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteLine(Guid articleId, Guid shoppingListId)
-        {
-            try
-            {
-                await _mediator.Send(new DeleteShoppingListLineCommand(articleId, shoppingListId));
+                await _mediator.Send(new UpdateShoppingListLinesCommand(dto));
                 return Ok();
             }
             catch (NotFoundException ex)

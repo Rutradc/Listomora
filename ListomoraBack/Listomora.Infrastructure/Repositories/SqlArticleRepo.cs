@@ -77,5 +77,13 @@ namespace Listomora.Infrastructure.Repositories
         {
             return await _dbContext.Articles.Include(a => a.Creator).Where(a => a.CreatorId == userId).Select(a => a.ToDetailsDto()).ToListAsync();
         }
+
+        public async Task<IEnumerable<ShoppingListLineArticleDto>> Search(string searchString, Guid? userId = null)
+        {
+            if (userId is null)
+                return (await _dbContext.Articles.Where(a => a.Name.Contains(searchString)).ToListAsync()).Select(a => a.ToShoppingListLineArticleDto());
+            else
+                return (await _dbContext.Articles.Where(a => (a.IsPublic || a.CreatorId == userId) && a.Name.Contains(searchString)).ToListAsync()).Select(a => a.ToShoppingListLineArticleDto());
+        }
     }
 }

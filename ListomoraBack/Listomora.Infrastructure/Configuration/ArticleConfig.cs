@@ -24,6 +24,7 @@ namespace Listomora.Infrastructure.Configuration
 
             //constraints
             builder.HasKey(a => a.Id).HasName("PK_Article");
+            builder.HasIndex(a => new { a.Name, a.CreatorId }).IsUnique();
 
             //relations
             // article <> user
