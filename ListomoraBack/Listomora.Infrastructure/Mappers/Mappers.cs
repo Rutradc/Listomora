@@ -106,7 +106,26 @@ namespace Listomora.Infrastructure.Mappers
             };
         }
         #endregion
-        #region
+        #region ShoppingList
+        public static ShoppingListLineArticleDto ToShoppingListLineArticleDto(this Article entity)
+        {
+            return new ShoppingListLineArticleDto()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+            };
+        }
+        public static ShoppingListLine ToEntity(this ShoppingListLineCreateUpdateDto dto, Guid shoppingListId)
+        {
+            return new ShoppingListLine()
+            {
+                ArticleId = dto.ArticleId,
+                ShoppingListId = shoppingListId,
+                Amount = dto.Amount,
+                Unit = dto.Unit,
+                Price = dto.Price,
+            };
+        }
         public static ShoppingList ToEntity(this ShoppingListCreateDto dto, Guid creatorId)
         {
             return new ShoppingList()
@@ -150,7 +169,7 @@ namespace Listomora.Infrastructure.Mappers
                 Price = entity.Price,
             };
         }
-        public static ShoppingListLine ToEntity(this ShoppingListLineCreateDto dto)
+        public static ShoppingListLine ToEntity(this ShoppingListLineCreateUpdateDto dto)
         {
             return new ShoppingListLine()
             {
@@ -158,6 +177,7 @@ namespace Listomora.Infrastructure.Mappers
                 ShoppingListId = dto.ShoppingListId,
                 Amount = dto.Amount,
                 Unit = dto.Unit,
+                Price = dto.Price,
             };
         }
         #endregion

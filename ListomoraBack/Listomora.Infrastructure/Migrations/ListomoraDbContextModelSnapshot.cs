@@ -54,6 +54,10 @@ namespace Listomora.Infrastructure.Migrations
 
                     b.HasIndex("CreatorId");
 
+                    b.HasIndex("Name", "CreatorId")
+                        .IsUnique()
+                        .HasFilter("[CreatorId] IS NOT NULL");
+
                     b.ToTable("Article", (string)null);
 
                     b.HasDiscriminator<string>("ArticleType").HasValue("Article");
@@ -550,7 +554,7 @@ namespace Listomora.Infrastructure.Migrations
                             Email = "john@cena.us",
                             FirstName = "John",
                             LastName = "Cena",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$ehpdI3z4ujA4SDfXx1Ou1w$d2Ez1LgQqGeh9D62OsfJUQOvs5k4T1N5qpOS5VeNBGQ",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$jtCiYlLrbgpWYGk2n3GE8A$6nvjf01pJU8+SQtS+0kaqNz8O2I8vDKdvWqJPw6RelY",
                             Role = 0
                         },
                         new
@@ -560,7 +564,7 @@ namespace Listomora.Infrastructure.Migrations
                             Email = "cr7@goat.com",
                             FirstName = "Cristiano",
                             LastName = "Ronaldo",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$GwBbis6x7S9Jib0/17cHIQ$oLa2jn0WxsHK4HpuMQBaVfjLM69KfH6Bq47sTvTOuRQ",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$p4akL1Q4gdcdkQGfgjIOWQ$RUtq78evmsNxqwF97kf/Wp2WmBbZ5WhbcbnjRRYoWlE",
                             Role = 1
                         },
                         new
@@ -570,7 +574,7 @@ namespace Listomora.Infrastructure.Migrations
                             Email = "lm10@goat.com",
                             FirstName = "Lionel",
                             LastName = "Messi",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$KRnjO15ytzYvIK++c9ieGw$ApU20crdRNgygzKPCol+6GtlPhCxIc/j65+pCp2sn+I",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$xFhzpOjAnFM0WRmYfGqX2Q$nraLcMsTJ1JE/+SqtqbpVgqPf8r/JhGcNpNksHInupA",
                             Role = 1
                         });
                 });

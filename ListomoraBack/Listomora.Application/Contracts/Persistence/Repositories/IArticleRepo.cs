@@ -12,5 +12,6 @@ namespace Listomora.Application.Contracts.Persistence.Repositories
         Task<bool> InsertAsync(ArticleCreateUpdateDto article, Guid creatorId);
         Task<bool> DeleteAsync(Guid id, Guid? userId = null);
         Task<bool> UpdateAsync(Guid id, ArticleCreateUpdateDto article, Guid? userId = null);
+        Task<IEnumerable<ShoppingListLineArticleDto>> Search(string searchString, Guid? userId = null);
     }
 }
