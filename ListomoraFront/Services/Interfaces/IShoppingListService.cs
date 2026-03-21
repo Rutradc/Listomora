@@ -10,7 +10,7 @@ namespace ListomoraFront.Services.Interfaces
         Task<bool> DeleteAsync(Guid id);
         Task<Guid> InsertAsync(ShoppingListCreateDto form);
         Task<bool> UpdateAsync(Guid id, ShoppingListUpdateDto form);
-        Task<bool> UpdateLinesAsync(ShoppingListLinesUpdateDto dto, Guid shoppingListId);
+        Task<bool> UpdateLinesAsync(IEnumerable<ShoppingListLineCreateUpdateDto> dtos);
         Task<bool> Complete(Guid id);
     }
 }

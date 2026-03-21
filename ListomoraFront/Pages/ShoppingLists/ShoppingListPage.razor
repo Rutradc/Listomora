@@ -47,15 +47,26 @@
         </MudItem>
         @if (!shoppingList.IsDone)
         {
+            @if(Id is not null)
+            {
+                <MudItem xs="12" md="3">
+                    <MudText Typo="Typo.body1">Template </MudText><MudIcon Icon="@(shoppingList.IsTemplate ? "fas fa-check" : "fas fa-xmark")" />
+                </MudItem>
+            }
+            else
+            {
+                <MudItem xs="12" md="3">
+                    <MudSwitch @bind-Value="shoppingList.IsTemplate"
+                                 Label="Template" />
+                </MudItem>
+            }
+        }
+        @if (Id is not null)
+        {
             <MudItem xs="12" md="3">
-                <MudSwitch @bind-Value="shoppingList.IsTemplate"
-                             Label="Template" />
+                <MudText Typo="Typo.body1">Terminée </MudText><MudIcon Icon="@(shoppingList.IsDone ? "fas fa-check" : "fas fa-xmark")" />
             </MudItem>
         }
-
-        <MudItem xs="12" md="3">
-            <MudText Typo="Typo.body1">Terminée </MudText><MudIcon Icon="@(shoppingList.IsDone ? "fas fa-check" : "fas fa-xmark")" />
-        </MudItem>
     </MudGrid>
 
     <!-- Date -->
@@ -81,7 +92,7 @@
             <RowTemplate>
                 <MudTd>
                     <MudAutocomplete T="ShoppingListLineArticleDto"
-                                     Value="context.SelectedArticle"
+                                     Value="context.Data.SelectedArticle"
                                      ValueChanged="@( (ShoppingListLineArticleDto v) => OnArticleSelected(context, v) )"
                                      ToStringFunc="@(a => a?.Name)"
                                      SearchFunc="SearchArticles"
@@ -98,8 +109,8 @@
                 </MudTd>
 
                 <MudTd>
-                    <MudNumericField Value="context.Amount"
-                                     ValueChanged="@((double? v) => OnLineChanged(context, v, nameof(context.Amount)))"
+                    <MudNumericField Value="context.Data.Amount"
+                                     ValueChanged="@((double? v) => OnLineChanged(context, v, nameof(context.Data.Amount)))"
                                      Immediate="false"
                                      HideSpinButtons="true"
                                      ReadOnly="@shoppingList.IsDone" />
@@ -107,8 +118,8 @@
 
                 <MudTd>
                     <MudSelect T="UnitTypeEnum?"
-                               Value="context.Unit"
-                               ValueChanged="@( (UnitTypeEnum? v) => OnLineChanged(context, v, nameof(context.Unit)) )"
+                               Value="context.Data.Unit"
+                               ValueChanged="@( (UnitTypeEnum? v) => OnLineChanged(context, v, nameof(context.Data.Unit)) )"
                                Immediate="false"
                                Clearable="true"
                                ReadOnly="@shoppingList.IsDone">
@@ -122,8 +133,8 @@
                 </MudTd>
 
                 <MudTd>
-                    <MudNumericField Value="context.Price"
-                                     ValueChanged="@((decimal? v) => OnLineChanged(context, v, nameof(context.Price)))"
+                    <MudNumericField Value="context.Data.Price"
+                                     ValueChanged="@((decimal? v) => OnLineChanged(context, v, nameof(context.Data.Price)))"
                                      Adornment="Adornment.End"
                                      AdornmentText="€"
                                      HideSpinButtons="true"
@@ -141,14 +152,16 @@
 
         </MudTable>
     }
-    <!-- Actions -->
-    <MudStack Row="true" Class="mt-4" Spacing="2">
-        <MudButton Variant="Variant.Outlined"
-                   StartIcon="@Icons.Material.Filled.Add"
-                   OnClick="AddLine"
-                   Disabled="@shoppingList.IsDone">
-            Ajouter un article
-        </MudButton>
-    </MudStack>
+    @if (Id is not null){
+        <!-- Actions -->
+        <MudStack Row="true" Class="mt-4" Spacing="2">
+            <MudButton Variant="Variant.Outlined"
+                       StartIcon="@Icons.Material.Filled.Add"
+                       OnClick="AddLine"
+                       Disabled="@shoppingList.IsDone">
+                Ajouter un article
+            </MudButton>
+        </MudStack>
+    }
 
 </MudPaper>

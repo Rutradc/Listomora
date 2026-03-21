@@ -59,9 +59,10 @@ namespace ListomoraFront.Services.Implementations
             return response.IsSuccessStatusCode;
         }
 
-        public Task<bool> UpdateLinesAsync(ShoppingListLinesUpdateDto dto, Guid shoppingListId)
+        public async Task<bool> UpdateLinesAsync(IEnumerable<ShoppingListLineCreateUpdateDto> dtos)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage response = await _http.PatchAsJsonAsync(_defaultRoute + "lines", dtos);
+            return response.IsSuccessStatusCode;
         }
     }
 }
