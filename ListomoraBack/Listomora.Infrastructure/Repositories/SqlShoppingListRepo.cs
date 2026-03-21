@@ -87,21 +87,26 @@ namespace Listomora.Infrastructure.Repositories
             return true;
         }
 
-        public async Task<bool> UpdateLinesAsync(ShoppingListLinesUpdateDto dto)
+        public async Task<bool> UpdateLinesAsync(IEnumerable<ShoppingListLineCreateUpdateDto> dtos)
         {
-            Guid shoppingListId = dto.ShoppingListId;
-
+            Guid shoppingListId = dtos.Select(x => x.ShoppingListId).FirstOrDefault();
+            if (dtos.Any(x => x.ShoppingListId != shoppingListId))
+                throw new InvalidOperationException("Call tried to update multiples lines that didn't have the same shoppingListId.");
             // delete
-            IEnumerable<ShoppingListLine> linesToRemove = await _dbContext.ShoppingListLines.Where(l => l.ShoppingListId == shoppingListId && dto.RemovedLinesArticleIds.Contains(l.ArticleId)).ToListAsync();
-            if (linesToRemove.ToList().Count != dto.RemovedLinesArticleIds.Count)
-                throw new NotFoundException($"{dto.RemovedLinesArticleIds.Count - linesToRemove.ToList().Count} line(s) to delete was(were) not found.");
+            List<ShoppingListLineCreateUpdateDto> linesToRemoveDto = dtos.Where(x => x.IsDeleted).ToList();
+            IEnumerable<ShoppingListLine> linesToRemove = await _dbContext.ShoppingListLines.Where(l => l.ShoppingListId == shoppingListId && linesToRemoveDto.Select(x => x.OriginArticleId).Contains(l.ArticleId)).ToListAsync();
+            if (linesToRemove.ToList().Count != linesToRemoveDto.Count)
+                throw new NotFoundException($"{linesToRemoveDto.Count - linesToRemove.ToList().Count} line(s) to delete was(were) not found.");
             _dbContext.ShoppingListLines.RemoveRange(linesToRemove);
 
             // update
-            IEnumerable<ShoppingListLine> linesToUpdate = _dbContext.ShoppingListLines.Where(l => dto.UpdatedLines.Select(x => x.ArticleId).Contains(l.ArticleId) && l.ShoppingListId == shoppingListId);
+            var linesToUpdateDto = dtos.Where(x => x.IsModified).ToList();
+            IEnumerable<ShoppingListLine> linesToUpdate = _dbContext.ShoppingListLines.Where(l => l.ShoppingListId == shoppingListId && linesToUpdateDto.Select(x => x.OriginArticleId).Contains(l.ArticleId));
+            if (linesToUpdate.ToList().Count != linesToUpdateDto.Count)
+                throw new NotFoundException($"{linesToUpdateDto.Count - linesToUpdate.ToList().Count} line(s) to update was(were) not found.");
             foreach (ShoppingListLine line in linesToUpdate)
             {
-                ShoppingListLineCreateUpdateDto? lineUpdated = dto.UpdatedLines.SingleOrDefault(x => x.OriginArticleId == line.ArticleId);
+                ShoppingListLineCreateUpdateDto? lineUpdated = dtos.Where(x => x.IsModified).SingleOrDefault(x => x.OriginArticleId == line.ArticleId);
                 if (lineUpdated is null)
                     throw new NotFoundException("At least one of the lines to update was not found.");
                 line.ArticleId = lineUpdated.ArticleId;
@@ -113,7 +118,7 @@ namespace Listomora.Infrastructure.Repositories
 
             // insert
 
-            var linesToAdd = dto.AddedLines.Select(x => x.ToEntity());
+            var linesToAdd = dtos.Where(x => x.IsNew).Select(x => x.ToEntity());
             _dbContext.ShoppingListLines.AddRange(linesToAdd);
 
             await _dbContext.SaveChangesAsync();

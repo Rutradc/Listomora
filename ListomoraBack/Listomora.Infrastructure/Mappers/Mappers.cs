@@ -173,6 +173,7 @@ namespace Listomora.Infrastructure.Mappers
         {
             return new ShoppingListLineListDto()
             {
+                ArticleId = entity.Article.Id,
                 ArticleName = entity.Article.Name,
                 Amount = entity.Amount,
                 Unit = entity.Unit,

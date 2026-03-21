@@ -177,11 +177,11 @@ namespace Listomora.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateLines([FromBody] ShoppingListLinesUpdateDto dto)
+        public async Task<IActionResult> UpdateLines([FromBody] IEnumerable<ShoppingListLineCreateUpdateDto> dtos)
         {
             try
             {
-                await _mediator.Send(new UpdateShoppingListLinesCommand(dto));
+                await _mediator.Send(new UpdateShoppingListLinesCommand(dtos));
                 return Ok();
             }
             catch (NotFoundException ex)
