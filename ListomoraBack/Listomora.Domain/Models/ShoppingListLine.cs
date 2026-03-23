@@ -5,6 +5,7 @@ namespace Listomora.Domain.Models
 {
     public class ShoppingListLine : EntityBase
     {
+        public Guid Id { get; set; }
         public double? Amount { get; set; }
         public UnitTypeEnum? Unit { get; set; }
         public decimal? Price { get; set; }

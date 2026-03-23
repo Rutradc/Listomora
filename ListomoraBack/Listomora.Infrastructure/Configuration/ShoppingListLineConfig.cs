@@ -10,13 +10,16 @@ namespace Listomora.Infrastructure.Configuration
         {
             builder.ToTable("ShoppingListLine");
 
+            builder.Property(a => a.Id)
+                .ValueGeneratedOnAdd();
             builder.Property(a => a.Amount);
             builder.Property(a => a.Unit)
                 .HasConversion<string>();
             builder.Property(a => a.Price);
 
             //constraints
-            builder.HasKey(s => new { s.ArticleId, s.ShoppingListId }).HasName("PK_ShoppingListLine");
+            builder.HasKey(s => s.Id).HasName("PK_ShoppingListLine");
+            //builder.HasIndex(s => new { s.ArticleId, s.ShoppingListId}).IsUnique();
 
             //relations
             // shoppingListLine <> article
