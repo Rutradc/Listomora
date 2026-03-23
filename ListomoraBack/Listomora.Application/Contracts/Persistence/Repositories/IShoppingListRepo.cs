@@ -11,6 +11,6 @@ namespace Listomora.Application.Contracts.Persistence.Repositories
         Task<bool> UpdateAsync(Guid id, ShoppingListUpdateDto dto, Guid? userId = null);
         Task<bool> DeleteAsync(Guid id, Guid? userId = null);
         Task<bool> CompleteShoppingList(Guid id, bool isDone, Guid? userId = null);
-        Task<bool> UpdateLinesAsync(ShoppingListLinesUpdateDto dto);
+        Task<bool> UpdateLinesAsync(IEnumerable<ShoppingListLineCreateUpdateDto> dtos);
     }
 }

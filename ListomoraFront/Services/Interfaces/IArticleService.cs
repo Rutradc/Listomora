@@ -1,4 +1,5 @@
 ﻿using ListomoraFront.Models.Articles;
+using ListomoraFront.Models.ShoppingLists;
 
 namespace ListomoraFront.Services.Interfaces
 {
@@ -11,5 +12,6 @@ namespace ListomoraFront.Services.Interfaces
         Task<bool> DeleteAsync(Guid id);
         Task<bool> InsertAsync(ArticleCreateUpdateDto form);
         Task<bool> UpdateAsync(Guid id, ArticleCreateUpdateDto form);
+        Task<List<ShoppingListLineArticleDto>> Search(string searchString);
     }
 }

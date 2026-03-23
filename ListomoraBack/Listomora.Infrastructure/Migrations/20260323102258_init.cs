@@ -102,16 +102,17 @@ namespace Listomora.Infrastructure.Migrations
                 name: "ShoppingListLine",
                 columns: table => new
                 {
-                    ArticleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ShoppingListId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: true),
                     Unit = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    ArticleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ShoppingListId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "DateTime2", nullable: false, defaultValueSql: "GETUTCDATE()")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShoppingListLine", x => new { x.ArticleId, x.ShoppingListId });
+                    table.PrimaryKey("PK_ShoppingListLine", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ShoppingListLine_Article",
                         column: x => x.ArticleId,
@@ -131,9 +132,9 @@ namespace Listomora.Infrastructure.Migrations
                 columns: new[] { "Id", "DisableDate", "Email", "FirstName", "LastName", "Password", "Role" },
                 values: new object[,]
                 {
-                    { new Guid("0eb2993d-7fd5-4f29-9172-1b8f6aa80736"), null, "lm10@goat.com", "Lionel", "Messi", "$argon2id$v=19$m=65536,t=3,p=1$t/fNj1U+6fmOHjVWdRKtXw$jOCjBrx9Ts3sl+UMtFh8Wk+ilMpp4YQGbtmEo078lVw", 1 },
-                    { new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"), null, "john@cena.us", "John", "Cena", "$argon2id$v=19$m=65536,t=3,p=1$TJV0EXfCCJVX/LQvxmDVVg$T8f2Q3Tg2bQb2gRxUSL3rhdv8rRffBi8RR6VR2MZ9zw", 0 },
-                    { new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"), null, "cr7@goat.com", "Cristiano", "Ronaldo", "$argon2id$v=19$m=65536,t=3,p=1$99J4XCa35WsR8kb8RV/59g$dvXPS3KUan0pA75f7cpw/C1X9VMa8KDwkFYLoeIsCAo", 1 }
+                    { new Guid("0eb2993d-7fd5-4f29-9172-1b8f6aa80736"), null, "lm10@goat.com", "Lionel", "Messi", "$argon2id$v=19$m=65536,t=3,p=1$YWVyoQbfwHoxu5l30i9t7Q$FRPImLUZdraBt5D024Znmcdg4kQaGYZB6wwYyhb1juk", 1 },
+                    { new Guid("5bd4bf86-da80-438c-be55-a466ea3b994d"), null, "john@cena.us", "John", "Cena", "$argon2id$v=19$m=65536,t=3,p=1$6nQj2IUSN3802LFUZRG/Iw$vT6joNv++j2GurHfs9/RMakdfiT50gPdfhS47tYJDh0", 0 },
+                    { new Guid("6ad52029-0225-48c4-a2b5-7aa35fec7056"), null, "cr7@goat.com", "Cristiano", "Ronaldo", "$argon2id$v=19$m=65536,t=3,p=1$pwImr1dctDCdepWxrMINVA$Kgs/MPisee/BSHXxfAY3j34ORkZFk6IF26QKoh+RLtw", 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -302,38 +303,38 @@ namespace Listomora.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "ShoppingListLine",
-                columns: new[] { "ArticleId", "ShoppingListId", "Amount", "Price", "Unit" },
+                columns: new[] { "Id", "Amount", "ArticleId", "Price", "ShoppingListId", "Unit" },
                 values: new object[,]
                 {
-                    { new Guid("121a810d-3904-4cf1-9af4-063a2e56b62b"), new Guid("5e47b154-be10-43bb-ad15-a09f83d77ff0"), 2.0, null, "CAN" },
-                    { new Guid("1dd4a5f7-f93f-42ed-919d-c677f0dc0e7f"), new Guid("49c7a8c0-0647-4380-a588-e8d88c039f06"), 200.0, null, "GRAM" },
-                    { new Guid("2145139b-64b4-475e-ba84-5efe83d53d8b"), new Guid("49c7a8c0-0647-4380-a588-e8d88c039f06"), null, null, null },
-                    { new Guid("21d579a9-b2ae-4434-b7d5-45201001bca1"), new Guid("5e47b154-be10-43bb-ad15-a09f83d77ff0"), 500.0, null, "GRAM" },
-                    { new Guid("336ac8ab-c997-4521-a3c1-9aaa5cb86fbb"), new Guid("86a0fcf5-f62e-4809-a28b-a9403514991e"), null, null, null },
-                    { new Guid("3d956419-cd5b-41c5-9b2a-d7e5a990c838"), new Guid("f132fcbf-bcd5-4ce9-ba7b-0dc102fabb72"), 12.0, null, "UNIT" },
-                    { new Guid("46703052-e35c-4582-85a8-418f284e0ec8"), new Guid("f132fcbf-bcd5-4ce9-ba7b-0dc102fabb72"), 2.0, null, "PACK" },
-                    { new Guid("48f07af2-eefb-4097-a479-cc50a3117851"), new Guid("5e47b154-be10-43bb-ad15-a09f83d77ff0"), 250.0, null, "GRAM" },
-                    { new Guid("4a5bda61-ac90-4faf-9ae1-139f81a17eb6"), new Guid("86a0fcf5-f62e-4809-a28b-a9403514991e"), 500.0, null, "GRAM" },
-                    { new Guid("4c500d54-1468-4a8c-81f5-ff846fb36b3d"), new Guid("5e47b154-be10-43bb-ad15-a09f83d77ff0"), null, null, null },
-                    { new Guid("6ef48e96-a40a-4dc5-9432-fe6d85c87bb6"), new Guid("86a0fcf5-f62e-4809-a28b-a9403514991e"), 2.0, null, "PACK" },
-                    { new Guid("794f67c2-7afb-495e-8570-6daad6cb4a0a"), new Guid("5e47b154-be10-43bb-ad15-a09f83d77ff0"), 6.0, null, "UNIT" },
-                    { new Guid("81bd4a7b-b60c-4e11-8d74-6c641721a928"), new Guid("49c7a8c0-0647-4380-a588-e8d88c039f06"), 4.0, null, "UNIT" },
-                    { new Guid("924c8c5b-9684-4b77-b5d0-80b0f1cf8b30"), new Guid("f132fcbf-bcd5-4ce9-ba7b-0dc102fabb72"), null, null, null },
-                    { new Guid("9e736920-7440-4376-b485-1f192e0d7470"), new Guid("f132fcbf-bcd5-4ce9-ba7b-0dc102fabb72"), 600.0, null, "GRAM" },
-                    { new Guid("a456432d-33d1-44d9-be6a-8599bd02becc"), new Guid("49c7a8c0-0647-4380-a588-e8d88c039f06"), 1.0, null, "BOX" },
-                    { new Guid("aac50be3-c2ea-4642-a3d9-81f58299e012"), new Guid("49c7a8c0-0647-4380-a588-e8d88c039f06"), 4.0, null, "UNIT" },
-                    { new Guid("ac07af80-640a-4270-9d48-62f8c9b84df6"), new Guid("5e47b154-be10-43bb-ad15-a09f83d77ff0"), 500.0, null, "GRAM" },
-                    { new Guid("b09ea0c6-b53a-4a70-bff7-56dcfc5bb2d0"), new Guid("86a0fcf5-f62e-4809-a28b-a9403514991e"), 6.0, null, "UNIT" },
-                    { new Guid("c65e7d76-8af8-4e1c-b89e-3102248e73a6"), new Guid("49c7a8c0-0647-4380-a588-e8d88c039f06"), 300.0, null, "GRAM" },
-                    { new Guid("c762d216-d6ab-43b6-bfe7-cab995c5aea9"), new Guid("5e47b154-be10-43bb-ad15-a09f83d77ff0"), 4.0, null, "UNIT" },
-                    { new Guid("c7e03ae1-353c-4e21-963f-ff906d09506c"), new Guid("86a0fcf5-f62e-4809-a28b-a9403514991e"), 6.0, null, "LITER" },
-                    { new Guid("d35633e3-34cb-48d2-aedc-5a65271357d2"), new Guid("f132fcbf-bcd5-4ce9-ba7b-0dc102fabb72"), 1.0, null, "UNIT" },
-                    { new Guid("d392cdc1-9141-4dc3-ac7e-a4486e2e8774"), new Guid("86a0fcf5-f62e-4809-a28b-a9403514991e"), 2.0, null, "BOX" },
-                    { new Guid("d6acb86d-856e-4874-9d64-73a1f3e2f8e9"), new Guid("49c7a8c0-0647-4380-a588-e8d88c039f06"), 1.0, null, "PACK" },
-                    { new Guid("e6f1fd6a-abb7-4d84-bca8-aeff139dc88c"), new Guid("f132fcbf-bcd5-4ce9-ba7b-0dc102fabb72"), 4.0, null, "UNIT" },
-                    { new Guid("edf88fdd-0117-4aa4-b3a5-17be26c913f9"), new Guid("86a0fcf5-f62e-4809-a28b-a9403514991e"), 2.0, null, "LITER" },
-                    { new Guid("fcf05aed-90e9-47a0-b9b9-09af9bf0f2b9"), new Guid("f132fcbf-bcd5-4ce9-ba7b-0dc102fabb72"), 50.0, null, "CENTILITER" },
-                    { new Guid("ff0cdcf7-aee0-4b9e-b520-8d0fb3b93047"), new Guid("f132fcbf-bcd5-4ce9-ba7b-0dc102fabb72"), 500.0, null, "GRAM" }
+                    { new Guid("0bcd6b9c-0ac1-4b21-b7ac-ec31808d3a8c"), 6.0, new Guid("c7e03ae1-353c-4e21-963f-ff906d09506c"), null, new Guid("86a0fcf5-f62e-4809-a28b-a9403514991e"), "LITER" },
+                    { new Guid("0f031734-21c3-4978-831d-bdc4f66527ac"), 12.0, new Guid("3d956419-cd5b-41c5-9b2a-d7e5a990c838"), null, new Guid("f132fcbf-bcd5-4ce9-ba7b-0dc102fabb72"), "UNIT" },
+                    { new Guid("12e92f83-af4f-4c86-aace-404e9466b69b"), 500.0, new Guid("21d579a9-b2ae-4434-b7d5-45201001bca1"), null, new Guid("5e47b154-be10-43bb-ad15-a09f83d77ff0"), "GRAM" },
+                    { new Guid("1666bda5-7278-4b68-9416-27d0195c1a75"), null, new Guid("4c500d54-1468-4a8c-81f5-ff846fb36b3d"), null, new Guid("5e47b154-be10-43bb-ad15-a09f83d77ff0"), null },
+                    { new Guid("204138ba-fb1b-4410-b345-8c1ad81ffa47"), 500.0, new Guid("4a5bda61-ac90-4faf-9ae1-139f81a17eb6"), null, new Guid("86a0fcf5-f62e-4809-a28b-a9403514991e"), "GRAM" },
+                    { new Guid("2144a4da-75da-4dde-b3d9-0ff144a67d31"), null, new Guid("2145139b-64b4-475e-ba84-5efe83d53d8b"), null, new Guid("49c7a8c0-0647-4380-a588-e8d88c039f06"), null },
+                    { new Guid("37b52e9a-6b26-4c4b-a4ed-df5c5105d64b"), 4.0, new Guid("e6f1fd6a-abb7-4d84-bca8-aeff139dc88c"), null, new Guid("f132fcbf-bcd5-4ce9-ba7b-0dc102fabb72"), "UNIT" },
+                    { new Guid("58ae0ec0-78a1-41a6-bca8-63152e124dbb"), 1.0, new Guid("a456432d-33d1-44d9-be6a-8599bd02becc"), null, new Guid("49c7a8c0-0647-4380-a588-e8d88c039f06"), "BOX" },
+                    { new Guid("6a475d95-febf-4e24-8f05-5e31452d0d49"), 2.0, new Guid("d392cdc1-9141-4dc3-ac7e-a4486e2e8774"), null, new Guid("86a0fcf5-f62e-4809-a28b-a9403514991e"), "BOX" },
+                    { new Guid("738afb77-0f6e-44c6-9fb6-9ab850d94b94"), 500.0, new Guid("ac07af80-640a-4270-9d48-62f8c9b84df6"), null, new Guid("5e47b154-be10-43bb-ad15-a09f83d77ff0"), "GRAM" },
+                    { new Guid("76b7acb0-61ac-42fa-9af3-214fb07b7342"), 4.0, new Guid("81bd4a7b-b60c-4e11-8d74-6c641721a928"), null, new Guid("49c7a8c0-0647-4380-a588-e8d88c039f06"), "UNIT" },
+                    { new Guid("78313e81-5a69-4869-99ce-733fc6023dcb"), 2.0, new Guid("121a810d-3904-4cf1-9af4-063a2e56b62b"), null, new Guid("5e47b154-be10-43bb-ad15-a09f83d77ff0"), "CAN" },
+                    { new Guid("800ca337-3bb0-4108-ab8b-895d392e09c6"), 6.0, new Guid("794f67c2-7afb-495e-8570-6daad6cb4a0a"), null, new Guid("5e47b154-be10-43bb-ad15-a09f83d77ff0"), "UNIT" },
+                    { new Guid("85589ef1-201f-44a1-85ad-3dd3d3b27326"), null, new Guid("924c8c5b-9684-4b77-b5d0-80b0f1cf8b30"), null, new Guid("f132fcbf-bcd5-4ce9-ba7b-0dc102fabb72"), null },
+                    { new Guid("8c0199b7-0569-4ea8-adfc-455113d6a319"), 2.0, new Guid("6ef48e96-a40a-4dc5-9432-fe6d85c87bb6"), null, new Guid("86a0fcf5-f62e-4809-a28b-a9403514991e"), "PACK" },
+                    { new Guid("9b42859a-1e6b-46cb-8dce-e745c8fdbc4f"), 6.0, new Guid("b09ea0c6-b53a-4a70-bff7-56dcfc5bb2d0"), null, new Guid("86a0fcf5-f62e-4809-a28b-a9403514991e"), "UNIT" },
+                    { new Guid("9f5d755d-eab1-4c40-8f12-2271ac8413ff"), 600.0, new Guid("9e736920-7440-4376-b485-1f192e0d7470"), null, new Guid("f132fcbf-bcd5-4ce9-ba7b-0dc102fabb72"), "GRAM" },
+                    { new Guid("a2fe4f08-aff4-4044-a21d-eaccc7338d72"), 200.0, new Guid("1dd4a5f7-f93f-42ed-919d-c677f0dc0e7f"), null, new Guid("49c7a8c0-0647-4380-a588-e8d88c039f06"), "GRAM" },
+                    { new Guid("a4930d78-4c79-4207-ad38-d329971ae88d"), 1.0, new Guid("d35633e3-34cb-48d2-aedc-5a65271357d2"), null, new Guid("f132fcbf-bcd5-4ce9-ba7b-0dc102fabb72"), "UNIT" },
+                    { new Guid("b7635cb2-3962-472b-94bc-9528f53af09e"), 300.0, new Guid("c65e7d76-8af8-4e1c-b89e-3102248e73a6"), null, new Guid("49c7a8c0-0647-4380-a588-e8d88c039f06"), "GRAM" },
+                    { new Guid("b9f22fa9-779c-45be-8608-60b429145d0a"), null, new Guid("336ac8ab-c997-4521-a3c1-9aaa5cb86fbb"), null, new Guid("86a0fcf5-f62e-4809-a28b-a9403514991e"), null },
+                    { new Guid("bbaaa9a3-591f-46e6-8598-1dcb397add1a"), 500.0, new Guid("ff0cdcf7-aee0-4b9e-b520-8d0fb3b93047"), null, new Guid("f132fcbf-bcd5-4ce9-ba7b-0dc102fabb72"), "GRAM" },
+                    { new Guid("be147985-dfa5-417c-815c-822fb15ee073"), 4.0, new Guid("c762d216-d6ab-43b6-bfe7-cab995c5aea9"), null, new Guid("5e47b154-be10-43bb-ad15-a09f83d77ff0"), "UNIT" },
+                    { new Guid("c1f6a7c1-0f40-468b-89c2-e76f50cc5781"), 2.0, new Guid("46703052-e35c-4582-85a8-418f284e0ec8"), null, new Guid("f132fcbf-bcd5-4ce9-ba7b-0dc102fabb72"), "PACK" },
+                    { new Guid("ca76e795-7768-48b5-8d32-5fae47084450"), 4.0, new Guid("aac50be3-c2ea-4642-a3d9-81f58299e012"), null, new Guid("49c7a8c0-0647-4380-a588-e8d88c039f06"), "UNIT" },
+                    { new Guid("dfb86232-fab9-4cff-8b6a-ec25d98171da"), 50.0, new Guid("fcf05aed-90e9-47a0-b9b9-09af9bf0f2b9"), null, new Guid("f132fcbf-bcd5-4ce9-ba7b-0dc102fabb72"), "CENTILITER" },
+                    { new Guid("e18dc687-be41-475a-be2f-38a31ccfa510"), 1.0, new Guid("d6acb86d-856e-4874-9d64-73a1f3e2f8e9"), null, new Guid("49c7a8c0-0647-4380-a588-e8d88c039f06"), "PACK" },
+                    { new Guid("eb2698fc-8e3e-49f3-b6ee-7f128a0eea45"), 250.0, new Guid("48f07af2-eefb-4097-a479-cc50a3117851"), null, new Guid("5e47b154-be10-43bb-ad15-a09f83d77ff0"), "GRAM" },
+                    { new Guid("fee9786c-4d96-44f9-9b2b-5980e9db5802"), 2.0, new Guid("edf88fdd-0117-4aa4-b3a5-17be26c913f9"), null, new Guid("86a0fcf5-f62e-4809-a28b-a9403514991e"), "LITER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -357,6 +358,11 @@ namespace Listomora.Infrastructure.Migrations
                 name: "IX_ShoppingList_CreatorId",
                 table: "ShoppingList",
                 column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShoppingListLine_ArticleId",
+                table: "ShoppingListLine",
+                column: "ArticleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingListLine_ShoppingListId",

@@ -14,7 +14,7 @@ namespace Listomora.Application.Features.ShoppingLists.Commands
 
         public async Task<Unit> Handle(UpdateShoppingListLinesCommand request, CancellationToken cancellationToken)
         {
-            await _repo.UpdateLinesAsync(request.Dto);
+            await _repo.UpdateLinesAsync(request.Dtos);
             return Unit.Value;
         }
     }

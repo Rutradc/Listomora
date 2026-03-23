@@ -1,0 +1,303 @@
+﻿using ListomoraFront.Models;
+using ListomoraFront.Models.Enums;
+using ListomoraFront.Models.ShoppingLists;
+using ListomoraFront.Services.Interfaces;
+using Microsoft.AspNetCore.Components;
+using MudBlazor;
+
+namespace ListomoraFront.Pages.ShoppingLists
+{
+    public partial class ShoppingListPage
+    {
+        //TODO : ajouter détecteur de changes sur field de shopppingList (avec OnFieldChanged qui fait devenir _hasChanges = true)
+        [Inject]
+        private IShoppingListService _client { get; set; }
+        [Inject]
+        private IArticleService _articleClient { get; set; }
+        [Inject]
+        private ISnackbar _snackbar { get; set; }
+        [Inject]
+        private NavigationManager _navigation { get; set; }
+        [Inject] 
+        private IDialogService DialogService { get; set; }
+        [Parameter]
+        public Guid? Id { get; set; }
+        [Parameter]
+        public string SourceUrl { get; set; }
+
+        private ShoppingListDetailsDto shoppingList { get; set; } = new();
+
+        private List<ShoppingListLineVM> _lines = new();
+        private List<ShoppingListLineCreateUpdateVM> _linesUpdate = new();
+        private bool _hasChanges = false;
+
+        protected override async Task OnInitializedAsync()
+        {
+            switch (SourceUrl)
+            {
+                case "adminlist":
+                case "mine":
+                    break;
+                default:
+                    SourceUrl = "mine";
+                    await InvokeAsync(StateHasChanged);
+                    break;
+            }
+            if (Id is not null)
+                await LoadData();
+        }
+
+        private async Task LoadData()
+        {
+            shoppingList = await _client.GetByIdAsync((Guid)Id);
+            _lines = shoppingList.ShoppingListLines?.Select(x => new ShoppingListLineVM()
+            {
+                Data = x,
+            }).ToList() ?? new();
+            foreach (var line in _lines)
+            {
+                if (line.Data.ArticleId != null)
+                {
+                    line.Data.OriginArticleId = line.Data.ArticleId;
+                    line.Data.SelectedArticle = new ShoppingListLineArticleDto
+                    {
+                        Id = line.Data.ArticleId,
+                        Name = line.Data.ArticleName
+                    };
+                }
+            }
+            _linesUpdate = new();
+        }
+
+        private async Task<IEnumerable<ShoppingListLineArticleDto>> SearchArticles(string value, CancellationToken token)
+        {
+            if (string.IsNullOrWhiteSpace(value) || value.Length < 1)
+                return Enumerable.Empty<ShoppingListLineArticleDto>();
+
+            // appel API
+            return await _articleClient.Search(value);
+        }
+
+        private void OnArticleSelected(ShoppingListLineVM line, ShoppingListLineArticleDto? article)
+        {
+            if (article == null)
+                return;
+
+            line.Data.ArticleId = article.Id;
+            line.Data.ArticleName = article.Name;
+            line.Data.SelectedArticle = article;
+
+            ModifyLine(line);
+            _hasChanges = true;
+        }
+
+        private void OnLineChanged(ShoppingListLineVM line, object? value, string field)
+        {
+            switch (field)
+            {
+                case nameof(line.Data.Amount):
+                    line.Data.Amount = (double?)value;
+                    break;
+
+                case nameof(line.Data.Unit):
+                    line.Data.Unit = (UnitTypeEnum?)value;
+                    break;
+
+                case nameof(line.Data.Price):
+                    line.Data.Price = (decimal?)value;
+                    break;
+            }
+
+            ModifyLine(line);
+            _hasChanges = true;
+        }
+
+        private void AddLine()
+        {
+            ShoppingListLineVM line = new();
+            _lines.Add(line);
+            _linesUpdate.Add(new ShoppingListLineCreateUpdateVM(line.LocalId));
+        }
+
+        private void ModifyLine(ShoppingListLineVM line)
+        {
+            var newLineDto = new ShoppingListLineCreateUpdateDto()
+            {
+                Id = line.Data.Id,
+                OriginArticleId = line.Data.OriginArticleId,
+                ArticleId = line.Data.ArticleId,
+                ShoppingListId = shoppingList.Id,
+                Amount = line.Data.Amount,
+                Unit = line.Data.Unit,
+                Price = line.Data.Price,
+            };
+
+            var listLine = _linesUpdate.SingleOrDefault(x => x.LocalId == line.LocalId);
+
+            if (listLine is null)
+            {
+                newLineDto.IsNew = false;
+                newLineDto.IsModified = true;
+                _linesUpdate.Add(new ShoppingListLineCreateUpdateVM(line.LocalId)
+                {
+                    Data = newLineDto,
+                });
+            }
+            else
+            {
+                if (listLine.Data.IsDeleted)
+                    _snackbar.Add("Vous essayez de modifier une ligne supprimée.", Severity.Error);
+                newLineDto.IsNew = listLine.Data.IsNew;
+                newLineDto.IsModified = listLine.Data.IsModified;
+                listLine.Data = newLineDto;
+            }
+        }
+
+        private void RemoveLine(ShoppingListLineVM line)
+        {
+            _lines.Remove(line);
+            var listLine = _linesUpdate.SingleOrDefault(x => x.LocalId == line.LocalId);
+            if (listLine is null)
+            {
+                _linesUpdate.Add(new ShoppingListLineCreateUpdateVM(line.LocalId)
+                {
+                    Data = new ShoppingListLineCreateUpdateDto()
+                    {
+                        Id = line.Data.Id,
+                        OriginArticleId = line.Data.OriginArticleId,
+                        ArticleId = line.Data.ArticleId,
+                        ShoppingListId = shoppingList.Id,
+                        IsNew = false,
+                        IsModified = false,
+                        IsDeleted = true
+                    }
+                });
+                _hasChanges = true;
+            }
+            else
+            {
+                if (listLine.Data.IsNew)
+                    _linesUpdate.Remove(listLine);
+                else
+                {
+                    listLine.Data.IsDeleted = true;
+                    listLine.Data.IsModified = false;
+                    _hasChanges = true;
+                }
+            }
+        }
+
+        private async Task GoToList()
+        {
+            if (_hasChanges)
+            {
+                var confirmed = await ShowConfirmDialog();
+                if (!confirmed)
+                    return;
+            }
+
+            _navigation.NavigateTo("/shoppinglist/" + SourceUrl);
+        }
+
+        private async Task<bool> ShowConfirmDialog()
+        {
+            var parameters = new DialogParameters
+            {
+                { "ContentText", "Des modifications non sauvegardées seront perdues. Continuer ?" },
+                { "ButtonText", "Quitter" },
+                { "Color", Color.Error }
+            };
+
+            var options = new DialogOptions
+            {
+                CloseOnEscapeKey = true,
+                MaxWidth = MaxWidth.Small,
+                FullWidth = true
+            };
+
+            var dialog = await DialogService.ShowAsync<ConfirmDialog>("Attention", parameters, options);
+            var result = await dialog.Result;
+
+            return !result.Canceled;
+        }
+
+        private async Task Save()
+        {
+            // TODO: appel API
+            if (Id is null)
+            {
+                ShoppingListCreateDto createModel = shoppingList.ToCreateDto();
+                Id = await _client.InsertAsync(createModel);
+                shoppingList.Id = (Guid)Id;
+                _navigation.NavigateTo($"/shoppinglist/page/{SourceUrl}/{Id}");
+                _hasChanges = false;
+            }
+            else
+            {
+                ShoppingListUpdateDto updateModel = shoppingList.ToUpdateDto();
+                if (await _client.UpdateAsync(shoppingList.Id, updateModel))
+                {
+                    if (_hasChanges)
+                    {
+                        foreach (var line in _linesUpdate)
+                        {
+                            Console.WriteLine($"{line.Data.Id} - {line.Data.ArticleId} - {(line.Data.IsNew ? "IsNew" : line.Data.IsModified ? "IsModified" : line.Data.IsDeleted ? "IsDeleted" : "")}");
+                        }
+                        _linesUpdate = _linesUpdate.Where(x => x.Data.ArticleId != Guid.Empty).ToList();
+                        if (_linesUpdate.Count > 0)
+                        {
+                            if (await _client.UpdateLinesAsync(_linesUpdate.Select(x => x.Data)))
+                            {
+                                _snackbar.Add("Liste mise à jour.", Severity.Success);
+                                _hasChanges = false;
+                                await LoadData();
+                            }
+                            else
+                                _snackbar.Add("Problème dans la mise à jour des lignes d'article.", Severity.Error);
+                        }
+                        else
+                        {
+                            _snackbar.Add("Aucun changement de ligne effectué mais liste mise à jour.", Severity.Info);
+                            _hasChanges = false;
+                        }
+                    }
+                }
+                else
+                    _snackbar.Add("Problème dans la mise à jour de la liste.", Severity.Error);
+            }
+        }
+
+        private async Task Complete()
+        {
+            if (shoppingList.IsDone)
+            {
+                await _client.Complete(shoppingList.Id);
+                await LoadData();
+            }
+            else
+            {
+                await Save();
+                await _client.Complete(shoppingList.Id);
+                await LoadData();
+            }
+        }
+
+        public class ShoppingListLineVM
+        {
+            public Guid LocalId { get; set; } = Guid.NewGuid();
+            public ShoppingListLineListDto Data { get; set; } = new();
+        }
+        public class ShoppingListLineCreateUpdateVM
+        {
+            public Guid LocalId { get; set; }
+            public ShoppingListLineCreateUpdateDto Data { get; set; } = new();
+
+            public ShoppingListLineCreateUpdateVM(Guid localId, Guid? lineId = null)
+            {
+                LocalId = localId;
+                if (lineId is not null) 
+                    Data = new ShoppingListLineCreateUpdateDto((Guid)lineId);
+            }
+        }
+    }
+}

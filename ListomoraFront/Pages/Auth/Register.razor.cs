@@ -16,7 +16,6 @@ namespace ListomoraFront.Pages.Auth
         private RegisterForm model = new ();
         private string errorMessage;
         private bool isLoading = false;
-        private string creationToken;
 
         private bool hasValidToken = false;
         private bool isShown = false;

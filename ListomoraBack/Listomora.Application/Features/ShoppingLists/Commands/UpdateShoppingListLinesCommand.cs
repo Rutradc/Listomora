@@ -5,11 +5,11 @@ namespace Listomora.Application.Features.ShoppingLists.Commands
 {
     public class UpdateShoppingListLinesCommand : IRequest<Unit>
     {
-        public ShoppingListLinesUpdateDto Dto { get; set; }
+        public IEnumerable<ShoppingListLineCreateUpdateDto> Dtos { get; set; }
 
-        public UpdateShoppingListLinesCommand(ShoppingListLinesUpdateDto dto)
+        public UpdateShoppingListLinesCommand(IEnumerable<ShoppingListLineCreateUpdateDto> dtos)
         {
-            Dto = dto;
+            Dtos = dtos;
         }
     }
 }

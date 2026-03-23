@@ -1,6 +1,7 @@
-﻿using Listomora.Domain.Enums;
+﻿using ListomoraFront.Models.Enums;
+using System.ComponentModel.DataAnnotations;
 
-namespace Listomora.Application.Contracts.Persistence.Dtos
+namespace ListomoraFront.Models.ShoppingLists
 {
     public class ShoppingListLineArticleDto
     {
@@ -19,23 +20,38 @@ namespace Listomora.Application.Contracts.Persistence.Dtos
         public bool IsNew { get; set; } = true;
         public bool IsModified { get; set; } = false;
         public bool IsDeleted { get; set; } = false;
+
+        public ShoppingListLineCreateUpdateDto(Guid id)
+        {
+            Id = id;
+        }
+
+        public ShoppingListLineCreateUpdateDto()
+        {
+        }
     }
     public class ShoppingListLineListDto
     {
         public Guid Id { get; set; }
         public Guid ArticleId { get; set; }
         public string ArticleName { get; set; }
+        public Guid OriginArticleId { get; set; }
+        public ShoppingListLineArticleDto SelectedArticle { get; set; }
         public double? Amount { get; set; }
         public UnitTypeEnum? Unit { get; set; }
         public decimal? Price { get; set; }
     }
     public class ShoppingListCreateDto
     {
+        [Required(ErrorMessage = "Le nom est obligatoire")]
+        [StringLength(150, MinimumLength = 1, ErrorMessage = "Le nom doit contenir entre 1 et 150 caractères.")]
         public string Name { get; set; }
         public bool IsTemplate { get; set; }
     }
     public class ShoppingListUpdateDto
     {
+        [Required(ErrorMessage = "Le nom est obligatoire")]
+        [StringLength(150, MinimumLength = 1, ErrorMessage = "Le nom doit contenir entre 1 et 150 caractères.")]
         public string Name { get; set; }
     }
     public class ShoppingListDetailsDto

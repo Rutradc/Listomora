@@ -46,6 +46,7 @@ namespace ListomoraFront
             builder.Services.AddScoped<IUserService, UserAPIClient>();
             builder.Services.AddScoped<IArticleService, ArticleAPIClient>();
             builder.Services.AddScoped<IIngredientService, IngredientAPIClient>();
+            builder.Services.AddScoped<IShoppingListService, ShoppingListAPIClient>();
 
             builder.Services.AddAuthorizationCore();
 
