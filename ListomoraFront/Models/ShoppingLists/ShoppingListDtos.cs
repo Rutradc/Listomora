@@ -8,21 +8,9 @@ namespace ListomoraFront.Models.ShoppingLists
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
     }
-    public class ShoppingListLinesUpdateDto
-    {
-        public List<ShoppingListLineCreateUpdateDto> AddedLines { get; set; }
-        public List<ShoppingListLineCreateUpdateDto> UpdatedLines { get; set; }
-        public List<Guid> RemovedLinesArticleIds { get; set; }
-
-        public ShoppingListLinesUpdateDto()
-        {
-            AddedLines = new List<ShoppingListLineCreateUpdateDto>();
-            UpdatedLines = new List<ShoppingListLineCreateUpdateDto>();
-            RemovedLinesArticleIds = new List<Guid>();
-        }
-    }
     public class ShoppingListLineCreateUpdateDto
     {
+        public Guid Id { get; set; }
         public Guid ArticleId { get; set; }
         public Guid OriginArticleId { get; set; }
         public Guid ShoppingListId { get; set; }
@@ -32,9 +20,19 @@ namespace ListomoraFront.Models.ShoppingLists
         public bool IsNew { get; set; } = true;
         public bool IsModified { get; set; } = false;
         public bool IsDeleted { get; set; } = false;
+
+        public ShoppingListLineCreateUpdateDto(Guid id)
+        {
+            Id = id;
+        }
+
+        public ShoppingListLineCreateUpdateDto()
+        {
+        }
     }
     public class ShoppingListLineListDto
     {
+        public Guid Id { get; set; }
         public Guid ArticleId { get; set; }
         public string ArticleName { get; set; }
         public Guid OriginArticleId { get; set; }

@@ -9,6 +9,7 @@ namespace Listomora.Application.Contracts.Persistence.Dtos
     }
     public class ShoppingListLineCreateUpdateDto
     {
+        public Guid Id { get; set; }
         public Guid ArticleId { get; set; }
         public Guid OriginArticleId { get; set; }
         public Guid ShoppingListId { get; set; }
@@ -21,6 +22,7 @@ namespace Listomora.Application.Contracts.Persistence.Dtos
     }
     public class ShoppingListLineListDto
     {
+        public Guid Id { get; set; }
         public Guid ArticleId { get; set; }
         public string ArticleName { get; set; }
         public double? Amount { get; set; }

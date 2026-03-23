@@ -9,9 +9,7 @@ namespace ListomoraFront.Pages.ShoppingLists
 {
     public partial class ShoppingListPage
     {
-        //TODO : ajouter Id dans entity shoppinglistline pour utiliser dans dto d'affichage et de createUpdate
-        // pour pouvoir update l'articleId sinon erreur ef car clé composite
-        // et retirer localid pour line
+        //TODO : ajouter détecteur de changes sur field de shopppingList (avec OnFieldChanged qui fait devenir _hasChanges = true)
         [Inject]
         private IShoppingListService _client { get; set; }
         [Inject]
@@ -125,6 +123,7 @@ namespace ListomoraFront.Pages.ShoppingLists
         {
             var newLineDto = new ShoppingListLineCreateUpdateDto()
             {
+                Id = line.Data.Id,
                 OriginArticleId = line.Data.OriginArticleId,
                 ArticleId = line.Data.ArticleId,
                 ShoppingListId = shoppingList.Id,
@@ -164,13 +163,16 @@ namespace ListomoraFront.Pages.ShoppingLists
                 {
                     Data = new ShoppingListLineCreateUpdateDto()
                     {
+                        Id = line.Data.Id,
                         OriginArticleId = line.Data.OriginArticleId,
+                        ArticleId = line.Data.ArticleId,
                         ShoppingListId = shoppingList.Id,
                         IsNew = false,
                         IsModified = false,
                         IsDeleted = true
                     }
                 });
+                _hasChanges = true;
             }
             else
             {
@@ -180,6 +182,7 @@ namespace ListomoraFront.Pages.ShoppingLists
                 {
                     listLine.Data.IsDeleted = true;
                     listLine.Data.IsModified = false;
+                    _hasChanges = true;
                 }
             }
         }
@@ -236,6 +239,10 @@ namespace ListomoraFront.Pages.ShoppingLists
                 {
                     if (_hasChanges)
                     {
+                        foreach (var line in _linesUpdate)
+                        {
+                            Console.WriteLine($"{line.Data.Id} - {line.Data.ArticleId} - {(line.Data.IsNew ? "IsNew" : line.Data.IsModified ? "IsModified" : line.Data.IsDeleted ? "IsDeleted" : "")}");
+                        }
                         _linesUpdate = _linesUpdate.Where(x => x.Data.ArticleId != Guid.Empty).ToList();
                         if (_linesUpdate.Count > 0)
                         {
@@ -250,7 +257,8 @@ namespace ListomoraFront.Pages.ShoppingLists
                         }
                         else
                         {
-                            _snackbar.Add("Aucune changement de ligne effectué mais liste mise à jour.", Severity.Info);
+                            _snackbar.Add("Aucun changement de ligne effectué mais liste mise à jour.", Severity.Info);
+                            _hasChanges = false;
                         }
                     }
                 }
@@ -284,9 +292,11 @@ namespace ListomoraFront.Pages.ShoppingLists
             public Guid LocalId { get; set; }
             public ShoppingListLineCreateUpdateDto Data { get; set; } = new();
 
-            public ShoppingListLineCreateUpdateVM(Guid localId)
+            public ShoppingListLineCreateUpdateVM(Guid localId, Guid? lineId = null)
             {
                 LocalId = localId;
+                if (lineId is not null) 
+                    Data = new ShoppingListLineCreateUpdateDto((Guid)lineId);
             }
         }
     }

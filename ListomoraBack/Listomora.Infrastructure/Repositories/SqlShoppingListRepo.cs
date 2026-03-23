@@ -94,19 +94,19 @@ namespace Listomora.Infrastructure.Repositories
                 throw new InvalidOperationException("Call tried to update multiples lines that didn't have the same shoppingListId.");
             // delete
             List<ShoppingListLineCreateUpdateDto> linesToRemoveDto = dtos.Where(x => x.IsDeleted).ToList();
-            IEnumerable<ShoppingListLine> linesToRemove = await _dbContext.ShoppingListLines.Where(l => l.ShoppingListId == shoppingListId && linesToRemoveDto.Select(x => x.OriginArticleId).Contains(l.ArticleId)).ToListAsync();
+            IEnumerable<ShoppingListLine> linesToRemove = await _dbContext.ShoppingListLines.Where(l => linesToRemoveDto.Select(x => x.Id).Contains(l.Id)).ToListAsync();
             if (linesToRemove.ToList().Count != linesToRemoveDto.Count)
                 throw new NotFoundException($"{linesToRemoveDto.Count - linesToRemove.ToList().Count} line(s) to delete was(were) not found.");
             _dbContext.ShoppingListLines.RemoveRange(linesToRemove);
 
             // update
             var linesToUpdateDto = dtos.Where(x => x.IsModified).ToList();
-            IEnumerable<ShoppingListLine> linesToUpdate = _dbContext.ShoppingListLines.Where(l => l.ShoppingListId == shoppingListId && linesToUpdateDto.Select(x => x.OriginArticleId).Contains(l.ArticleId));
+            IEnumerable<ShoppingListLine> linesToUpdate = _dbContext.ShoppingListLines.Where(l => linesToUpdateDto.Select(x => x.Id).Contains(l.Id)).ToList();
             if (linesToUpdate.ToList().Count != linesToUpdateDto.Count)
                 throw new NotFoundException($"{linesToUpdateDto.Count - linesToUpdate.ToList().Count} line(s) to update was(were) not found.");
             foreach (ShoppingListLine line in linesToUpdate)
             {
-                ShoppingListLineCreateUpdateDto? lineUpdated = dtos.Where(x => x.IsModified).SingleOrDefault(x => x.OriginArticleId == line.ArticleId);
+                ShoppingListLineCreateUpdateDto? lineUpdated = dtos.Where(x => x.IsModified).SingleOrDefault(x => x.Id == line.Id);
                 if (lineUpdated is null)
                     throw new NotFoundException("At least one of the lines to update was not found.");
                 line.ArticleId = lineUpdated.ArticleId;
