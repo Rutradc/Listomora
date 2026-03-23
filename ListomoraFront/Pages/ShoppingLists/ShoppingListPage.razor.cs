@@ -9,6 +9,9 @@ namespace ListomoraFront.Pages.ShoppingLists
 {
     public partial class ShoppingListPage
     {
+        //TODO : ajouter Id dans entity shoppinglistline pour utiliser dans dto d'affichage et de createUpdate
+        // pour pouvoir update l'articleId sinon erreur ef car clé composite
+        // et retirer localid pour line
         [Inject]
         private IShoppingListService _client { get; set; }
         [Inject]
@@ -17,6 +20,8 @@ namespace ListomoraFront.Pages.ShoppingLists
         private ISnackbar _snackbar { get; set; }
         [Inject]
         private NavigationManager _navigation { get; set; }
+        [Inject] 
+        private IDialogService DialogService { get; set; }
         [Parameter]
         public Guid? Id { get; set; }
         [Parameter]
@@ -179,9 +184,38 @@ namespace ListomoraFront.Pages.ShoppingLists
             }
         }
 
-        private void GoToList()
+        private async Task GoToList()
         {
+            if (_hasChanges)
+            {
+                var confirmed = await ShowConfirmDialog();
+                if (!confirmed)
+                    return;
+            }
+
             _navigation.NavigateTo("/shoppinglist/" + SourceUrl);
+        }
+
+        private async Task<bool> ShowConfirmDialog()
+        {
+            var parameters = new DialogParameters
+            {
+                { "ContentText", "Des modifications non sauvegardées seront perdues. Continuer ?" },
+                { "ButtonText", "Quitter" },
+                { "Color", Color.Error }
+            };
+
+            var options = new DialogOptions
+            {
+                CloseOnEscapeKey = true,
+                MaxWidth = MaxWidth.Small,
+                FullWidth = true
+            };
+
+            var dialog = await DialogService.ShowAsync<ConfirmDialog>("Attention", parameters, options);
+            var result = await dialog.Result;
+
+            return !result.Canceled;
         }
 
         private async Task Save()
@@ -193,6 +227,7 @@ namespace ListomoraFront.Pages.ShoppingLists
                 Id = await _client.InsertAsync(createModel);
                 shoppingList.Id = (Guid)Id;
                 _navigation.NavigateTo($"/shoppinglist/page/{SourceUrl}/{Id}");
+                _hasChanges = false;
             }
             else
             {
@@ -207,7 +242,7 @@ namespace ListomoraFront.Pages.ShoppingLists
                             if (await _client.UpdateLinesAsync(_linesUpdate.Select(x => x.Data)))
                             {
                                 _snackbar.Add("Liste mise à jour.", Severity.Success);
-                                
+                                _hasChanges = false;
                                 await LoadData();
                             }
                             else
