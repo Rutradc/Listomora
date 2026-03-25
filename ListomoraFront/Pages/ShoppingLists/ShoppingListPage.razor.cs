@@ -67,6 +67,7 @@ namespace ListomoraFront.Pages.ShoppingLists
                 }
             }
             _linesUpdate = new();
+            await InvokeAsync(StateHasChanged);
         }
 
         private async Task<IEnumerable<ShoppingListLineArticleDto>> SearchArticles(string value, CancellationToken token)

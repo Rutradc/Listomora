@@ -16,7 +16,7 @@ namespace ListomoraFront.Services.Implementations
 
         public async Task<bool> Complete(Guid id)
         {
-            HttpResponseMessage response = await _http.PostAsJsonAsync(_defaultRoute + "complete", id);
+            HttpResponseMessage response = await _http.PatchAsJsonAsync(_defaultRoute + "complete", id);
             return response.IsSuccessStatusCode;
         }
 

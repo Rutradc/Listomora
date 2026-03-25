@@ -193,5 +193,36 @@ namespace Listomora.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPatch("complete")]
+        [Authorize(Policy = "Authenticated")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Complete([FromBody] Guid id)
+        {
+            try
+            {
+                string? role = User.FindFirst(ClaimTypes.Role)?.Value;
+                if (role == UserRole.ADMIN.ToString())
+                {
+                    await _mediator.Send(new CompleteShoppingListCommand(id));
+                    return Ok();
+                }
+                string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                await _mediator.Send(new CompleteShoppingListCommand(id, new Guid(userId)));
+                return Ok();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

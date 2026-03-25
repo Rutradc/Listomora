@@ -69,7 +69,7 @@ namespace Listomora.Infrastructure.Repositories
             return true;
         }
 
-        public async Task<bool> CompleteShoppingList(Guid id, bool isDone, Guid? userId = null)
+        public async Task<bool> CompleteShoppingList(Guid id, Guid? userId = null)
         {
             ShoppingList shoppingListToUpdate;
             if (userId is null)
@@ -77,11 +77,11 @@ namespace Listomora.Infrastructure.Repositories
             else
                 shoppingListToUpdate = await _dbContext.ShoppingLists.SingleOrDefaultAsync(s => s.Id == id && s.CreatorId == (Guid)userId);
             if (shoppingListToUpdate is null)
-                return false;
-            if (isDone && !shoppingListToUpdate.IsDone)
+                throw new NotFoundException("Shopping list to complete was not found.");
+            shoppingListToUpdate.IsDone = !shoppingListToUpdate.IsDone;
+            if (shoppingListToUpdate.IsDone)
                 shoppingListToUpdate.DoneAt = DateTime.UtcNow;
-            shoppingListToUpdate.IsDone = isDone;
-            if (!isDone)
+            if (!shoppingListToUpdate.IsDone)
                 shoppingListToUpdate.DoneAt = null;
             await _dbContext.SaveChangesAsync();
             return true;
