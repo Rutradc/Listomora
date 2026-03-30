@@ -21,7 +21,7 @@
 
         <!-- Partie droite -->
         <MudStack Row="true" Spacing="2">
-            @if(Id is not null)
+            @if (Id is not null && !shoppingList.IsTemplate)
             {
                 <MudButton Variant="Variant.Filled"
                            Color="Color.Primary"
@@ -61,7 +61,7 @@
                 </MudItem>
             }
         }
-        @if (Id is not null)
+        @if (Id is not null && !shoppingList.IsTemplate)
         {
             <MudItem xs="12" md="3">
                 <MudText Typo="Typo.body1">Terminée </MudText><MudIcon Icon="@(shoppingList.IsDone ? "fas fa-check" : "fas fa-xmark")" />
@@ -133,8 +133,9 @@
                 </MudTd>
 
                 <MudTd>
-                    <MudNumericField Value="context.Data.Price"
-                                     ValueChanged="@((decimal? v) => OnLineChanged(context, v, nameof(context.Data.Price)))"
+                    <MudNumericField T="decimal?"
+                                     Value="context.Data.Price"
+                                     ValueChanged="@((decimal? v) => { context.Data.Price = v ; OnLineChanged(context, v, nameof(context.Data.Price));})"
                                      Adornment="Adornment.End"
                                      AdornmentText="€"
                                      HideSpinButtons="true"

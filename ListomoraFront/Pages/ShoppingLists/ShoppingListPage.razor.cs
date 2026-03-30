@@ -105,7 +105,12 @@ namespace ListomoraFront.Pages.ShoppingLists
                     break;
 
                 case nameof(line.Data.Price):
-                    line.Data.Price = (decimal?)value;
+                    line.Data.Price = value switch
+                    {
+                        decimal d => d,
+                        double db => (decimal)db,
+                        _ => null
+                    };
                     break;
             }
 
@@ -261,6 +266,10 @@ namespace ListomoraFront.Pages.ShoppingLists
                             _snackbar.Add("Aucun changement de ligne effectué mais liste mise à jour.", Severity.Info);
                             _hasChanges = false;
                         }
+                    }
+                    else
+                    {
+                        _snackbar.Add("Aucun changement de ligne à effectuer", Severity.Info);
                     }
                 }
                 else
